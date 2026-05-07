@@ -55,13 +55,13 @@ Features that **must** be completed:
 
 ## Stretch Features (Only if MVP is Complete)
 1. The ability to have a profile and see your shared / saved recipes
-1. 
-1. 
+1. A game / something entertaining for the user to do
+1. Use of API for imagery
 
 ## Explicit Non-Goals
 
 Features intentionally excluded:
-- 
+- Direct communication between users
 - 
 
 ---
