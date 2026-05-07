@@ -1,6 +1,3 @@
-Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kurian  
-Tacos  
-
 Program Components:  
 
 Flask Application  
@@ -29,21 +26,22 @@ Flask Application
 
 
 # Summary
-{Keep it tight. Concise. 1 sentence. Really need more? 3 max.}
+We are creating a collaborative recipe sharing application where a user can share their recipes as well as find recipes based on the foods they have at home.
 
 ## Problem Being Solved
-
+The problem being solved is the difficulty of finding recipes that you're able to follow with the ingredients you have at hand.
 
 ## Target Users
 
 Who will use this system?
 
-- ____________________________________
-- ____________________________________
+- Beginner level cooks
+- People with limited access to food products
+- Intermediate level cooks looking to share their recipes
 
 
 ## Why This Project Matters
-
+This project makes cooking accessible to anyone who wants to experiment with a new recipe or produce something out of the ingredients they have accessible to them with minimal to no food shopping needed.
 
 ---
 
@@ -51,12 +49,12 @@ Who will use this system?
 
 ## Core Features (Required for Final Submission)
 Features that **must** be completed:
-1. 
-1. 
-1. 
+1. The ability to post/share a recipe
+1. The ability to browse all recipes
+1. The ability to search up specific recipes based on recipe title / ingredients
 
 ## Stretch Features (Only if MVP is Complete)
-1. 
+1. The ability to have a profile and see your shared / saved recipes
 1. 
 1. 
 
