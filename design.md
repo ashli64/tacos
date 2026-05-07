@@ -1,9 +1,3 @@
-Program Components:  
-
-Flask Application  
-- Routing for home and other pages
-- User session data
-
 # System Blueprint (_a.k.a._ "Design Doc")
 
 ## TNPG: TACOS
@@ -62,7 +56,6 @@ Features that **must** be completed:
 
 Features intentionally excluded:
 - Direct communication between users
-- 
 
 ---
 
@@ -70,14 +63,14 @@ Features intentionally excluded:
 
 | Layer | Selected Tool |
 |---|---|
-| Backend Framework | Flask / Node.js (choose one) |
-| Frontend Framework | none / bootstrap / foundation / tailwind / other? (seek clearance) |
-| Database | SQLite / MongoDB |
-| Authentication | Flask sessions unless you have good reason/need to deviate |
-| ORM / DB Library | optionally SQLAlchemy; initiate clearance protocol if interested |
+| Backend Framework | Flask |
+| Frontend Framework | Tailwind |
+| Database | SQLite |
+| Authentication | Flask sessions |
+| ORM / DB Library | n/a |
 
 ## Why This Stack Was Chosen
-{your summary/recap of team discussions here}
+We chose flask because it provides smooth transition between app calls, selected tailwind because we have higher familiarity with the framework, selected SQLite because it serves our purpose well (recipes don't require complex database).
 
 ---
 
@@ -87,7 +80,7 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| | | | |
+|Veronika| | | |
 | | | | |
 | | | | |
 | | | | |
