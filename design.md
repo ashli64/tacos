@@ -127,7 +127,7 @@ As a __________, I want to __________ so that...
 {Delineate here your plan for testing each component}
 
 # Timeline
-## Week 1 Goals:
+## Week 1 Goals: 
 ## Week 2 Goals:
 ## Week 3 Goals:
 ## Internal Deadlines:
@@ -136,15 +136,15 @@ As a __________, I want to __________ so that...
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
-1.
-1.
-1.
+1. User can publish recipes
+1. User can browse through recipes (with search tool)
+1. User can list ingredients and find matching recipes
 
 # Open Questions
-{Delineate anything undecided here}
+What is the meaning of life?
 
 # Appendix
-{Any relevant info that is useful but would have interrupted narrative flow above, or cluttered the information portrayed}
+N/A
 
 # Other
-{Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
+N/A
