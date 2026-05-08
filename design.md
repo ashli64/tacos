@@ -80,10 +80,10 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-|Veronika| | | |
-| | | | |
-| | | | |
-| | | | |
+|Ashley|Frontend|Visual Design| |
+|Naomi|Backend| | |
+|Isabel|Backend| | |
+|Veronika|Backend|Visual Design| |
 
 ---
 
