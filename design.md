@@ -108,13 +108,13 @@ Dashboard
 
 ## Key User Stories
 ### eg0
-As a __________, I want to __________ so that...
+As a low-income mom, I want to find recipes with food I already own so that I'm not wasting it and letting it go bad.
 
 ### eg1
-As a __________, I want to __________ so that...
+As a intermediate chef, I want to share recipes so that people of any cooking level can follow along.
 
 ### eg2
-As a __________, I want to __________ so that...
+As a student, I want to find quick recipes so that I can make a quick meal to eat after class.
 
 
 
@@ -141,7 +141,7 @@ Project is considered complete when all of the following are true:
 1. User can list ingredients and find matching recipes
 
 # Open Questions
-What is the meaning of life?
+What is the meaning of life if not eating?
 
 # Appendix
 N/A
