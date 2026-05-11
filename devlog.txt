@@ -14,3 +14,9 @@ STARTING
 * NEW CHANGES:
     - Set up tree in repo
 
+naomiK -- 2026-05-11
+PREPARING
+* NEW CHANGES
+    - Finished setting up https
+    - Link works but website not currently being served
+    - Finished dd for in-class review
