@@ -91,100 +91,10 @@ Each member must own meaningful deliverables.
 
 # Component map
 
-```mermaid
----
-config:
-  layout: elk
----
-graph TB
-    classDef backendStyle stroke:#818cf8,fill:#eef2ff,color:#1e1b4b
-    classDef frontendStyle stroke:#2dd4bf,fill:#f0fdfa,color:#1e1b4b
-    classDef dbStyle stroke:#f87171,fill:#fef2f2,color:#1e1b4b
-    classDef assetStyle stroke:#a78bfa,fill:#f5f3ff,color:#1e1b4b
-    classDef routeStyle stroke:#fb923c,fill:#fff7ed,color:#1e1b4b
-
-    subgraph Backend["Backend"]
-        Init["__init__.py"]
-        DataDB[("data.db")]
-        Logout["/logout route"]
-    end
-
-    subgraph Frontend["Frontend"]
-        Home["HOME<br/>(home.html)"]
-        Login["LOGIN<br/>(login.html)"]
-        Register["REGISTER<br/>(register.html)"]
-        Profile["PROFILE<br/>(profile.html)"]
-        Browse["BROWSE<br/>(browse.html)"]
-        Recipe["RECIPE<br/>(recipe.html)"]
-        RecipeEdit["EDIT<br/>(recipeEdit.html)"]
-        Game["GAME<br/>(game.html)"]
-    end
-
-    subgraph Assets["Shared Assets"]
-        CSS["style.css"]
-        JS["script.js"]
-    end
-
-    %% backend relationships
-    Init -->|reads/writes| DataDB
-    Init -->|"serves all HTML templates"| Frontend
-    Init -->|defines route| Logout
-
-    %% logout route
-    Logout -->|redirects to| Home
-
-    %% navbar (home connects bidirectionally except login/register)
-    Home <--> |navbar| Profile
-    Home <--> |navbar| Browse
-    Home <--> |navbar| Recipe
-    Home <--> |navbar| RecipeEdit
-    Home <--> |navbar| Game
-    Login <--> |navbar| Register
-    Login -->|to| Home
-    Register -->|to| Home
-
-    %% shared assets (single line to group)
-    CSS -->|"used by all HTML pages"| Frontend
-    JS -->|"used by all HTML pages"| Frontend
-
-    class Init backendStyle
-    class Logout routeStyle
-    class DataDB dbStyle
-    class CSS,JS assetStyle
-    class Home,Login,Register,Profile,Browse,Recipe,RecipeEdit,Game frontendStyle
-```
+![Diagram 1](1.png)
 
 # Site map
-
-```mermaid
----
-config:
-  layout: elk
----
-graph TB
-    classDef pageStyle stroke:#2dd4bf,fill:#f0fdfa,color:#1e1b4b
-    classDef homeStyle stroke:#818cf8,fill:#eef2ff,color:#1e1b4b
-
-    Home["HOME<br/>(home.html)"]:::homeStyle
-    Login["LOGIN<br/>(login.html)"]:::pageStyle
-    Register["REGISTER<br/>(register.html)"]:::pageStyle
-    Profile["PROFILE<br/>(profile.html)"]:::pageStyle
-    Browse["BROWSE<br/>(browse.html)"]:::pageStyle
-    Recipe["RECIPE<br/>(recipe.html)"]:::pageStyle
-    RecipeEdit["EDIT<br/>(recipeEdit.html)"]:::pageStyle
-    Game["GAME<br/>(game.html)"]:::pageStyle
-
-    %% connections
-    Home <--> |navbar| Profile
-    Home <--> |navbar| Browse
-    Home <--> |navbar| Recipe
-    Home <--> |navbar| RecipeEdit
-    Home <--> |navbar| Game
-
-    Login <--> |navbar| Register
-    Login -->|user login| Home
-    Register -->|to| Home
-```
+![Diagram 2](2.png)
 
 ## Key User Stories
 ### eg0
@@ -199,31 +109,7 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 
 
 # Database Design
-```mermaid
----
-config:
-  layout: elk
----
-erDiagram
-    USERS {
-        INTEGER userid PK
-        TEXT username
-        TEXT password
-        INTEGER contributions
-        TEXT ingredients
-        TEXT favorites
-    }
-
-    RECIPES {
-        INTEGER id PK
-        INTEGER author FK
-        TEXT name
-        TEXT description
-        TEXT ingredients
-        TEXT pic
-        TEXT difficulty
-    }
-```
+![Diagram 3](3.png)
 
 
 # Testing Plan
