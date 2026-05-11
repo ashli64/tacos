@@ -229,10 +229,10 @@ erDiagram
 2. After databases are set up, information saved, testing the blog-like recipe inputs the user makes & ensuring these are stored properly.
 
 # Timeline
-## Week 1 Goals: 
-## Week 2 Goals:
-## Week 3 Goals:
-## Internal Deadlines:
+## Week 1 Goals: Set up users page (use it as the foundation) and organize databases. 
+## Week 2 Goals: Implement the user recipe inputs setting, making it viewable to everyone. 
+## Week 3 Goals: Use an API to suggest recipes with the user-provided ingredients and accessibility. 
+## Internal Deadlines: Always make sure that there's something running without bugs. 
 {List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
 
 
