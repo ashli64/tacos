@@ -154,17 +154,34 @@ graph TB
 
 # Site map
 
-{Insert your mermaid(or equivalent)-generated diagram here}
-eg...
-```
-Landing Page
-   ↓
-Login / Register
-   ↓
-Dashboard
-   ├── Feature A
-   ├── Feature B
-   └── Profile
+```mermaid
+---
+config:
+  layout: elk
+---
+graph TB
+    classDef pageStyle stroke:#2dd4bf,fill:#f0fdfa,color:#1e1b4b
+    classDef homeStyle stroke:#818cf8,fill:#eef2ff,color:#1e1b4b
+
+    Home["HOME<br/>(home.html)"]:::homeStyle
+    Login["LOGIN<br/>(login.html)"]:::pageStyle
+    Register["REGISTER<br/>(register.html)"]:::pageStyle
+    Profile["PROFILE<br/>(profile.html)"]:::pageStyle
+    Browse["BROWSE<br/>(browse.html)"]:::pageStyle
+    Recipe["RECIPE<br/>(recipe.html)"]:::pageStyle
+    RecipeEdit["EDIT<br/>(recipeEdit.html)"]:::pageStyle
+    Game["GAME<br/>(game.html)"]:::pageStyle
+
+    %% connections
+    Home <--> |navbar| Profile
+    Home <--> |navbar| Browse
+    Home <--> |navbar| Recipe
+    Home <--> |navbar| RecipeEdit
+    Home <--> |navbar| Game
+
+    Login <--> |navbar| Register
+    Login -->|user login| Home
+    Register -->|to| Home
 ```
 
 ## Key User Stories
@@ -180,8 +197,31 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 
 
 # Database Design
+```mermaid
+---
+config:
+  layout: elk
+---
+erDiagram
+    USERS {
+        INTEGER userid PK
+        TEXT username
+        TEXT password
+        INTEGER contributions
+        TEXT ingredients
+        TEXT favorites
+    }
 
-{Insert your table/document organizational structure here}
+    RECIPES {
+        INTEGER id PK
+        INTEGER author FK
+        TEXT name
+        TEXT description
+        TEXT ingredients
+        TEXT pic
+        TEXT difficulty
+    }
+```
 
 
 # Testing Plan
