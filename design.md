@@ -1,8 +1,17 @@
+---
+title: "Design"
+---
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true });
+</script>
+
 # System Blueprint (_a.k.a._ "Design Doc")
 
 ## TNPG: TACOS
 ## project: P05 Le Fin
-## Target ship date: {2026-05-30}
+## Target ship date: 2026-05-30
 
 ---
 
