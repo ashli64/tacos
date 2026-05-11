@@ -83,7 +83,7 @@ Each member must own meaningful deliverables.
 |Ashley|Frontend|Visual Design|search bar|
 |Naomi|Backend|Styling|Login/register, recipe html pages|
 |Isabel|Backend|Example accounts|profile page, browsing page|
-|Veronika|Backend|Visual Design|home html|
+|Veronika|Backend|Visual Design|home html, game html|
 
 ---
 
