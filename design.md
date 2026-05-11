@@ -225,7 +225,8 @@ erDiagram
 
 
 # Testing Plan
-{Delineate here your plan for testing each component}
+1. Work with a single VM at the beginning, we want to be able to sync user profiles with recipes. Each user should be set up with a password, username, and potentially status (active, not online, or completely offline).
+2. After databases are set up, information saved, testing the blog-like recipe inputs the user makes & ensuring these are stored properly.
 
 # Timeline
 ## Week 1 Goals: 
