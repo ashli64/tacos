@@ -27,3 +27,9 @@ DD REVISIONS
     - Fixed component diagram
     - Added non-goals
     - Reviewed feedback
+
+isabelZ -- 2026-05-12
+DESIGN DOC SUGGESTION SUMMARY
+    - Lacked specificity in goals & formatting errors 
+    - Overlapping roles that may cause future conflicts in task-arranging 
+    - Needed to add a little more complexity to the overall scope 
