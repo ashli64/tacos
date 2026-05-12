@@ -58,6 +58,8 @@ Features that **must** be completed:
 
 Features intentionally excluded:
 - Direct communication between users
+- Nutrient specifics
+- Ingredients page
 
 ---
 
@@ -107,7 +109,6 @@ As a intermediate chef, I want to share recipes so that people of any cooking le
 As a student, I want to find quick recipes so that I can make a quick meal to eat after class.
 
 
-
 # Database Design
 ![Diagram 3](3.png)
 
@@ -120,8 +121,20 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 ## Week 1 Goals: Set up users page (use it as the foundation) and organize databases. 
 ## Week 2 Goals: Implement the user recipe inputs setting, making it viewable to everyone. 
 ## Week 3 Goals: Use an API to suggest recipes with the user-provided ingredients and accessibility. 
+
 ## Internal Deadlines: Always make sure that there's something running without bugs. 
-{List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
+
+| Team Member | Name | Details | Deadline |
+|---|---|---|---|
+|Naomi|Login|Set up basic login html and route|5/12/2026|
+|Naomi|Register|Set up basic register html and route|5/12/2026|
+|Veronika|Home|Set up basic home html and navbar|5/13/2026|
+|Ashley|Logout|Set up logout route|5/12/2026|
+|Isabel|Game|Set up game html|5/15/2026|
+|Ashley|DB|Set tables in dbs|5/12/2026|
+|Veronika|Filtering|Implement filtering and search bar|5/16/2026|
+|Veronika|Styling|Set up basic tailwind|5/16/2026|
+|Isabel|Styling|Add custom css|5/16/2026|
 
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")

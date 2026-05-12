@@ -20,3 +20,10 @@ PREPARING
     - Finished setting up https
     - Link works but website not currently being served
     - Finished dd for in-class review
+
+naomiK -- 2026-05-11
+DD REVISIONS
+    - Added specified internal deadlines table
+    - Fixed component diagram
+    - Added non-goals
+    - Reviewed feedback
