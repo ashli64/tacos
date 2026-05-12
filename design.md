@@ -1,5 +1,3 @@
-
-
 # System Blueprint (_a.k.a._ "Design Doc")
 
 ## TNPG: TACOS
@@ -46,13 +44,13 @@ This project makes cooking accessible to anyone who wants to experiment with a n
 ## Core Features (Required for Final Submission)
 Features that **must** be completed:
 1. The ability to post/share a recipe
-1. The ability to browse all recipes
-1. The ability to search up specific recipes based on recipe title / ingredients
+2. The ability to browse all recipes
+3. The ability to search up specific recipes based on recipe title / ingredients
 
 ## Stretch Features (Only if MVP is Complete)
 1. The ability to have a profile and see your shared / saved recipes
-1. A game / something entertaining for the user to do
-1. Use of API for imagery
+2. A game / something entertaining for the user to do
+3. Use of API for imagery
 
 ## Explicit Non-Goals
 
@@ -140,8 +138,8 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
 1. User can publish recipes
-1. User can browse through recipes (with search tool)
-1. User can list ingredients and find matching recipes
+2. User can browse through recipes (with search tool)
+3. User can list ingredients and find matching recipes
 
 # Open Questions
 What is the meaning of life if not eating?
