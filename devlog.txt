@@ -33,3 +33,18 @@ DESIGN DOC SUGGESTION SUMMARY
     - Lacked specificity in goals & formatting errors 
     - Overlapping roles that may cause future conflicts in task-arranging 
     - Needed to add a little more complexity to the overall scope 
+
+isabelZ -- 2026-05-12
+PYTHON STYLE 
+    - The indents, imports, whitespace in expressions, and naming conventions were the most relevant parts of the study guide. 
+    - I believe the indentations and trailing commas will be the most useful to other students, helping with organization and readability (regardless of the time completed). 
+FILES = [
+    'setup.cfg',
+    'tox.ini',
+    ]
+initialize(FILES,
+           error=True,
+           )
+    - The code demonstrated above, demonstrating the trailing commas conventions, will be used when creating different lists of data pulled from the recipes API we are planning on using. User inputs would also be stored in files like these. 
+JAVA STYLE 
+    - 
