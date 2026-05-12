@@ -122,7 +122,7 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 ## Week 2 Goals: Implement the user recipe inputs setting, making it viewable to everyone. 
 ## Week 3 Goals: Use an API to suggest recipes with the user-provided ingredients and accessibility. 
 
-## Internal Deadlines: Always make sure that there's something running without bugs. 
+## Internal Deadlines: Always make sure that there's something running without bugs. [DAILY GOAL]
 
 | Team Member | Name | Details | Deadline |
 |---|---|---|---|
