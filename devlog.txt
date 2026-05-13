@@ -2,6 +2,20 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
+ashleyL -- 2026-05-12 00:14
+JS STYLE
+    - Commeting advice of keeping it short and purposeful were the most relevant part of the guide. It's worth putting blank lines despite interrupting code for cleaner comments.
+    - Using 'Node.textContent' instead of 'Element.innerHTML' is better in order to prevent security flaws. We should always take the safer route with our website, especially if the command performs the same.
+'if (test) {
+  // Perform something if test is true
+  // …
+  return;
+}
+
+// Perform something if test is false
+// …'
+    - I believe that this piece of code suggesting removing the 'else{...}' function is very useful as it removes unecessary code and decreases redundancy.
+
 isabelZ -- 2026-05-12
 PYTHON STYLE 
     - The indents, imports, whitespace in expressions, and naming conventions were the most relevant parts of the study guide. 
@@ -13,9 +27,7 @@ FILES = [
 initialize(FILES,
            error=True,
            )
-    - The code demonstrated above, demonstrating the trailing commas conventions, will be used when creating different lists of data pulled from the recipes API we are planning on using. User inputs would also be stored in files like these. 
-JAVA STYLE 
-    - 
+    - The code demonstrated above, demonstrating the trailing commas conventions, will be used when creating different lists of data pulled from the recipes API we are planning on using. User inputs would also be stored in files like these.
 
 isabelZ -- 2026-05-12
 DESIGN DOC SUGGESTION SUMMARY
