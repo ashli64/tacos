@@ -2,38 +2,6 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
-ashleyL -- 2026-05-05 11:21
-    disabled root by changing `PermitRootLogin yes` to `PermitRootLogin no`
-    and according to Maya and Piazza, `sudo systemctl restart sshd` should be `sudo systemctl restart ssh`
-
-ashleyL -- 2026-05-04 00:30
-    Filled form for VMs
-
-naomiK -- 2026-05-01 11:19
-STARTING
-* NEW CHANGES:
-    - Set up tree in repo
-
-naomiK -- 2026-05-11
-PREPARING
-* NEW CHANGES
-    - Finished setting up https
-    - Link works but website not currently being served
-    - Finished dd for in-class review
-
-naomiK -- 2026-05-11
-DD REVISIONS
-    - Added specified internal deadlines table
-    - Fixed component diagram
-    - Added non-goals
-    - Reviewed feedback
-
-isabelZ -- 2026-05-12
-DESIGN DOC SUGGESTION SUMMARY
-    - Lacked specificity in goals & formatting errors 
-    - Overlapping roles that may cause future conflicts in task-arranging 
-    - Needed to add a little more complexity to the overall scope 
-
 isabelZ -- 2026-05-12
 PYTHON STYLE 
     - The indents, imports, whitespace in expressions, and naming conventions were the most relevant parts of the study guide. 
@@ -48,3 +16,35 @@ initialize(FILES,
     - The code demonstrated above, demonstrating the trailing commas conventions, will be used when creating different lists of data pulled from the recipes API we are planning on using. User inputs would also be stored in files like these. 
 JAVA STYLE 
     - 
+
+isabelZ -- 2026-05-12
+DESIGN DOC SUGGESTION SUMMARY
+    - Lacked specificity in goals & formatting errors 
+    - Overlapping roles that may cause future conflicts in task-arranging 
+    - Needed to add a little more complexity to the overall scope 
+
+naomiK -- 2026-05-11
+DD REVISIONS
+    - Added specified internal deadlines table
+    - Fixed component diagram
+    - Added non-goals
+    - Reviewed feedback
+
+naomiK -- 2026-05-11
+PREPARING
+* NEW CHANGES
+    - Finished setting up https
+    - Link works but website not currently being served
+    - Finished dd for in-class review
+
+ashleyL -- 2026-05-05 11:21
+    disabled root by changing `PermitRootLogin yes` to `PermitRootLogin no`
+    and according to Maya and Piazza, `sudo systemctl restart sshd` should be `sudo systemctl restart ssh`
+
+ashleyL -- 2026-05-04 00:30
+    Filled form for VMs
+
+naomiK -- 2026-05-01 11:19
+STARTING
+* NEW CHANGES:
+    - Set up tree in repo
