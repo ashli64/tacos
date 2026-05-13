@@ -76,7 +76,10 @@ def homepage():
         return redirect("/login")
     return render_template("home.html")
 
-
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.clear()
+    return redirect("/login")
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
