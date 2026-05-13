@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+  Veronika Duvanova, Naomi Kurian, Alvin Sze, Andrew Tsai   Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
+  Tacos
+  SoftDev
+  P05 -- El Fin
+  2026-05-13
+ -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOG IN</title>
+</head>
+
+<body class="h-screen overflow-hidden text-white relative">
+
+
+                  <form action="/login" method="POST">
+
+                    <div class="">
+                      <span class="">Tacos</span>
+                    </div>
+
+                    <h5 class="" style="letter-spacing: 1px;">Log into your account</h5>
+
+                    {% if error %}
+                    <div class="bg-red-50 border border-red-100 text-red-600 text-sm font-semibold rounded-xl px-3 py-3">
+                      {{ error | safe }}
+                    </div>
+                    {% endif %}
+
+                  
+                      <input type="text" name="username" class="form-control form-control-lg" required/>
+                      <label>Username</label>
+
+                      <input type="password" name="password" class="form-control form-control-lg" required/>
+		      <label>Password</label>
+
+                    <div class="pt-1 mb-4">
+                      <input class="btn btn-dark btn-lg btn-block" type="submit" value="LOG IN">
+                    </div>
+
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/register"
+                        style="color: #393f81;">Register here</a></p>
+                  </form>
+
+
+  </body>
+</html>
