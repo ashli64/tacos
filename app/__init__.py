@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS recipes (
    description TEXT,
    ingredients TEXT,
    pic TEXT,
-   difficulty TEXT
-   FOREIGN KEY(author) REFERENCES users(user_id))
+   difficulty TEXT,
+   FOREIGN KEY(author) REFERENCES users(user_id)
 )
 """)
 
