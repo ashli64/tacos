@@ -2,6 +2,10 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
+naomik -- 2026-05-13
+WROKING APP
+   - Got app to run locally
+
 ashleyL -- 2026-05-12 00:14
 JS STYLE
     - Commeting advice of keeping it short and purposeful were the most relevant part of the guide. It's worth putting blank lines despite interrupting code for cleaner comments.
