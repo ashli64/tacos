@@ -133,6 +133,29 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if "username" not in session:
+        return redirect("/login")
+
+'''
+    tableString = ""
+    for i in range(len(ans)):
+        if (i%3==0):
+            tableString +="<tr class= 'flex justify-between p-5'>"
+
+        tableString+= f"""
+        <td class = "p-4 border border-gray-300">
+            <h2>{names[i]}</h2>
+            <img src={paths[i]} alt="animal" class=" top-0 z-0 animalsh">
+        </td>"""
+        if (i%3==2):
+            tableString +="</tr>"
+    if not tableString.strip().endswith("</tr>"):
+        tableString+="</tr>"
+'''
+    return render_template("profile.html")
+
 
 
 def fetch(table, criteria, data, params=()):

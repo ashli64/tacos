@@ -2,10 +2,10 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
-isabelZ -- 2026-05-14 
+isabelZ -- 2026-05-14 11:40 
    - cerbot verified domain & fixed nginx (vm works now!) 
 
-naomiK-- 2026-05-13
+naomiK-- 2026-05-13 00:00
 WROKING APP
    - Got app to run locally
 
