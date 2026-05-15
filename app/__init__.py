@@ -157,6 +157,13 @@ def profile():
     return render_template("profile.html")
 
 
+@app.route('/recipe/<rid>') 
+def recipe(rid):
+    if not 'username' in session:
+        return redirect("/login")
+    
+    
+
 
 def fetch(table, criteria, data, params=()):
     db = get_db()
