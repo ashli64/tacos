@@ -7,6 +7,11 @@ ashleyL -- 2026-05-15 11:36
 'If you see this page, the nginx web server is successfully installed and working. Further configuration is required.'
    - Bible: https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
 
+naomiK -- 2026-05-15 11:42
+   - Fixed the navabars
+   - Fixed profile page
+   - Added check for confirm password in register 
+
 ashleyL -- 2026-05-15 6:00
    - Due to many virtual machines being broken and absences happen due to AP Exams, we have been delayed. However, Isabel and Naomi's working VMS were used to serve a basic app. We have the register, login, and home page working. By Monday we want our APIs chosen and incorporated by next week.
 

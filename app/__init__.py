@@ -106,8 +106,12 @@ def register():
 
     if request.method == "POST" and request.form:
         usernames = [row[0] for row in fetch("users", "TRUE", "username")]
+
         if request.form["username"] in usernames:
             return render_template("register.html", error="Username already taken, please try again! <br><br>")
+        elif request.form["username"] != request.form["confirm"]:
+            return render_template("register.html", error="Passwords don't match <br><br>")
+
         else:
             db = sqlite3.connect(DB_FILE)
             c = db.cursor()
