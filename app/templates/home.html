@@ -10,19 +10,30 @@
 
 <html>
 <head>
-  <title>HOME</title>
+    <title>HOME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+    <style>body { font-family: 'Poppins', sans-serif; }</style>
 
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
-  <span class="navbar-brand fw-bold">Tacos</span>
-  <div class="ms-auto d-flex gap-2">
-    <form action="/" method="POST"><input class="btn btn-outline-primary" type="submit" value="HOME"></form>
-    <form action="/profile" method="POST"><input class="btn btn-outline-primary" type="submit" value="PROFILE"></form>
-    <form action="/logout" method="POST"><input class="btn btn-outline-danger" type="submit" value="LOG OUT"></form>
-  </div>
-</nav>
+<!--NAV BAR-->
+    <nav>
+      <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+        <a class="flex items-center gap-2" href="/">
+          <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+        </a>
+        <div class="flex flex-row items-center gap-2">
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
 
 <div class="container text-center mt-5">
   <h1 class="fw-bold display-4">Welcome to Tacos</h1>

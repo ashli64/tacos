@@ -137,7 +137,7 @@ def register():
 def profile():
     if "username" not in session:
         return redirect("/login")
-    return render_template("profile.html")
+    return render_template("profile.html", user = session["username"])
 
 
 @app.route('/recipe/<rid>') 
