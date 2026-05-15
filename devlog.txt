@@ -8,7 +8,7 @@ ashleyL -- 2026-05-15 11:36
    - Bible: https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
 
 ashleyL -- 2026-05-15 6:00
-   - Due to many virtual machines being broken and absences happen due to AP Exams, we have been delayed on register, login, home, and nav bar. We are hoping to fix the VMs by tonight and have the html page by Monday.
+   - Due to many virtual machines being broken and absences happen due to AP Exams, we have been delayed. However, Isabel and Naomi's working VMS were used to serve a basic app. We have the register, login, and home page working. By Monday we want our APIs chosen and incorporated by next week.
 
 isabelZ -- 2026-05-14 11:40 
    - cerbot verified domain & fixed nginx (vm works now!) 
