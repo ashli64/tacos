@@ -5,6 +5,7 @@ P05: Le Fin
 ashleyL -- 2026-05-15 11:36
    - Something got fixed!
 'If you see this page, the nginx web server is successfully installed and working. Further configuration is required.'
+   - Bible: https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
 
 ashleyL -- 2026-05-15 6:00
    - Due to many virtual machines being broken and absences happen due to AP Exams, we have been delayed on register, login, home, and nav bar. We are hoping to fix the VMs by tonight and have the html page by Monday.
