@@ -15,7 +15,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <style>body { font-family: 'Poppins', sans-serif; }</style>
 
 </head>
@@ -30,6 +29,7 @@
         <div class="flex flex-row items-center gap-2">
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
           <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
+          <a href='/create/{{new}}' class="util">Create</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
@@ -38,6 +38,14 @@
 <div class="container text-center mt-5">
   <h1 class="fw-bold display-4">Welcome to Tacos</h1>
 </div>
+
+<ul>
+{% for r in recipes %}
+  <li>
+    <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
+  </li>
+{% endfor %}
+</ul>
 
 </body>
 </html>

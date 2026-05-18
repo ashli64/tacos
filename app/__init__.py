@@ -9,7 +9,7 @@ import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
-import requests
+#import requests
 
 
 # Flask
@@ -28,7 +28,6 @@ def get_db():
     return conn
 
 db = get_db()
-
 c = db.cursor()
 
 
@@ -36,13 +35,9 @@ c.execute("""
 CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
     password TEXT,
-    age INT,
-    weight INT,
-    height INT,
-    sex TEXT,
-    activity TEXT,
-    loss REAL,
-    burned REAL
+    contributions TEXT,
+    ingredients TEXT,
+    favorites TEXT
 )
 """)
 
@@ -50,13 +45,12 @@ CREATE TABLE IF NOT EXISTS users (
 c.execute("""
 CREATE TABLE IF NOT EXISTS recipes (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
-   author INTEGER 
+   author TEXT, 
    name TEXT,
    description TEXT,
    ingredients TEXT,
    pic TEXT,
-   difficulty TEXT,
-   FOREIGN KEY(author) REFERENCES users(user_id)
+   difficulty TEXT
 )
 """)
 
@@ -74,12 +68,46 @@ db.close()
 def homepage():
     if "username" not in session:
         return redirect("/login")
-    return render_template("home.html")
+    new = fetch('recipes', True, 'COUNT(*)')[0][0]
+    recipes = fetch('recipes', True, 'name')
+    
+    return render_template("home.html", new = new, recipes= recipes)
+
+
+
+
+@app.route('/create/<rid>', methods=["GET", "POST"]) 
+def create(rid):
+    if not 'username' in session:
+        return redirect("/login")
+    if rid in fetch('users', 'username = ?', 'contributions', (session['username']))[0][0].split(','):
+        return redirect(f"/recipe/{rid}")
+    if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
+        return redirect("/")
+    if request.method == "POST":
+        db = get_db()
+        c = db.cursor()
+
+        
+        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty) VALUES (?, ?, ?, ?, ?, ?)"
+        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', '',)
+        c.execute(query, params)
+
+        db.commit()
+        db.close()
+        return redirect("/")
+        
+    return render_template("create.html")
+
+
+
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.clear()
     return redirect("/login")
+
+
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -109,24 +137,21 @@ def register():
 
         if request.form["username"] in usernames:
             return render_template("register.html", error="Username already taken, please try again! <br><br>")
-        elif request.form["username"] != request.form["confirm"]:
+        elif request.form["password"] != request.form["confirm"]:
             return render_template("register.html", error="Passwords don't match <br><br>")
 
         else:
             db = sqlite3.connect(DB_FILE)
             c = db.cursor()
             c.execute(
-                "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO users VALUES (?, ?, ?, ?, ?)",
                 (
                     request.form["username"],
                     request.form["password"],
-                    0,
-                    0,
-                    0,
-                    "",
-                    "",
-                    0,
-                    0
+                    '',
+                    '',
+                    ''
+
                 )
             )
             db.commit()
