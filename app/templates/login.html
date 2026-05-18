@@ -3,18 +3,32 @@
   Veronika Duvanova, Naomi Kurian, Alvin Sze, Andrew Tsai   Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
   Tacos
   SoftDev
-  P05 -- El Fin
+  P05 - El Fin
   2026-05-13
  -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOG IN</title>
-</head>
+  <head>
+    <title>Register — Tacos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="icon" href="/static/favicon.png" type="image/png">
+    <style>body { font-family: 'Poppins', sans-serif; }</style>
+  </head>
 
-<body class="h-screen overflow-hidden text-white relative">
+  <body class="min-h-screen bg-[url('../static/backdrops/registration_backdrop.png')] bg-cover bg-center bg-no-repeat flex flex-col">
 
+  <nav>
+    <div class="bg-gray-800 flex items-center justify-between h-20 p-4">
+      <a class="flex items-center" href="/">
+      </a>
+      <div class="p-5 flex flex-row justify-end space-x-4">
+        <a class="font-semibold bg-transparent rounded-lg text-white hover:bg-white hover:text-gray-800 py-3 px-5 shadow-md shadow-white transition" href="/register">Register</a>
+      </div>
+    </div>
+  </nav>
 
                   <form action="/login" method="POST">
 
@@ -30,7 +44,7 @@
                     </div>
                     {% endif %}
 
-                  
+
                       <input type="text" name="username" class="form-control form-control-lg" required/>
                       <label>Username</label>
 
@@ -44,7 +58,47 @@
                     <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/register"
                         style="color: #393f81;">Register here</a></p>
                   </form>
+<!-- register styling -->
+                  <div class="flex-1 flex items-center justify-center p-6">
+                    <div class="w-full max-w-md bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-2">
 
+                      <h1 class="text-3xl font-extrabold text-gray-800 uppercase tracking-wide text-center">Log In</h1>
+                      <p class="text-gray-500 text-sm text-center mb-4">Enter a username and password to get started</p>
+
+                      <form method="POST" action="/register" class="w-full flex flex-col gap-4">
+
+                        <div class="flex flex-col gap-1">
+                          <label for="username" class="text-xs font-bold uppercase text-gray-500 tracking-widest">Username</label>
+                          <input type="text" name="username" id="username" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                          <label for="password" class="text-xs font-bold uppercase text-gray-500 tracking-widest">Password</label>
+                          <input type="password" name="password" id="password" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                          <label for="confirm" class="text-xs font-bold uppercase text-gray-500 tracking-widest">Confirm Password</label>
+                          <input type="password" name="confirm" id="confirm" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                        </div>
+
+                        {% if error %}
+                        <div class="bg-red-50 border border-red-200 text-red-600 text-sm font-semibold rounded-xl px-4 py-3">
+                          {{ error | safe }}
+                        </div>
+                        {% endif %}
+
+                        <input type="submit" name="sub1"
+                          class="w-full font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest"
+                          value="Create Account">
+                      </form>
+
+                      <p class="text-gray-400 text-sm mt-4">Already have an account? <a href="/login" class="text-gray-700 font-semibold hover:underline">Log In</a></p>
+                    </div>
+                  </div>
 
   </body>
 </html>
