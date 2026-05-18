@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+ 
+  </head>
+
+  <nav>
+    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+      <a class="flex items-center gap-2" href="/">
+        <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+      </a>
+      <div class="flex flex-row items-center gap-2">
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+        <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <body>
+    <br>
+    <div class='main'>
+      <form method="POST" action="">
+          <p>Title:</p>
+          <input type="text" name="name" placeholder="Recipe Name:" required>
+          <br><br>
+          <p>Description:</p>
+          <textarea name="description" rows="40" cols="100" placeholder="Enter food description..." required></textarea>
+          <br>
+          <p>Ingredients:</p>
+          <textarea name="ingredients" rows="5" cols="100" placeholder="Enter ingredients..." required></textarea>
+          <br>
+        <input type="submit" id='submit' value="Publish Recipe">
+      </form>
+    </div>
+  </body>
+
+  <footer>
+
+  </footer>
+
+</html>
