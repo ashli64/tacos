@@ -1,7 +1,7 @@
 # Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kurian
 # Tacos
 # SoftDev
-# P05 -- El Fin
+# P05 -- Le Fin
 # 2026-05-13
 
 import sqlite3
@@ -100,6 +100,17 @@ def create(rid):
     return render_template("create.html")
 
 
+@app.route('/recipe/<rid>', methods=["GET", "POST"]) 
+def recipe(rid):
+    if not 'username' in session:
+        return redirect("/login")
+    if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
+        return redirect("/")
+    description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
+    name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
+    ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
+    author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
+    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author)
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -162,19 +173,13 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
+@app.route("/profile/<pid>", methods=["GET", "POST"])
+def profile(pid):
     if "username" not in session:
         return redirect("/login")
     return render_template("profile.html", user = session["username"])
 
 
-@app.route('/recipe/<rid>') 
-def recipe(rid):
-    if not 'username' in session:
-        return redirect("/login")
-    
-    
 
 
 def fetch(table, criteria, data, params=()):

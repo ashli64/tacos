@@ -3,6 +3,10 @@ Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
 
+
+naomiK -- 2026-05-18 11:37
+   - Got recipe pages to work 
+
 naomiK -- 2026-05-17 22:19
    - Added install guide on readme
    - Added create aspect of website
