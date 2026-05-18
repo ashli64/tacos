@@ -2,6 +2,11 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
+naomiK -- 2026-05-17 22:19
+   - Added install guide on readme
+   - Added create aspect of website
+   - Got website to be served on my droplet 
+
 ashleyL -- 2026-05-15 11:36
    - Something got fixed!
 'If you see this page, the nginx web server is successfully installed and working. Further configuration is required.'
