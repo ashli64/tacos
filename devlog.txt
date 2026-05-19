@@ -2,7 +2,8 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
-
+ashleyL -- 2026-05-19 11:17
+   -Finished stylization of log in page
 
 naomiK -- 2026-05-18 11:37
    - Got recipe pages to work 
