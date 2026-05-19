@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS recipes (
    description TEXT,
    ingredients TEXT,
    pic TEXT,
-   difficulty TEXT
+   difficulty TEXT,
+   instructions TEXT
 )
 """)
 
@@ -91,9 +92,8 @@ def create(rid):
         db = get_db()
         c = db.cursor()
 
-
-        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty) VALUES (?, ?, ?, ?, ?, ?)"
-        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', '',)
+        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', request.form["diff"], request.form["instructions"],)
         c.execute(query, params)
 
         db.commit()
@@ -113,7 +113,10 @@ def recipe(rid):
     name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
     ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
     author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
-    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author)
+    difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
+    instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
+
+    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions)
 
 
 @app.route("/logout", methods=["GET", "POST"])

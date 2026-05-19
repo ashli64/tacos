@@ -13,14 +13,24 @@
   </nav>
 
   <body>
-      <h1> {{ name }} </h1>
+      <h1>Name: {{ name }} </h1>
         <div class="content">
-          {{ description }}
+          Description: {{ description }}
         </div>
         <div class="ingredients">
           <h2>Ingredients:</h2>
           {{ ingredients }}
         </div>
+
+	<div class="content">
+          <h2>Instructions:</h2>
+          {{ instructions }}
+        </div>
+
+        <div class="content">
+          Skill level necessary: {{ difficulty }}
+        </div>
+
 
     </div>
   </body>
