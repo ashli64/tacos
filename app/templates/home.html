@@ -65,11 +65,19 @@
     </div>
 
   <ul class="list-group mb-3">
-  {% for r in recipes %}
-    <li class="list-group-item d-flex justify-content-between">
-      <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
-    </li>
-  {% endfor %}
+  {% if not recipeSearch %}
+    {% for r in recipes %}
+      <li class="list-group-item d-flex justify-content-between">
+        <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
+      </li>
+    {% endfor %}
+  {% else: %}
+    {% for r in recipes %}
+      <li class="list-group-item d-flex justify-content-between">
+        <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
+      </li>
+    {% endfor %}
+  {% endif %}
   </ul>
 </div>
 

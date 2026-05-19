@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS users (
 c.execute("""
 CREATE TABLE IF NOT EXISTS recipes (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
-   author TEXT, 
+   author TEXT,
    name TEXT,
    description TEXT,
    ingredients TEXT,
@@ -70,13 +70,16 @@ def homepage():
         return redirect("/login")
     new = fetch('recipes', True, 'COUNT(*)')[0][0]
     recipes = fetch('recipes', True, 'name')
-    
-    return render_template("home.html", new = new, recipes= recipes)
+    recipeSearch = []
+    for i in range(1, len(recipes)):
+        recipeSearch += [recipes[i][0]]
+
+    return render_template("home.html", new = new, recipes= recipes, recipeSearch=recipeSearch)
 
 
 
 
-@app.route('/create/<rid>', methods=["GET", "POST"]) 
+@app.route('/create/<rid>', methods=["GET", "POST"])
 def create(rid):
     if not 'username' in session:
         return redirect("/login")
@@ -88,7 +91,7 @@ def create(rid):
         db = get_db()
         c = db.cursor()
 
-        
+
         query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty) VALUES (?, ?, ?, ?, ?, ?)"
         params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', '',)
         c.execute(query, params)
@@ -96,11 +99,11 @@ def create(rid):
         db.commit()
         db.close()
         return redirect("/")
-        
+
     return render_template("create.html")
 
 
-@app.route('/recipe/<rid>', methods=["GET", "POST"]) 
+@app.route('/recipe/<rid>', methods=["GET", "POST"])
 def recipe(rid):
     if not 'username' in session:
         return redirect("/login")
@@ -199,4 +202,3 @@ def fetch(table, criteria, data, params=()):
 if __name__=='__main__':
     app.debug = False
     app.run()
-
