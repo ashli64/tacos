@@ -84,7 +84,7 @@ def homepage():
 def create(rid):
     if not 'username' in session:
         return redirect("/login")
-    if rid in fetch('users', 'username = ?', 'contributions', (session['username']))[0][0].split(','):
+    if rid in fetch('users', 'username = ?', 'contributions', (session['username'],))[0][0].split(','):
         return redirect(f"/recipe/{rid}")
     if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
         return redirect("/")
@@ -203,5 +203,5 @@ def fetch(table, criteria, data, params=()):
 
 # Flask
 if __name__=='__main__':
-    app.debug = False
+    app.debug = True
     app.run()
