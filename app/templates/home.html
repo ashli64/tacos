@@ -45,41 +45,36 @@
 
 <!-- the search  bar that shows everything if blank and limits search -->
 
-<div id = "results-section" class="card shadow-sm p-4 mb-5">
+<div class="container text-center mt-5 mb-5">
 
-  <div class="flex flex-col md:flex-row gap-4">
-    <div class="flex-1 dropdown1 mt-3">
-        <div id="dropd" class="menu">
-          <div class="searchBar" id='s'>
-            <input class="form-control" type="text" placeholder="Search..." id="search" onkeyup="filter()">
-          </div>
-          <div id="options" class="opt">
-            {% for r in recipes %}
-            <p onclick="newF(this)" data-value="{{r}}">{{r}}</p>
-            {% endfor %}
-          </div>
-        </div>
+  <h1 class="fw-bold display-4">Nutrition</h1>
+  <p class="text-muted fs-5">Find data on your favorite foods!</p>
+  <p class="text-muted fs-6">Simply browse through our collection of foods to observe their caloric and nutritional values, other contents, health benefits, and more!</p>
+
+
+  <div class="card shadow-sm mt-4 p-4 mx-auto" style="max-width: 500px;">
+
+    <form action="{{ url_for('results')}}" method="get">
+
+      <div class="mb-3">
+        <input type="text"
+          name="search_query"
+          placeholder="Search up..."
+          class="form-control form-control-lg"
+          required>
       </div>
-      <button class="flex-1btn btn-primary" onclick="drop()" id="foodEdit">Search Recipes</button>
 
-    </div>
+      <button type="submit" class="btn btn-primary w-100">
+        SEARCH
+      </button>
 
-  <ul class="list-group mb-3">
-  {% if not recipeSearch %}
-    {% for r in recipes %}
-      <li class="list-group-item d-flex justify-content-between">
-        <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
-      </li>
-    {% endfor %}
-  {% else: %}
-    {% for r in recipes %}
-      <li class="list-group-item d-flex justify-content-between">
-        <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
-      </li>
-    {% endfor %}
-  {% endif %}
-  </ul>
-</div>
+    </form>
+
+  </div>
+
+  <div class="mt-5 mb-5"></div>
+
+  <div class="container text-center mt-5 mb-5">
 
 </body>
 </html>
