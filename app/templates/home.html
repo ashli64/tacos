@@ -45,36 +45,22 @@
 
 <!-- the search  bar that shows everything if blank and limits search -->
 
-<div class="container text-center mt-5 mb-5">
+<h1>Recipe Catalog</h1>
 
-  <h1 class="fw-bold display-4">Nutrition</h1>
-  <p class="text-muted fs-5">Find data on your favorite foods!</p>
-  <p class="text-muted fs-6">Simply browse through our collection of foods to observe their caloric and nutritional values, other contents, health benefits, and more!</p>
+<form action="/results" method="GET" class="search-box">
+    <input type="text" name="search" placeholder="Search recipe name">
+    <button type="submit">Search</button>
+</form>
 
-
-  <div class="card shadow-sm mt-4 p-4 mx-auto" style="max-width: 500px;">
-
-    <form action="{{ url_for('results')}}" method="get">
-
-      <div class="mb-3">
-        <input type="text"
-          name="search_query"
-          placeholder="Search up..."
-          class="form-control form-control-lg"
-          required>
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100">
-        SEARCH
-      </button>
-
-    </form>
-
-  </div>
-
-  <div class="mt-5 mb-5"></div>
-
-  <div class="container text-center mt-5 mb-5">
+<div class="grid">
+    {% for recipe in recipes %}
+    <div class="card">
+        <h3>{{ recipe[1] }}</h3>
+        <p>{{ recipe[3] }}</p>
+        <a href="/recipe/{{ recipe[0] }}">Open</a>
+    </div>
+    {% endfor %}
+</div>
 
 </body>
 </html>
