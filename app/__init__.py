@@ -65,17 +65,19 @@ db.close()
 
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=["GET"])
 def homepage():
     if "username" not in session:
         return redirect("/login")
-    new = fetch('recipes', True, 'COUNT(*)')[0][0]
-    recipes = fetch('recipes', True, 'name')
-    recipeSearch = []
-    for i in range(1, len(recipes)):
-        recipeSearch += [recipes[i][0]]
 
-    return render_template("home.html", new = new, recipes= recipes, recipeSearch=recipeSearch)
+    new = fetch('recipes', True, 'COUNT(*)')[0][0]
+    recipes = fetch('recipes', True, 'id, name, author, description')
+
+    recipeSearch = []
+    for recipe in recipes:
+        recipeSearch.append(recipe[1])
+
+    return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch)
 
 
 
