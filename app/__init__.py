@@ -224,5 +224,5 @@ def fetch(table, criteria, data, params=()):
 
 # Flask
 if __name__=='__main__':
-    app.debug = True
+    app.debug = False
     app.run()
