@@ -79,7 +79,26 @@ def homepage():
 
     return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch)
 
+@app.route('/results', methods=["GET"])
+def results():
+    if "username" not in session:
+        return redirect("/login")
 
+    search = request.args.get("search", "").strip()
+    if search == "":
+        return redirect("/")
+
+    db = get_db()
+    c = db.cursor()
+    c.execute("""
+        SELECT id, name, author, description
+        FROM recipes
+        WHERE LOWER(name) LIKE ?
+    """, ('%' + search.lower() + '%',))
+    matches = c.fetchall()
+    db.close()
+
+    return render_template("results.html", recipes=matches,search=search)
 
 
 @app.route('/create/<rid>', methods=["GET", "POST"])
