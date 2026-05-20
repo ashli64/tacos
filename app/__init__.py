@@ -1,7 +1,7 @@
 # Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kurian
 # Tacos
 # SoftDev
-# P05 -- El Fin
+# P05 -- Le Fin
 # 2026-05-13
 
 import sqlite3
@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS recipes (
    description TEXT,
    ingredients TEXT,
    pic TEXT,
-   difficulty TEXT
+   difficulty TEXT,
+   instructions TEXT
 )
 """)
 
@@ -64,23 +65,47 @@ db.close()
 
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=["GET"])
 def homepage():
     if "username" not in session:
         return redirect("/login")
+
     new = fetch('recipes', True, 'COUNT(*)')[0][0]
-    recipes = fetch('recipes', True, 'name')
+    recipes = fetch('recipes', True, 'id, name, author, description')
 
-    return render_template("home.html", new = new, recipes= recipes)
+    recipeSearch = []
+    for recipe in recipes:
+        recipeSearch.append(recipe[1])
 
+    return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch)
 
+@app.route('/results', methods=["GET"])
+def results():
+    if "username" not in session:
+        return redirect("/login")
+
+    search = request.args.get("search", "").strip()
+    if search == "":
+        return redirect("/")
+
+    db = get_db()
+    c = db.cursor()
+    c.execute("""
+        SELECT id, name, author, description
+        FROM recipes
+        WHERE LOWER(name) LIKE ?
+    """, ('%' + search.lower() + '%',))
+    matches = c.fetchall()
+    db.close()
+
+    return render_template("results.html", recipes=matches,search=search)
 
 
 @app.route('/create/<rid>', methods=["GET", "POST"])
 def create(rid):
     if not 'username' in session:
         return redirect("/login")
-    if rid in fetch('users', 'username = ?', 'contributions', (session['username']))[0][0].split(','):
+    if rid in fetch('users', 'username = ?', 'contributions', (session['username'],))[0][0].split(','):
         return redirect(f"/recipe/{rid}")
     if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
         return redirect("/")
@@ -88,9 +113,8 @@ def create(rid):
         db = get_db()
         c = db.cursor()
 
-
-        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty) VALUES (?, ?, ?, ?, ?, ?)"
-        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', '',)
+        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', request.form["diff"], request.form["instructions"],)
         c.execute(query, params)
 
         db.commit()
@@ -100,6 +124,20 @@ def create(rid):
     return render_template("create.html")
 
 
+@app.route('/recipe/<rid>', methods=["GET", "POST"])
+def recipe(rid):
+    if not 'username' in session:
+        return redirect("/login")
+    if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
+        return redirect("/")
+    description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
+    name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
+    ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
+    author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
+    difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
+    instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
+
+    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions)
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -162,17 +200,11 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
+@app.route("/profile/<pid>", methods=["GET", "POST"])
+def profile(pid):
     if "username" not in session:
         return redirect("/login")
     return render_template("profile.html", user = session["username"])
-
-
-@app.route('/recipe/<rid>')
-def recipe(rid):
-    if not 'username' in session:
-        return redirect("/login")
 
 
 

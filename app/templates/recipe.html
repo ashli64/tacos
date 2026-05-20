@@ -9,32 +9,36 @@
   <nav>
     <a href='/logout' class="util">Logout</a>
     <a href='/profile' class="util">Profile</a>
-    <a href='/' class="back">&#8592;</a>
-    {% if didnt_edit %}
-      <a href='/edit/{{story_id}}' class="util">Edit</a>
-    {% endif %}
+    <a href='/' class="util">Home</a>
   </nav>
 
   <body>
-    <div id="backing"> &nbsp </div>
-    <div class="main">
-      <h1> {{ title }} </h1>
+      <h1>Name: {{ name }} </h1>
         <div class="content">
-          {{ content | safe }}
+          Description: {{ description }}
         </div>
+        <div class="ingredients">
+          <h2>Ingredients:</h2>
+          {{ ingredients }}
+        </div>
+
+	<div class="content">
+          <h2>Instructions:</h2>
+          {{ instructions }}
+        </div>
+
+        <div class="content">
+          Skill level necessary: {{ difficulty }}
+        </div>
+
+
     </div>
   </body>
 
   <footer>
-    <div class="editors">
-      <a href="/profile/{{author_id}}">Author: {{author_user}}</a>
-      <br>
-      <p>Editors: </p>
-      <ul>
-        {% for editor_id, editor_user in editors.items() %}
-          <li><a href="/profile/{{ editor_id }}">{{ editor_user }}</a></li>
-        {% endfor %}
-      </ul>
+    <div class="author">
+      <a href="/profile/{{author}}">Author: {{author}}</a>
+
     </div>
   </footer>
 

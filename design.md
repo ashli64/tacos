@@ -108,8 +108,27 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 
 
 # Database Design
-![Diagram 3](3.png)
 
+||USERS||
+|---|---|---|
+|INTEGER|userid|PK|
+|TEXT|username||
+|TEXT|password||
+|INTEGER|contributions||
+|TEXT|ingredients||
+|TEXT|favorites||
+---
+||RECIPE||
+|---|---|---|
+|TEXT|id|PK|
+|INTEGER|author|FK|
+|TEXT|name||
+|TEXT|description||
+|TEXT|ingredients||
+|TEXT|pic||
+|TEXT|difficulty||
+|TEXT|instructions||
+---
 
 # Testing Plan
 1. Work with a single VM at the beginning, we want to be able to sync user profiles with recipes. Each user should be set up with a password, username, and potentially status (active, not online, or completely offline).
