@@ -2,6 +2,11 @@ TACOS DEVLOG
 Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
+naomiK -- 2026-05-20 02:37
+   - Added difficulty level to recipe
+   - Adjusted recipe table
+   - Started working on ingredients list
+
 ashleyL -- 2026-05-19 11:17
    -Finished stylization of log in page
 
