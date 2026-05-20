@@ -109,8 +109,7 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 
 # Database Design
 
-Recipe
-| Type | Name | Secondary Ownership |
+||USERS||
 |---|---|---|
 |INTEGER|userid|PK|
 |TEXT|username||
@@ -119,14 +118,17 @@ Recipe
 |TEXT|ingredients||
 |TEXT|favorites||
 ---
-
-| Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
-|---|---|---|---|
-|Ashley|Frontend|Visual Design|search bar|
-|Naomi|Backend|Styling|Login/register, recipe html pages|
-|Isabel|Backend|Example accounts|profile page, browsing page|
-|Veronika|Backend|Visual Design|home html, game html|
-
+||RECIPE||
+|---|---|---|
+|TEXT|id|PK|
+|Naomi|author|FK|
+|TEXT|name||
+|TEXT|description||
+|TEXT|ingredients||
+|TEXT|pic||
+|TEXT|difficulty||
+|TEXT|instructions||
+---
 
 # Testing Plan
 1. Work with a single VM at the beginning, we want to be able to sync user profiles with recipes. Each user should be set up with a password, username, and potentially status (active, not online, or completely offline).
