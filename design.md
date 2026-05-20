@@ -121,7 +121,7 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 ||RECIPE||
 |---|---|---|
 |TEXT|id|PK|
-|Naomi|author|FK|
+|INTEGER|author|FK|
 |TEXT|name||
 |TEXT|description||
 |TEXT|ingredients||
