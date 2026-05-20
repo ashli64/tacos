@@ -108,7 +108,24 @@ As a student, I want to find quick recipes so that I can make a quick meal to ea
 
 
 # Database Design
-![Diagram 3](3.png)
+
+Recipe
+| Type | Name | Secondary Ownership |
+|---|---|---|
+|INTEGER|userid|PK|
+|TEXT|username||
+|TEXT|password||
+|INTEGER|contributions||
+|TEXT|ingredients||
+|TEXT|favorites||
+---
+
+| Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
+|---|---|---|---|
+|Ashley|Frontend|Visual Design|search bar|
+|Naomi|Backend|Styling|Login/register, recipe html pages|
+|Isabel|Backend|Example accounts|profile page, browsing page|
+|Veronika|Backend|Visual Design|home html, game html|
 
 
 # Testing Plan
