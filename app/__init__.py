@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT,
     contributions TEXT,
     ingredients TEXT,
-    favorites TEXT
+    favorites TEXT,
+    highscore REAL
 )
 """)
 
@@ -182,13 +183,14 @@ def register():
             db = sqlite3.connect(DB_FILE)
             c = db.cursor()
             c.execute(
-                "INSERT INTO users VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)",
                 (
                     request.form["username"],
                     request.form["password"],
                     '',
                     '',
-                    ''
+                    '',
+                    0,
 
                 )
             )
