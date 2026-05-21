@@ -43,12 +43,13 @@
 </div>
 
 <!-- the search  bar that shows everything if blank and limits search -->
-
+<br>
 <h1>Recipe Catalog</h1>
 
 <form action="/results" method="GET" class="search-box">
-    <input type="text" name="search" placeholder="Search recipe name">
-    <button type="submit">Search</button>
+    <input type="text" name="search" placeholder="Search recipe name" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+    <br>  
+    <button class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit">Search</button>
 </form>
 
 <div class="grid">
