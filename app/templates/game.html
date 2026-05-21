@@ -1,0 +1,35 @@
+<!--
+  Veronika Duvanova, Naomi Kurian, Alvin Sze, Andrew Tsai   Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
+  Tacos
+  SoftDev
+  P05 -- El Fin
+  2026-05-13
+ -->
+ <html>
+   <head>
+       <title>HOME</title>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+       <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+       <style>body { font-family: 'Poppins', sans-serif; }</style>
+      <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+
+   </head>
+   <body>
+     <div id="game-holder" style="width:100%">
+       <canvas id="main-canvas" style="margin:auto; position:relative;border:1px solid #000000;"></canvas>
+     </div>
+
+     <script>
+       var canvas = document.getElementById('main-canvas');
+       var context = canvas.getContext('2d');
+       context.canvas.width = window.innerWidth * .80;
+       context.canvas.height = window.innerWidth * .60;
+
+     </script>
+
+    <script type="module" src="/static/js/game.js"></script>
+
+   </body>
+ </html>

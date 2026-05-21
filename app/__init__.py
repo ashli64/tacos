@@ -221,10 +221,14 @@ def fetch(table, criteria, data, params=()):
     db.close()
     return data
 
+@app.route("/game", methods=["GET", "POST"])
+def game():
+    if "username" not in session:
+        return redirect("/login")
+    return render_template("game.html", user = session["username"])
 
 
 
-# Flask
 if __name__=='__main__':
     app.debug = False
     app.run()
