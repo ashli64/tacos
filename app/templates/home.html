@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <!--
-  Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kurian>
+  Veronika Duvanova, Naomi Kurian, Alvin Sze, Andrew Tsai   Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
   Tacos
   SoftDev
-  P05 Le Fin
+  P05 -- El Fin
   2026-05-13
  -->
 
@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <style>body { font-family: 'Poppins', sans-serif; }</style>
+
 </head>
 
 <body>
@@ -26,9 +27,9 @@
           <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
         </a>
         <div class="flex flex-row items-center gap-2">
-          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/">Home</a>
-          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile">Profile</a>
-          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href='/create/{{new}}' class="util">Create</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile/{{username}}">Profile</a>
+          <a href='/create/{{new}}' class="util">Create</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
@@ -43,13 +44,12 @@
 </div>
 
 <!-- the search  bar that shows everything if blank and limits search -->
-<br>
+
 <h1>Recipe Catalog</h1>
 
 <form action="/results" method="GET" class="search-box">
-    <input type="text" name="search" placeholder="Search recipe name" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
-    <br>  
-    <button class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit">Search</button>
+    <input type="text" name="search" placeholder="Search recipe name">
+    <button type="submit">Search</button>
 </form>
 
 <div class="grid">
