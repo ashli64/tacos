@@ -70,7 +70,7 @@ db.close()
 def homepage():
     if "username" not in session:
         return redirect("/login")
-
+ 
     new = fetch('recipes', True, 'COUNT(*)')[0][0]
     recipes = fetch('recipes', True, 'id, name, author, description')
 
@@ -78,7 +78,7 @@ def homepage():
     for recipe in recipes:
         recipeSearch.append(recipe[1])
 
-    return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch)
+    return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch, username = session['username'])
 
 @app.route('/results', methods=["GET"])
 def results():
@@ -206,7 +206,12 @@ def register():
 def profile(pid):
     if "username" not in session:
         return redirect("/login")
-    return render_template("profile.html", user = session["username"])
+    mine = fetch('recipes','author = ?', 'id', (session['username'],))
+    mineNames = fetch('recipes','author = ?', 'name', (session['username'],))
+    recipes = []
+    for i in range(len(mine)):
+        recipes += [mineNames[i], mine[i]]
+    return render_template("profile.html", user = session["username"], mine = mine, recipes = recipes)
 
 
 
