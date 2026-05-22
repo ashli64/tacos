@@ -28,24 +28,40 @@
         </a>
         <div class="flex flex-row items-center gap-2">
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
-          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
+          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile/{{username}}">Profile</a>
           <a href='/create/{{new}}' class="util">Create</a>
+          <a href='/game'>Game</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
     </nav>
 
 <div class="container text-center mt-5">
-  <h1 class="fw-bold display-4">Welcome to Tacos</h1>
+  <h1 class="fw-bold text-9x1">Welcome to Tacos: A Recipe Search & Share Tool</h1>
 </div>
 
-<ul>
-{% for r in recipes %}
-  <li>
-    <a href="recipe/{{ recipes.index(r) }}">{{r[0]}}</a>
-  </li>
-{% endfor %}
-</ul>
+<div class="container text-center mt-5">
+  <h1 class="fw-bold display-4">Explore our library of recipes or search for a specific recipe based off of it's name below:</h1>
+</div>
+
+<!-- the search  bar that shows everything if blank and limits search -->
+
+<h1>Recipe Catalog</h1>
+
+<form action="/results" method="GET" class="search-box">
+    <input type="text" name="search" placeholder="Search recipe name">
+    <button type="submit">Search</button>
+</form>
+
+<div class="grid">
+    {% for recipe in recipes %}
+    <div class="card">
+        <h3>{{ recipe[1] }}</h3>
+        <p>{{ recipe[3] }}</p>
+        <a href="/recipe/{{ recipe[0] }}">Open</a>
+    </div>
+    {% endfor %}
+</div>
 
 </body>
 </html>

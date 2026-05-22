@@ -28,12 +28,18 @@
         </a>
         <div class="flex flex-row items-center gap-2">
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
-          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
     </nav>
     <h1>Hello, {{user}}!</h1>
+    <h2>Recipes:</h2><br>
+
+    {% for recipe in recipes %}
+    <div class="card">
+        <a href="/recipe/{{ recipe[1] }}"> {{ recipe[0] }}</a>
+    </div>
+    {% endfor %}
 
   </body>
 </html>

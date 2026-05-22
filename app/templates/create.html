@@ -27,13 +27,42 @@
           <input type="text" name="name" placeholder="Recipe Name:" required>
           <br><br>
           <p>Description:</p>
-          <textarea name="description" rows="40" cols="100" placeholder="Enter food description..." required></textarea>
+          <textarea name="description" rows="5" cols="100" placeholder="Enter food description..." required></textarea>
           <br>
           <p>Ingredients:</p>
-          <textarea name="ingredients" rows="5" cols="100" placeholder="Enter ingredients..." required></textarea>
+         
+          <textarea name="ingredients" rows="1" cols="100" placeholder="Enter an ingredient..." required></textarea>
+          <input name = "addIng" type="submit" id="addIng" value="Add Ingredient">
+
           <br>
+          <p>Instructions:</p>
+          <textarea name="instructions" rows="10" cols="100" placeholder="Enter instructions..." required></textarea>
+          <br>
+          
+          <label for= "pic">Take a photo:</label> 
+          <input id = "pic" type="file" accept="image/*" capture="environment">
+          <script> 
+
+          </script>
+
+          <p>Skill Level Required:</p>
+
+          <fieldset>
+            <input type="radio" name="diff" value="No hope in kitchen" required> No hope in kitchen<br>
+            <input type="radio" name="diff" value="Beginner"> Beginner<br>
+            <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
+            <input type="radio" name="diff" value="Good"> Good<br>
+            <input type="radio" name="diff" value="Advanced"> Advanced<br>
+          </fieldset>
+
+
         <input type="submit" id='submit' value="Publish Recipe">
+
       </form>
+
+
+
+
     </div>
   </body>
 
