@@ -29,26 +29,17 @@
     <br>
     <div class='main'>
       <form method="POST" action="">
-         
           <p>Title:</p>
-          <input class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" type="text" name="name" placeholder="Recipe Name:" required>
+          <input type="text" name="name" placeholder="Recipe Name:" required>
           <br><br>
-        
           <p>Description:</p>
-          <textarea class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" name="description" rows="5" cols="100" placeholder="Enter food description..." required></textarea>
-          <br><br>
-         
-          <p>Ingredients:</p>
-
-
-          <textarea class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" name="ingredients" rows="1" cols="100" placeholder="Enter an ingredient..." required></textarea>
+          <textarea name="description" rows="5" cols="100" placeholder="Enter food description..." required></textarea>
           <br>
-          <!--adding button-->
-          <input class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit" id='addIng' value="addIng">
 
-         
-          <textarea name="ingredients" rows="1" cols="100" placeholder="Enter an ingredient..." required class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition"></textarea>
-          <input name = "addIng" type="submit" id="addIng" value="Add Ingredient" class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest">
+          <p>{{ings}}</p>
+          <p>Ingredients (don't include commas):</p>
+          <input type = "text" name = "addIng" pattern="[^,]*" type="submit" id="addIng" value="">
+          <input type="submit" name = "addIng" id='newIng' value="Add Ingredient">
 
 
           <br>

@@ -110,19 +110,27 @@ def create(rid):
         return redirect(f"/recipe/{rid}")
     if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
         return redirect("/")
+
+    ings = []
     if request.method == "POST":
-        db = get_db()
-        c = db.cursor()
+        if request.form["addIng"]:
+            ings += [request.form["addIng"]]
+            return render_template("create.html", ings = ings)
 
-        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', request.form["diff"], request.form["instructions"],)
-        c.execute(query, params)
+        else:
 
-        db.commit()
-        db.close()
-        return redirect("/")
+            db = get_db()
+            c = db.cursor()
 
-    return render_template("create.html")
+            query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', request.form["diff"], request.form["instructions"],)
+            c.execute(query, params)
+
+            db.commit()
+            db.close()
+            return redirect("/")
+
+    return render_template("create.html", ings = ings)
 
 
 @app.route('/recipe/<rid>', methods=["GET", "POST"])
