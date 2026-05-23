@@ -10,7 +10,7 @@ context.canvas.height = window.innerWidth * .350;
 //2 - run game
 //3 - night end screen
 
-const GAME_MODE = 0;
+let GAME_MODE = 0;
 
 //START SCREEN IMAGES
 const start_screen_bg = new Image();
@@ -21,25 +21,74 @@ const tutorial_button = new Image();
 tutorial_button.src = "/static/img/tutorial_button.png";
 
 //TO CREATE SCALEABLE GAME
-const SCALE_FACTOR = start_button.width / canvas.width;
+
+function loadImage(img) {
+    return new Promise((resolve, reject) => {
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+    });
+}
+
+//TO GET COORDINATES OF CLICK
+function get_coordinates(event) {
+  const rect = canvas.getBoundingClientRect();
+  return {  
+    x: (event.clientX - rect.left) * (canvas.width / rect.width),  
+    y: (event.clientY - rect.top) * (canvas.height / rect.height)
+  };  
+}  
 
 async function start_screen() {
+    console.log("start_screen launched");
     try {
-        const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(url => loadImage(url)));
+        const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(src => loadImage(src)));
     
+        //const SCALE_FACTOR = start_button.width / canvas.width;
+
         context.drawImage(
             start_screen_bg, 0, 0, canvas.width, canvas.height
         );
 
+        //768 is the full screen length of canvas
         context.drawImage(
-            start_button, canvas.width/2 - start_button.width/2, canvas.height/2, start_button.width / SCALE_FACTOR
+            start_button, canvas.width/2 - start_button.width*(canvas.width/768)/2, canvas.height/2, start_button.width * (canvas.width/768), start_button.height * (canvas.height/768)
         );
     
         context.drawImage(
-            tutorial_button, canvas.width/2 - start_button.width/2, canvas.height/2 + tutorial_button.width/1.5
+            tutorial_button, canvas.width/2 - tutorial_button.width*(canvas.width/768)/2, canvas.height/2 + tutorial_button.height*(canvas.width/768), tutorial_button.width * (canvas.width/768), tutorial_button.height * (canvas.height/768)
         );
     } catch (error) {
-        console.error("Some images may have not loaded) }
+        console.error("Some images may have not loaded"); 
+    }
 }
 
-start_screen();
+//detects what buttons are pressed
+canvas.addEventListener('click', trigger_buttons);
+
+function trigger_buttons(){
+    console.log("get_coordinates click detected");  
+    const coords = get_coordina
+
+    if (GAME_MODE==0) {
+        console.log("click detected on start page");
+    }
+
+    else if (GAME_MODE==1) {
+        console.log("click detected on tutorial page");
+    }
+    else if (GAME_MODE == 2) {
+        console.log("click detected on game page");
+    }
+    else if (GAME_MODE == 3){
+        console.log("click detected on night page");
+    }
+        
+}
+
+function game() {
+    if (GAME_MODE == 0) {
+        start_screen();
+    }
+}
+
+game();
