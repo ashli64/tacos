@@ -30,17 +30,24 @@
     <div class='main'>
       <form method="POST" action="">
           <p>Title:</p>
-          <input type="text" name="name" placeholder="Recipe Name:" required>
+          <textarea name="name" placeholder="Recipe Name:" required></textarea>
           <br><br>
           <p>Description:</p>
           <textarea name="description" rows="5" cols="100" placeholder="Enter food description..." required></textarea>
           <br>
 
-          <p>{{ings}}</p>
+          <ul id="ingredientList" class="list-disc list-inside bg-gray-50 p-3 rounded w-1/2 min-h-12 border">
+            {% for ing in ings %}
+              <li>{{ ing }}</li>
+            {% endfor %}
+          </ul>
+          <br><br>
           <p>Ingredients (don't include commas):</p>
-          <input type = "text" name = "addIng" pattern="[^,]*" type="submit" id="addIng" value="">
-          <input type="submit" name = "addIng" id='newIng' value="Add Ingredient">
 
+          <input type = "text" id = "inp" name = "addIng" pattern="[^,]*" id="addIng" value="">
+          <button type="button" onclick="newF()">
+            Add Ingredient
+          </button>
 
           <br>
           <p>Instructions:</p>
@@ -67,6 +74,28 @@
         <input class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit" id='submit' value="Publish Recipe">
 
       </form>
+
+      <script>
+        let ingredients = [];
+    
+        function newF() {
+            const input = document.getElementById("inp");
+            const value = input.value.trim();
+    
+            if (value === "") return;
+    
+            ingredients.push(value);
+    
+            const li = document.createElement("li");
+            li.textContent = value;
+            document.getElementById("ingredientList").appendChild(li);
+    
+            document.getElementById("ingredientsHidden").value =
+                ingredients.join(",");
+    
+            input.value = "";
+        }
+      </script>
 
 
 

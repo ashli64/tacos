@@ -106,38 +106,38 @@ def results():
 def create(rid):
     if not 'username' in session:
         return redirect("/login")
-    if rid in fetch('users', 'username = ?', 'contributions', (session['username'],))[0][0].split(','):
-        return redirect(f"/recipe/{rid}")
+    
     if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
         return redirect("/")
 
-    ings = []
     if request.method == "POST":
-        if request.form["addIng"]:
-            ings += [request.form["addIng"]]
-            return render_template("create.html", ings = ings)
 
-        else:
+        db = get_db()
+        c = db.cursor()
 
-            db = get_db()
-            c = db.cursor()
+        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        params = (session["username"], request.form["name"], request.form["description"], request.form.get("ingredients"), '', request.form["diff"], request.form["instructions"],)
+        c.execute(query, params)
 
-            query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            params = (session["username"], request.form["name"], request.form["description"], request.form["ingredients"], '', request.form["diff"], request.form["instructions"],)
-            c.execute(query, params)
+        db.commit()
+        db.close()
+        return redirect("/")
+ 
+    if fetch("recipes", "id = ?", "ingredients", (rid,)):
+        ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
+        ingredients = ingredients.split(",")
+    else:
+        ingredients = []
 
-            db.commit()
-            db.close()
-            return redirect("/")
-
-    return render_template("create.html", ings = ings)
+    return render_template("create.html", ings = ingredients)
 
 
 @app.route('/recipe/<rid>', methods=["GET", "POST"])
 def recipe(rid):
     if not 'username' in session:
         return redirect("/login")
-    if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
+    amt = fetch('recipes', True, 'COUNT(*)')[0][0]
+    if int(rid) > amt:
         return redirect("/")
     description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
     name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
@@ -214,11 +214,11 @@ def register():
 def profile(pid):
     if "username" not in session:
         return redirect("/login")
-    mine = fetch('recipes','author = ?', 'id', (session['username'],))
-    mineNames = fetch('recipes','author = ?', 'name', (session['username'],))
+    mine = fetch('recipes','author = ?', 'id', (session['username'],))[0]
+    mineNames = fetch('recipes','author = ?', 'name', (session['username'],))[0]
     recipes = []
     for i in range(len(mine)):
-        recipes += [mineNames[i], mine[i]]
+        recipes += [[mineNames[i], mine[i]]]
     return render_template("profile.html", user = session["username"], mine = mine, recipes = recipes)
 
 
