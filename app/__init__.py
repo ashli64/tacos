@@ -123,13 +123,14 @@ def create(rid):
         db.close()
         return redirect("/")
  
-    if fetch("recipes", "id = ?", "ingredients", (rid,)):
-        ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
-        ingredients = ingredients.split(",")
+    result = fetch("recipes", "id = ?", "ingredients", (rid,))
+
+    if result and result[0][0]:
+        ingredients = result[0][0].split(",")
     else:
         ingredients = []
 
-    return render_template("create.html", ings = ingredients)
+    return render_template("create.html", ings = ingredients, username = session['username'])
 
 
 @app.route('/recipe/<rid>', methods=["GET", "POST"])
@@ -146,7 +147,7 @@ def recipe(rid):
     difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
     instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
 
-    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions)
+    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions, username = session['username'])
 
 
 @app.route("/logout", methods=["GET", "POST"])
