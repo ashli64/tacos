@@ -9,7 +9,6 @@ context.canvas.height = window.innerWidth * .350;
 //1 = tutorial
 //2 - run game
 //3 - night end screen
-
 let GAME_MODE = 0;
 
 //START SCREEN IMAGES
@@ -28,15 +27,6 @@ function loadImage(img) {
         img.onerror = reject;
     });
 }
-
-//TO GET COORDINATES OF CLICK
-function get_coordinates(event) {
-  const rect = canvas.getBoundingClientRect();
-  return {  
-    x: (event.clientX - rect.left) * (canvas.width / rect.width),  
-    y: (event.clientY - rect.top) * (canvas.height / rect.height)
-  };  
-}  
 
 async function start_screen() {
     console.log("start_screen launched");
@@ -62,15 +52,26 @@ async function start_screen() {
     }
 }
 
-//detects what buttons are pressed
+
+//TO GET COORDINATES OF CLICK
+function get_coordinates(event) {
+  const rect = canvas.getBoundingClientRect();
+  return {  
+    x: (event.clientX - rect.left) * (canvas.width / rect.width),  
+    y: (event.clientY - rect.top) * (canvas.height / rect.height)
+  };  
+}  
+
+//detects what screen the buttons are pressed on
 canvas.addEventListener('click', trigger_buttons);
 
-function trigger_buttons(){
+function trigger_buttons(event){
     console.log("get_coordinates click detected");  
-    const coords = get_coordina
+    const coords = get_coordinates(event);
 
     if (GAME_MODE==0) {
         console.log("click detected on start page");
+        trigger_buttons_start(coords);
     }
 
     else if (GAME_MODE==1) {
@@ -81,14 +82,40 @@ function trigger_buttons(){
     }
     else if (GAME_MODE == 3){
         console.log("click detected on night page");
+    }     
+}
+
+function trigger_buttons_start(c) {
+    console.log(c);
+    if (c.x > canvas.width/2 - start_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + start_button.width*(canvas.width/768)/2) {
+        if (c.y > canvas.height/2 && c.y < canvas.height/2 + start_button.width) {
+            console.log("run game");
+        }
     }
-        
+
+    if (c.x > canvas.width/2 - tutorial_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + tutorial_button.width*(canvas.width/768)/2) {
+        if (c.y > canvas.height/2 + tutorial_button.height*(canvas.width/768) && c.y < canvas.height/2 + tutorial_button.height*(canvas.width/768) + tutorial_button.width) {
+            console.log("run game");
+        }
+    }  
+
 }
 
 function game() {
     if (GAME_MODE == 0) {
         start_screen();
     }
+    else if (GAME_MODE == 1) {
+        tutorial_screen();
+    }
+    else if (GAME_MODE == 2) {
+        //run game
+    }
+    else if (GAME_MODE == 3) {
+        //run night endgame
+    }
 }
 
+//setInterval(game, 200);
 game();
+
