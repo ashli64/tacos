@@ -21,7 +21,6 @@
 
 <body class="bg-gray-50 min-h-screen">
 
-<!--NAV BAR-->
     <nav>
       <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
         <a class="flex items-center gap-2" href="/">
@@ -40,7 +39,6 @@
 
     <div class="max-w-4xl mx-auto px-6 py-10">
 
-        <!-- Search bar -->
         <form action="/results" method="GET" class="flex gap-3 mb-8">
             <input
                 type="text"
@@ -54,10 +52,9 @@
             </button>
         </form>
 
-        <!-- Results heading -->
         <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-extrabold text-gray-800">Results for "{{ search }}"</h1>
-            <a href="/" class="text-sm text-gray-500 hover:text-gray-800 transition">← Back to all recipes</a>
+            <h1 class="text-2xl font-extrabold text-gray-800">Results For "{{ search }}"</h1>
+            <a href="/" class="text-sm text-gray-500 hover:text-gray-800 transition">← Back To All Recipes</a>
         </div>
 
         {% if recipes|length > 0 %}
@@ -73,23 +70,20 @@
 
         {% else %}
 
-        <!-- No results -->
         <div class="text-center py-12">
-            <p class="text-gray-400 text-lg mb-2">No recipes found for "{{ search }}".</p>
-            <p class="text-gray-400 text-sm mb-8">Can't find a recipe? We can look for nearby restaurants or grocery stores instead.</p>
+            <p class="text-gray-400 text-lg mb-2">No Recipes Found For "{{ search }}"</p>
+            <p class="text-gray-400 text-sm mb-8">Can't find a recipe? We can look for nearby restaurants or stores </p>
 
             <button
                 id="find-nearby-btn"
                 onclick="findNearby()"
-                class="font-bold bg-gray-800 text-white rounded-xl px-6 py-3 hover:bg-gray-700 transition text-sm uppercase tracking-widest"
-            >
+                class="font-bold bg-gray-800 text-white rounded-xl px-6 py-3 hover:bg-gray-700 transition text-sm uppercase tracking-widest">
                 Find Nearby Places
             </button>
 
             <p id="nearby-status" class="text-gray-400 text-sm mt-4 hidden">Getting your location...</p>
         </div>
 
-        <!-- Nearby results -->
         <div id="nearby-results" class="mt-6"></div>
 
         <script>

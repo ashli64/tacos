@@ -305,7 +305,7 @@ def fetch(table, criteria, data, params=()):
     db.close()
     return data
 
-CUISINE_MAP = {
+foodss = {
     "taco": "mexican", "tacos": "mexican", "burrito": "mexican", "mexican": "mexican",
     "sushi": "sushi", "ramen": "ramen", "japanese": "japanese",
     "pizza": "italian", "italian": "italian", "pasta": "italian",
@@ -323,45 +323,39 @@ CUISINE_MAP = {
 @app.route("/api/nearby", methods=["GET"])
 def nearby():
     if "username" not in session:
-        return jsonify([]), 401
+        return redirect("/")
 
     query = request.args.get("query", "").strip().lower()
-    lat = request.args.get("lat", "")
-    lng = request.args.get("lng", "")
+    lati = request.args.get("lat", "")
+    long = request.args.get("lng", "")
 
-    if not query or not lat or not lng:
+    if not query or not lati or not long:
         return jsonify([])
 
     radius = 5000
-    cuisine = CUISINE_MAP.get(query)
+    cuisine = foodss.get(query)
 
     if cuisine:
-        restaurant_filter = f'["amenity"="restaurant"]["cuisine"="{cuisine}"]'
-        fastfood_filter = f'["amenity"="fast_food"]["cuisine"="{cuisine}"]'
+        rF = f'["amenity"="restaurant"]["cuisine"="{cuisine}"]'
+        fff = f'["amenity"="fast_food"]["cuisine"="{cuisine}"]'
     else:
-        restaurant_filter = '["amenity"="restaurant"]'
-        fastfood_filter = '["amenity"="fast_food"]'
+        rF = '["amenity"="restaurant"]'
+        fff = '["amenity"="fast_food"]'
 
     overpass_query = f"""
-[out:json][timeout:10];
-(
-  node{restaurant_filter}(around:{radius},{lat},{lng});
-  node{fastfood_filter}(around:{radius},{lat},{lng});
-  node["shop"="supermarket"](around:{radius},{lat},{lng});
-  node["shop"="grocery"](around:{radius},{lat},{lng});
-);
-out body 20;
-"""
+    [out:json][timeout:10];
+    (
+    node{rF}(around:{radius},{lati},{long});
+    node{fff}(around:{radius},{lati},{long});
+    node["shop"="supermarket"](around:{radius},{lati},{long});
+    node["shop"="grocery"](around:{radius},{lati},{long});
+    );
+    out body 20;
+    """
 
     url = "https://overpass-api.de/api/interpreter"
     data = urllib.parse.urlencode({"data": overpass_query}).encode()
     req = urllib.request.Request(url, data=data, headers={"User-Agent": "tacos-app/1.0"})
-
-    try:
-        with urllib.request.urlopen(req, timeout=12) as resp:
-            result = json.loads(resp.read().decode())
-    except Exception:
-        return jsonify([])
 
     seen = set()
     places = []
@@ -372,10 +366,10 @@ out body 20;
             continue
         seen.add(name.lower())
         kind = tags.get("amenity") or tags.get("shop", "")
-        place_type = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
+        pType = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
         places.append({
             "name": name,
-            "type": place_type,
+            "type": pType,
             "lat": el.get("lat"),
             "lng": el.get("lon"),
         })
