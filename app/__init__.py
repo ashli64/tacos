@@ -252,17 +252,21 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/profile/<pid>", methods=["GET", "POST"])
+@app.route("/profile/<pid>")
 def profile(pid):
     if "username" not in session:
         return redirect("/login")
-    mine = fetch('recipes','author = ?', 'id', (session['username'],))[0]
-    mineNames = fetch('recipes','author = ?', 'name', (session['username'],))[0]
-    recipes = []
-    for i in range(len(mine)):
-        recipes += [[mineNames[i], mine[i]]]
-    return render_template("profile.html", user = session["username"], mine = mine, recipes = recipes)
-
+    db = get_db() 
+    c = db.cursor() 
+    c.execute ("""
+        SELECT id, name, description, pic, difficulty, author 
+        FROM recipes
+        WHERE author = ? 
+    """, (pid,)) 
+    recipes = c.fetchall()
+    db.close()
+    return render_template ("profile.html", user=pid, recipes=recipes)
+   
 
 
 

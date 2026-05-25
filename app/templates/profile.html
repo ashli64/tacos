@@ -1,48 +1,158 @@
 <!DOCTYPE html>
 
 <!--
-  Veronika, Ashley, Isabel, Naomi
-  Tacos
-  SoftDev
-  P05 Le Fin
-  2026-05-14
- -->
+  <html>
+<head>
+    <title>Profile</title>
 
-<html>
-  <head>
-    <title>PROFILE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
-    <style>body { font-family: 'Poppins', sans-serif; }</style>
-  </head>
-  <body class="min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('{{backdrop}}');">
 
-    <!--NAV BAR-->
-    <nav>
-      <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
-        <a class="flex items-center gap-2" href="/">
-          <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
-        </a>
-        <div class="flex flex-row items-center gap-2">
-          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
-          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-100">
+
+    <!-- NAVBAR -->
+    <nav class="bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+
+                <a href="/" class="text-white text-2xl font-extrabold">
+                    Tacos
+                </a>
+
+                <div class="flex gap-3">
+                    <a href="/"
+                       class="bg-white/10 hover:bg-white hover:text-gray-800 transition text-white px-4 py-2 rounded-xl font-semibold">
+                        Home
+                    </a>
+
+                    <a href="/create"
+                       class="bg-orange-500 hover:bg-orange-600 transition text-white px-4 py-2 rounded-xl font-semibold">
+                        Create Recipe
+                    </a>
+
+                    <a href="/logout"
+                       class="bg-red-500 hover:bg-red-600 transition text-white px-4 py-2 rounded-xl font-semibold">
+                        Logout
+                    </a>
+                </div>
+
+            </div>
         </div>
-      </div>
     </nav>
-    <h1>Hello, {{user}}!</h1>
-    
-    <h2>Recipes:</h2>
-    <ul>
-    {% for recipe in recipes %}
-    <li>
-      <div class="card">
-          <a href="/recipe/{{ recipe[1] }}"> {{recipe[0]}}</a>
-      </div>
-    </li>
-    {% endfor %}
-    </ul>
-  </body>
+
+    <!-- PROFILE HEADER -->
+    <section class="max-w-5xl mx-auto mt-10 px-6">
+
+        <div class="bg-white rounded-3xl shadow-lg p-8">
+
+            <div class="flex items-center gap-6">
+
+                <!-- PROFILE ICON -->
+                <div class="w-24 h-24 rounded-full bg-orange-400 flex items-center justify-center text-white text-4xl font-bold">
+                    {{ user[0].upper() }}
+                </div>
+
+                <div>
+                    <h1 class="text-4xl font-extrabold text-gray-800">
+                        {{ user }}
+                    </h1>
+
+                    <p class="text-gray-500 mt-2">
+                        Welcome to your recipe profile!
+                    </p>
+
+                    <p class="mt-2 text-orange-500 font-semibold">
+                        {{ recipes|length }} Recipes Created
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RECIPES -->
+    <section class="max-w-5xl mx-auto mt-8 px-6 pb-12">
+
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">
+            My Recipes
+        </h2>
+
+        {% if recipes %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {% for recipe in recipes %}
+
+            <a href="/recipe/{{ recipe['id'] }}"
+               class="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden">
+
+                <img src="{{ url_for('static', filename='uploads/' + recipe['pic']) }}"
+                     class="w-full h-52 object-cover">
+
+                <div class="p-5">
+
+                    <h3 class="text-2xl font-bold text-gray-800">
+                        {{ recipe['name'] }}
+                    </h3>
+
+                    <p class="text-gray-500 mt-2 line-clamp-3">
+                        {{ recipe['description'] }}
+                    </p>
+
+                    <div class="mt-4 flex justify-between items-center">
+
+                        <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">
+                            {{ recipe['difficulty'] }}
+                        </span>
+
+                        <span class="text-gray-400 text-sm">
+                            By {{ recipe['author'] }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="bg-white rounded-2xl shadow-md p-10 text-center">
+
+            <h3 class="text-2xl font-bold text-gray-700">
+                No recipes yet!
+            </h3>
+
+            <p class="text-gray-500 mt-3">
+                Create your first recipe and share it with everyone.
+            </p>
+
+            <a href="/create"
+               class="inline-block mt-5 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition">
+                Create Recipe
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</body>
 </html>
