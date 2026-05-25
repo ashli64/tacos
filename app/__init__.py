@@ -10,12 +10,16 @@ from flask import Flask, render_template
 from flask import session, request, redirect
 import os
 from werkzeug.utils import secure_filename
-#import requests
+from werkzeug.utils import secure_filename
+
+allowed = {"png", "jpg", "jpeg", "gif"}
+
 
 
 # Flask
 app = Flask(__name__)
-app.secret_key = 'wegjedfoigshseiudf'
+app.secret_key = 'inbuifnrexctfyviuutbfr5rbdtbfnjgytbf76tygvy'
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 # SQLite
 
@@ -65,7 +69,11 @@ db.commit()
 db.close()
 
 
-
+def allowed_file(filename):
+    return (
+        "." in filename and
+        filename.rsplit(".", 1)[1].lower() in allowed
+    )
 
 
 
@@ -131,7 +139,7 @@ def create():
 
         photo = request.files.get("pic")
         filename = ''
-        if photo and photo.filename != "":
+        if photo and photo.filename != "" and allowed_file(photo.filename):
 
             curr = os.path.splitext(photo.filename)[1]
             filename = f"{rid}{curr}"
