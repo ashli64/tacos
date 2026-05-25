@@ -10,16 +10,17 @@
 
 <html>
 <head>
-    <title>HOME</title>
+    <title>Results for "{{ search }}"</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <style>body { font-family: 'Poppins', sans-serif; }</style>
-
 </head>
 
-<body>
+<body class="bg-gray-50 min-h-screen">
+
 <!--NAV BAR-->
     <nav>
       <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
@@ -28,47 +29,162 @@
         </a>
         <div class="flex flex-row items-center gap-2">
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
-          <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/profile">Profile</a>
-          <a href='/create/{{new}}' class="util">Create</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/create">Create</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
     </nav>
 
-<div class="container text-center mt-5">
-  <h1 class="fw-bold text-9x1">Welcome to Tacos: A Recipe Search & Share Tool</h1>
-</div>
+    <div class="max-w-4xl mx-auto px-6 py-10">
 
-<div class="container text-center mt-5">
-  <h1 class="fw-bold display-4">Explore our library of recipes or search for a specific recipe based off of it's name below:</h1>
-</div>
+        <!-- Search bar -->
+        <form action="/results" method="GET" class="flex gap-3 mb-8">
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                class="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition"
+                placeholder="Search recipe name"
+            >
+            <button type="submit" class="font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 px-6 transition text-sm uppercase tracking-widest">
+                Search
+            </button>
+        </form>
 
-<!-- the search  bar that shows everything if blank and limits search -->
+        <!-- Results heading -->
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-extrabold text-gray-800">Results for "{{ search }}"</h1>
+            <a href="/" class="text-sm text-gray-500 hover:text-gray-800 transition">← Back to all recipes</a>
+        </div>
 
-<h1>Results for "{{ search }}"</h1>
+        {% if recipes|length > 0 %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for recipe in recipes %}
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
+                <h3 class="font-bold text-gray-800 text-lg mb-1">{{ recipe[1] }}</h3>
+                <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ recipe[3] }}</p>
+                <a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">Open</a>
+            </div>
+            {% endfor %}
+        </div>
 
-<form action="/results" method="GET" class="search-box">
-    <input type="text" name="search" value="{{ search }}">
-    <button type="submit">Search</button>
-</form>
+        {% else %}
 
-<a href="/">Back to all recipes</a>
+        <!-- No results -->
+        <div class="text-center py-12">
+            <p class="text-gray-400 text-lg mb-2">No recipes found for "{{ search }}".</p>
+            <p class="text-gray-400 text-sm mb-8">Can't find a recipe? We can look for nearby restaurants or grocery stores instead.</p>
 
-<br><br>
+            <button
+                id="find-nearby-btn"
+                onclick="findNearby()"
+                class="font-bold bg-gray-800 text-white rounded-xl px-6 py-3 hover:bg-gray-700 transition text-sm uppercase tracking-widest"
+            >
+                Find Nearby Places
+            </button>
 
-<div class="grid">
-    {% for recipe in recipes %}
-    <div class="card">
-        <h3>{{ recipe[1] }}</h3>
-        <p>{{ recipe[3] }}</p>
-        <a href="/recipe/{{ recipe[0] }}">Open</a>
+            <p id="nearby-status" class="text-gray-400 text-sm mt-4 hidden">Getting your location...</p>
+        </div>
+
+        <!-- Nearby results -->
+        <div id="nearby-results" class="mt-6"></div>
+
+        <script>
+        function findNearby() {
+            const btn = document.getElementById('find-nearby-btn');
+            const status = document.getElementById('nearby-status');
+            btn.classList.add('hidden');
+            status.classList.remove('hidden');
+
+            if (!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser.';
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
+                status.textContent = 'Searching nearby...';
+
+                fetch(`/api/nearby?query={{ search|urlencode }}&lat=${lat}&lng=${lng}`)
+                    .then(r => r.json())
+                    .then(places => {
+                        status.classList.add('hidden');
+                        const container = document.getElementById('nearby-results');
+
+                        if (places.length === 0) {
+                            container.innerHTML = '<p class="text-center text-gray-400">No nearby places found. Try a different search term.</p>';
+                            return;
+                        }
+
+                        const restaurants = places.filter(p => p.type === 'restaurant');
+                        const groceries = places.filter(p => p.type === 'grocery store');
+
+                        let html = '';
+
+                        if (restaurants.length) {
+                            html += `
+                                <h2 class="text-xl font-extrabold text-gray-800 mb-4">Nearby Restaurants</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            `;
+                            restaurants.forEach(p => {
+                                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}&center=${p.lat},${p.lng}`;
+                                html += `
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition flex items-center justify-between">
+                                        <div>
+                                            <p class="font-bold text-gray-800">${p.name}</p>
+                                            <p class="text-xs text-gray-400 mt-1">Restaurant</p>
+                                        </div>
+                                        <a href="${mapsUrl}" target="_blank" class="font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition ml-4 whitespace-nowrap">
+                                            View Map
+                                        </a>
+                                    </div>
+                                `;
+                            });
+                            html += '</div>';
+                        }
+
+                        if (groceries.length) {
+                            html += `
+                                <h2 class="text-xl font-extrabold text-gray-800 mb-4">Nearby Grocery Stores</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            `;
+                            groceries.forEach(p => {
+                                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}&center=${p.lat},${p.lng}`;
+                                html += `
+                                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition flex items-center justify-between">
+                                        <div>
+                                            <p class="font-bold text-gray-800">${p.name}</p>
+                                            <p class="text-xs text-gray-400 mt-1">Grocery Store</p>
+                                        </div>
+                                        <a href="${mapsUrl}" target="_blank" class="font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition ml-4 whitespace-nowrap">
+                                            View Map
+                                        </a>
+                                    </div>
+                                `;
+                            });
+                            html += '</div>';
+                        }
+
+                        container.innerHTML = html;
+                    })
+                    .catch(() => {
+                        status.classList.remove('hidden');
+                        status.textContent = 'Failed to fetch nearby places. Please try again.';
+                    });
+            }, function() {
+                status.classList.remove('hidden');
+                status.textContent = 'Location access denied. Please allow location access to use this feature.';
+            });
+        }
+        </script>
+
+        {% endif %}
+
     </div>
-    {% endfor %}
-</div>
-
-{% if recipes|length == 0 %}
-    <p>No recipes found.</p>
-{% endif %}
 
 </body>
 </html>

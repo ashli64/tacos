@@ -7,8 +7,11 @@
 import sqlite3
 import random
 from flask import Flask, render_template
-from flask import session, request, redirect
+from flask import session, request, redirect, jsonify
 import os
+import urllib.request
+import urllib.parse
+import json
 from werkzeug.utils import secure_filename
 from werkzeug.utils import secure_filename
 
@@ -109,7 +112,7 @@ def results():
     matches = c.fetchall()
     db.close()
 
-    return render_template("results.html", recipes=matches,search=search)
+    return render_template("results.html", recipes=matches, search=search, username=session["username"])
 
 
 @app.route('/map', methods=["GET", "POST"])
@@ -188,7 +191,7 @@ def recipe(rid):
     else:
         pic = ''
 
-    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions, username = session['username'], pic = pic)
+    return render_template("recipe.html", name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic)
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -279,6 +282,84 @@ def fetch(table, criteria, data, params=()):
     db.commit()
     db.close()
     return data
+
+CUISINE_MAP = {
+    "taco": "mexican", "tacos": "mexican", "burrito": "mexican", "mexican": "mexican",
+    "sushi": "sushi", "ramen": "ramen", "japanese": "japanese",
+    "pizza": "italian", "italian": "italian", "pasta": "italian",
+    "burger": "burger", "burgers": "burger", "american": "american",
+    "chinese": "chinese", "noodle": "chinese", "noodles": "chinese", "dumpling": "chinese",
+    "indian": "indian", "curry": "indian",
+    "thai": "thai", "pad thai": "thai",
+    "korean": "korean", "bbq": "barbecue", "barbecue": "barbecue",
+    "mediterranean": "mediterranean", "falafel": "middle_eastern", "shawarma": "middle_eastern",
+    "greek": "greek", "french": "french", "vietnamese": "vietnamese", "pho": "vietnamese",
+    "sandwich": "sandwich", "salad": "salad", "vegan": "vegan", "vegetarian": "vegetarian",
+    "seafood": "seafood", "fish": "seafood", "chicken": "chicken",
+}
+
+@app.route("/api/nearby", methods=["GET"])
+def nearby():
+    if "username" not in session:
+        return jsonify([]), 401
+
+    query = request.args.get("query", "").strip().lower()
+    lat = request.args.get("lat", "")
+    lng = request.args.get("lng", "")
+
+    if not query or not lat or not lng:
+        return jsonify([])
+
+    radius = 5000
+    cuisine = CUISINE_MAP.get(query)
+
+    if cuisine:
+        restaurant_filter = f'["amenity"="restaurant"]["cuisine"="{cuisine}"]'
+        fastfood_filter = f'["amenity"="fast_food"]["cuisine"="{cuisine}"]'
+    else:
+        restaurant_filter = '["amenity"="restaurant"]'
+        fastfood_filter = '["amenity"="fast_food"]'
+
+    overpass_query = f"""
+[out:json][timeout:10];
+(
+  node{restaurant_filter}(around:{radius},{lat},{lng});
+  node{fastfood_filter}(around:{radius},{lat},{lng});
+  node["shop"="supermarket"](around:{radius},{lat},{lng});
+  node["shop"="grocery"](around:{radius},{lat},{lng});
+);
+out body 20;
+"""
+
+    url = "https://overpass-api.de/api/interpreter"
+    data = urllib.parse.urlencode({"data": overpass_query}).encode()
+    req = urllib.request.Request(url, data=data, headers={"User-Agent": "tacos-app/1.0"})
+
+    try:
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            result = json.loads(resp.read().decode())
+    except Exception:
+        return jsonify([])
+
+    seen = set()
+    places = []
+    for el in result.get("elements", []):
+        tags = el.get("tags", {})
+        name = tags.get("name")
+        if not name or name.lower() in seen:
+            continue
+        seen.add(name.lower())
+        kind = tags.get("amenity") or tags.get("shop", "")
+        place_type = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
+        places.append({
+            "name": name,
+            "type": place_type,
+            "lat": el.get("lat"),
+            "lng": el.get("lon"),
+        })
+
+    return jsonify(places[:15])
+
 
 @app.route("/game", methods=["GET", "POST"])
 def game():
