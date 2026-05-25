@@ -1,143 +1,340 @@
 <!DOCTYPE html>
-
 <html>
 
-  <head>
-    <title>HOME</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <style>body { font-family: 'Poppins', sans-serif; }</style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  </head>
+<head>
+  <title>HOME</title>
 
-  <nav>
-    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
-      <a class="flex items-center gap-2" href="/">
-        <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
-      </a>
-      <div class="flex flex-row items-center gap-2">
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
-      </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <style>
+    body{
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    .main{
+      max-width: 1300px;
+      margin: 30px auto;
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .formWrap{
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .lcol,
+    .rcol{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      border: 1px solid #d4d4d4;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 14px;
+      background: #fafafa;
+    }
+
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: #888;
+      background: white;
+    }
+
+    p,label{
+      font-weight: 600;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    button, #adI{
+      background: #222;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    #adI{
+      color: black;
+      background: #aabecf;
+    }
+
+   
+
+    button:hover {
+      background: #444;
+    }
+
+    fieldset{
+      border: 1px solid #ddd;
+      padding: 14px;
+      border-radius: 10px;
+      background: #fafafa;
+      width: 100%;
+    }
+
+    #ingLi{
+      padding: 14px;
+      background: #aabecf;
+      min-height: 50px;
+    }
+
+    #namee{
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 14px;
+      background: #aabecf;
+      min-height: 50px;
+    }
+
+    #tt{
+      color: black;
+    }
+
+
+    #map{
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      margin-top: 12px;
+      height: 320px;
+    }
+
+    #submit{
+      width: 100%;
+      background: #222;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      transition: 0.2s;
+    }
+
+    #submit:hover{
+      background: #444;
+    }
+
+    .sideCard{
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    @media(max-width: 900px){
+      .formWrap{
+        grid-template-columns: 1fr;
+      }
+      #map{
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        margin-top: 12px;
+        height: 520px;
+        width: 100%;
+      }
+
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<nav>
+  <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+    <a class="flex items-center gap-2" href="/">
+      <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+    </a>
+
+    <div class="flex flex-row items-center gap-2">
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+
+      <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/create">Create</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <body>
-    <br>
-    <div class='main'>
-      <form method="POST" action="" enctype="multipart/form-data">
-          <p>Title:</p>
-          <textarea name="name" placeholder="Recipe Name:" required></textarea>
-          <br><br>
-          <p>Description:</p>
-          <textarea name="description" rows="5" cols="100" placeholder="Enter food description..." required></textarea>
-          <br>
+<body>
 
-          <p>Ingredients (don't include commas):</p>
-          <ul id="ingredientList" class="list-disc list-inside bg-gray-50 p-3 rounded w-1/2 min-h-12 border">
-            {% for ing in ings %}
+  <div class='main'>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+
+      <div class="formWrap">
+        <div class="lcol">
+          <div>
+            <p>Title:</p>
+            <textarea name="name" placeholder="Recipe Name:" required></textarea>
+          </div>
+
+          <div>
+            <p>Description:</p>
+            <textarea name="description" rows="5" placeholder="Enter food description..." required></textarea>
+          </div>
+
+          <div id="namee">
+            <p id="tt">Ingredients Added:</p>
+
+            <ul id="ingLi">
+              {% for ing in ings %}
               <li>{{ ing }}</li>
-            {% endfor %}
-          </ul>
-          <input type="hidden" name="ingredients" id="ingredientsHidden">
-          <input type = "text" id = "inp" name = "addIng" pattern="[^,]*" value="">
-          <button type="button" onclick="newF()">
-            Add Ingredient
-          </button>
+              {% endfor %}
+            </ul>
+          </div>
 
-          <br><br>
-          <p>Instructions:</p>
-          <textarea class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" name="instructions" rows="10" cols="100" placeholder="Enter instructions..." required></textarea>
-          <br><br>
-          
-          <label for= "pic">Pick a photo:</label> 
-          <input name = "pic" id = "pic" type="file" accept="image/*" capture="environment">
-          
-          <br><br>
+          <input type="hidden" name="ingredients" id="iHid">
 
-          <p>Skill Level Required:</p>
+          <div>
+            <input type="text" id="inp" name="addIng" pattern="[^,]*" value="">
+            <button id="adI" type="button" onclick="newF()">
+              Add Ingredient (don't include commas)
+            </button>
+          </div>
 
-          <fieldset>
-            <input type="radio" name="diff" value="Hopeless in kitchen" required> Hopeless in kitchen<br>
-            <input type="radio" name="diff" value="Beginner"> Beginner<br>
-            <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
-            <input type="radio" name="diff" value="Good"> Good<br>
-            <input type="radio" name="diff" value="Advanced"> Advanced<br>
-          </fieldset>
+          <div>
+            <p>Instructions:</p>
 
-        <br>
+            <textarea
+              class="w-full"
+              name="instructions"
+              rows="12"
+              placeholder="Enter instructions..."
+              required></textarea>
+          </div>
 
-        <div id="map" style="height: 300px;"></div>
+        </div>
 
-        <input type="hidden" name="lt" id="lt">
-        <input type="hidden" name="lg" id="lg">
+        <div class="rcol">
+          <div class="sideCard">
 
-        <br>
+            <label for="pic">Pick a photo:</label>
 
-        <input class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit" id='submit' value="Publish Recipe">
+            <input
+              name="pic"
+              id="pic"
+              type="file"
+              accept="image/*"
+              capture="environment">
 
-      </form>
+          </div>
 
-      <script>
-        let ingredients = [];
-        const mp = L.map('map', {
-          minZoom: 2,
-          maxZoom: 18
-        }).setView([20, 0], 2);
-        let mark = null;
+          <div class="sideCard">
 
-    
-        function newF() {
-            const input = document.getElementById("inp");
-            const value = input.value.trim();
-    
-            if (value === "") return;
-    
-            ingredients.push(value);
-    
-            const li = document.createElement("li");
-            li.textContent = value;
-            document.getElementById("ingredientList").appendChild(li);
-    
-            document.getElementById("ingredientsHidden").value =
-                ingredients.join(",");
-    
-            input.value = "";
-        }
+            <p>Skill Level Required:</p>
 
-        
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap',
-            noWrap: true
-        }).addTo(mp);
-        mp.on('click', function(evt) {
+            <fieldset>
+              <input type="radio" name="diff" value="Hopeless in kitchen" required> Hopeless in kitchen<br>
+              <input type="radio" name="diff" value="Beginner"> Beginner<br>
+              <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
+              <input type="radio" name="diff" value="Good"> Good<br>
+              <input type="radio" name="diff" value="Advanced"> Advanced<br>
+            </fieldset>
+
+          </div>
+
+          <div class="sideCard">
+            <p>Choose Origin of Dish:</p>
+            <div id="map"></div>
+            <input type="hidden" name="lt" id="lt">
+            <input type="hidden" name="lg" id="lg">
+          </div>
+        </div>
+
+      </div>
+
+      <input type="submit" id='submit' value="Publish Recipe">
+
+    </form>
+
+    <script>
+
+      let ingredients = [];
+
+      const mp = L.map('map', {
+        minZoom: 2,
+        maxZoom: 18
+      }).setView([10, 0], 1.4);
+      let mark = null;
+
+      function newF() {
+
+        const input = document.getElementById("inp");
+        const value = input.value.trim();
+
+        if (value === "") return;
+
+        ingredients.push(value);
+
+        const li = document.createElement("li");
+        li.textContent = value;
+
+        document.getElementById("ingLi").appendChild(li);
+
+        document.getElementById("iHid").value =
+          ingredients.join(",");
+
+        input.value = "";
+      }
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        noWrap: true
+      }).addTo(mp);
+
+      mp.on('click', function (evt) {
+
         const lat = evt.latlng.lat;
         const lng = evt.latlng.lng;
 
         document.getElementById("lt").value = lat;
         document.getElementById("lg").value = lng;
-
         if (mark) {
-            mp.removeLayer(mark);
+          mp.removeLayer(mark);
         }
-
         mark = L.marker([lat, lng]).addTo(mp);
-        });
+      });
 
-      </script>
+    </script>
 
+  </div>
 
+</body>
 
+<footer>
 
-    </div>
-  </body>
-
-  <footer>
-
-  </footer>
+</footer>
 
 </html>
