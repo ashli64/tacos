@@ -88,14 +88,14 @@ function trigger_buttons(event){
 function trigger_buttons_start(c) {
     console.log(c);
     if (c.x > canvas.width/2 - start_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + start_button.width*(canvas.width/768)/2) {
-        if (c.y > canvas.height/2 && c.y < canvas.height/2 + start_button.width) {
+        if (c.y > canvas.height/2 && c.y < canvas.height/2 + start_button.height*canvas.width/768) {
             console.log("run game");
         }
     }
 
     if (c.x > canvas.width/2 - tutorial_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + tutorial_button.width*(canvas.width/768)/2) {
         if (c.y > canvas.height/2 + tutorial_button.height*(canvas.width/768) && c.y < canvas.height/2 + tutorial_button.height*(canvas.width/768) + tutorial_button.width) {
-            console.log("run game");
+            console.log("run tutorial");
         }
     }  
 
