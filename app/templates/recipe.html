@@ -3,33 +3,53 @@
 <html>
 
   <head>
-  
+    <title>RECIPE</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
   </head>
 
   <nav>
-    <a href='/logout' class="util">Logout</a>
-    <a href='/profile/{{username}}' class="util">Profile</a>
-    <a href='/' class="util">Home</a>
+    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+      <a class="flex items-center gap-2" href="/">
+        <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+      </a>
+      <div class="flex flex-row items-center gap-2">
+        <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/">Home</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+      </div>
+    </div>
   </nav>
 
   <body>
+    <br>
       <h1>Name: {{ name }} </h1>
+
+        <div class="w-40 h-40 overflow-hidden rounded-xl">
+          <img
+            src="{{ url_for('static', filename='uploads/' + pic) }}"
+            alt="food img"
+            class="w-full h-full object-cover"
+          >
+        </div>
+        <br>
+
         <div class="content">
           Description: {{ description }}
         </div>
-        <div>
-           <img src="static/images" alt="food">
-        </div>
+        <br>
 
         <div class="ingredients">
           <h2>Ingredients:</h2>
           {{ ingredients }}
         </div>
+        <br>
 
-	<div class="content">
+	      <div class="content">
           <h2>Instructions:</h2>
           {{ instructions }}
         </div>
+
+        <br>
 
         <div class="content">
           Skill level necessary: {{ difficulty }}
@@ -40,6 +60,8 @@
   </body>
 
   <footer>
+    <br>
+
     <div class="author">
       <a href="/profile/{{author}}">Author: {{author}}</a>
 

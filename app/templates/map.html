@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>MAP</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+
+  <nav>
+    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+      <a class="flex items-center gap-2" href="/">
+        <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+      </a>
+      <div class="flex flex-row items-center gap-2">
+        <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/">Home</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <body>
+        <div id="map" style="height: 500px;"></div>
+
+        <script>
+            const map = L.map('map').setView([20, 0], 2);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                noWrap: true
+            }).addTo(map);
+            
+            const recipes = {{ recipes|tojson }};
+            
+            recipes.forEach(r => {
+                if (r[3] && r[4]) {
+                    const marker = L.marker([r[3], r[4]]).addTo(map);
+                    const icon = L.divIcon({
+                        className: "custom-icon",
+                        html: `<img src="/static/uploads/${r[2]}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid white;">`,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20]
+                    });
+
+                    L.marker([r[3], r[4]], { icon: icon }).addTo(map);
+                    marker.bindPopup(`
+                        <div style="width:200px">
+                            <img src="/static/uploads/${r[2]}"
+                                style="width:100%;border-radius:10px">
+
+                            <h3 style="font-weight:bold;margin-top:8px">
+                                ${r[1]}
+                            </h3>
+
+                            <a href="/recipe/${r[0]}"
+                            style="color:#2563eb">
+                            View Recipe
+                            </a>
+                        </div>
+                    `);
+                }
+            });
+        </script>
+  </body>
+
+
+
+
+  <footer>
+    
+  </footer>
+
+</html>

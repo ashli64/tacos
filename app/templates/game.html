@@ -17,6 +17,21 @@
 
    </head>
    <body>
+
+
+      <nav>
+        <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+          <a class="flex items-center gap-2" href="/">
+            <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+          </a>
+          <div class="flex flex-row items-center gap-2">
+            <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/">Home</a>
+            <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+            <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+          </div>
+        </div>
+      </nav>
+
      <div id="game-holder" style="width:100%">
        <canvas id="main-canvas" style="margin:auto; position:relative;border:1px solid #000000;"></canvas>
      </div>

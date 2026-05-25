@@ -29,8 +29,9 @@
         <div class="flex flex-row items-center gap-2">
           <a class="font-semibold rounded-xl bg-white text-gray-800 py-2 px-4 text-sm" href="/">Home</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
-          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/create/{{new}}' class="util">Create</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/create' class="util">Create</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/game' class="util">Play</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/map' class="util">Map</a>
           <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
         </div>
       </div>
@@ -56,12 +57,14 @@
 </form>
 
 <div class="grid">
+    <br>
     {% for recipe in recipes %}
     <div class="card">
         <h3>{{ recipe[1] }}</h3>
         <p>{{ recipe[3] }}</p>
         <a href="/recipe/{{ recipe[0] }}">Open</a>
     </div>
+    <br>
     {% endfor %}
 </div>
 

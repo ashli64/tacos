@@ -9,6 +9,7 @@ import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
+from werkzeug.utils import secure_filename
 #import requests
 
 
@@ -52,7 +53,9 @@ CREATE TABLE IF NOT EXISTS recipes (
    ingredients TEXT,
    pic TEXT,
    difficulty TEXT,
-   instructions TEXT
+   instructions TEXT,
+   lat REAL,
+   long REAL
 )
 """)
 
@@ -71,14 +74,13 @@ def homepage():
     if "username" not in session:
         return redirect("/login")
  
-    new = fetch('recipes', True, 'COUNT(*)')[0][0]
     recipes = fetch('recipes', True, 'id, name, author, description')
 
     recipeSearch = []
     for recipe in recipes:
         recipeSearch.append(recipe[1])
 
-    return render_template("home.html",new=new,recipes=recipes,recipeSearch=recipeSearch, username = session['username'])
+    return render_template("home.html",recipes=recipes,recipeSearch=recipeSearch, username = session['username'])
 
 @app.route('/results', methods=["GET"])
 def results():
@@ -102,35 +104,61 @@ def results():
     return render_template("results.html", recipes=matches,search=search)
 
 
-@app.route('/create/<rid>', methods=["GET", "POST"])
-def create(rid):
+@app.route('/map', methods=["GET", "POST"])
+def map():
     if not 'username' in session:
         return redirect("/login")
-    
-    if int(rid) > fetch('recipes', True, 'COUNT(*)')[0][0]:
-        return redirect("/")
+    stuff = [list(r) for r in fetch("recipes", True, "id, name, pic, lat, long")]
+    return render_template("map.html", username = session['username'], recipes = stuff)
+
+@app.route('/create', methods=["GET", "POST"])
+def create():
+    if not 'username' in session:
+        return redirect("/login")
+    rid = fetch('recipes', True, 'COUNT(*)')[0][0]
+
 
     if request.method == "POST":
 
         db = get_db()
         c = db.cursor()
 
-        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        params = (session["username"], request.form["name"], request.form["description"], request.form.get("ingredients"), '', request.form["diff"], request.form["instructions"],)
+        query = "INSERT INTO recipes (author, name, description, ingredients, pic, difficulty, instructions, lat, long) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        params = (session["username"], request.form["name"], request.form["description"], request.form.get("ingredients"), '', request.form["diff"], request.form["instructions"], request.form.get("lt"), request.form.get("lg"))
         c.execute(query, params)
+
+        recipeId = c.lastrowid
+
+        photo = request.files.get("pic")
+        filename = ''
+        if photo and photo.filename != "":
+
+            curr = os.path.splitext(photo.filename)[1]
+            filename = f"{rid}{curr}"
+            upload_path = os.path.join(
+                app.static_folder,
+                "uploads",
+                filename
+            )
+
+            photo.save(upload_path)
+        else:
+            filename = "taco.jpeg"
+
+        c.execute(
+            "UPDATE recipes SET pic = ? WHERE id = ?",
+            (filename, recipeId)
+        )
+
+        
 
         db.commit()
         db.close()
         return redirect("/")
  
-    result = fetch("recipes", "id = ?", "ingredients", (rid,))
+    
 
-    if result and result[0][0]:
-        ingredients = result[0][0].split(",")
-    else:
-        ingredients = []
-
-    return render_template("create.html", ings = ingredients, username = session['username'])
+    return render_template("create.html", ings = [], username = session['username'])
 
 
 @app.route('/recipe/<rid>', methods=["GET", "POST"])
@@ -147,7 +175,12 @@ def recipe(rid):
     difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
     instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
 
-    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions, username = session['username'])
+    if fetch("recipes", "id = ?", "pic", (rid,)):
+        pic = fetch("recipes", "id = ?", "pic", (rid,))[0][0]
+    else:
+        pic = ''
+
+    return render_template("recipe.html", name = name, description = description, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions, username = session['username'], pic = pic)
 
 
 @app.route("/logout", methods=["GET", "POST"])
