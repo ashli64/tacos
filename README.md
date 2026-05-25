@@ -19,7 +19,7 @@ Our website allows aspiring chefs of all skill levels to share their creative re
 5. **Install dependencies**: `pip install -r requirements.txt`
 
 ### Launch Codes:
-In the terminal, access the project root directory ('cd app') and run the following commands:
+In the terminal, access the project root directory `cd app` and run the following commands:
 - `~$ python3 __init__.py`
 
 ### Launch Website
