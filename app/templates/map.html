@@ -4,6 +4,7 @@
 
   <head>
     <title>MAP</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -26,6 +27,9 @@
   </nav>
 
   <body>
+        <div class="taco-container">
+            <img src="/static/uploads/taco.gif" class="taco-walk">
+        </div>
         <div id="map" style="height: 500px;"></div>
 
         <script>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>HOME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <style>body { font-family: 'Poppins', sans-serif; }</style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+
+  <nav>
+    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+      <a class="flex items-center gap-2" href="/">
+        <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+      </a>
+      <div class="flex flex-row items-center gap-2">
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <body>
+    <br>
+    <div class='main'>
+      <form method="POST" action="/searchIngs" enctype="multipart/form-data">
+
+          <p>Ingredients (don't include commas):</p>
+          <ul id="ingredientList" class="list-disc list-inside bg-gray-50 p-3 rounded w-1/2 min-h-12 border">
+            {% for ing in ings %}
+              <li>{{ ing }}</li>
+            {% endfor %}
+          </ul>
+          <input type="hidden" name="ingredients" id="ingredientsHidden">
+          <input type = "text" id = "inp" pattern="[^,]*" value="">
+          <button type="button" onclick="newF()">
+            Add Ingredient
+          </button>
+          <br>
+
+        <input class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit" id='submit' value="Search">
+
+      </form>
+
+
+
+      <h1>Results</h1>
+
+        <div class="grid">
+            {% for recipe in stuff %}
+                <div class="card">
+                    <h3>{{ recipe[1] }}</h3>   
+                    <p>{{ recipe[3] }}</p>     
+                    <p><a href="/recipe/{{ recipe[0] }}">Open</a></p>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+
+        {% if stuff|length == 0 %}
+            <p>No Results</p>
+        {% endif %}
+
+      <script>
+        let ingredients = [];
+    
+        function newF() {
+            const input = document.getElementById("inp");
+            const value = input.value.trim();
+    
+            if (value === "") return;
+    
+            ingredients.push(value);
+    
+            const li = document.createElement("li");
+            li.textContent = value;
+            document.getElementById("ingredientList").appendChild(li);
+    
+            document.getElementById("ingredientsHidden").value =
+                ingredients.join(",");
+    
+            input.value = "";
+        }
+      </script>
+
+
+    
+
+
+    </div>
+  </body>
+
+  <footer>
+
+  </footer>
+
+</html>

@@ -122,6 +122,32 @@ def map():
     stuff = [list(r) for r in fetch("recipes", True, "id, name, pic, lat, long")]
     return render_template("map.html", username = session['username'], recipes = stuff)
 
+@app.route('/searchIngs', methods=["GET", "POST"])
+def searchIngs():
+    if not 'username' in session:
+        return redirect("/login")
+
+    results = []
+
+    if request.method == "POST":
+        submitted = request.form.get("ingredients", "").strip().lower()
+
+        if submitted:
+            sub = [i.strip() for i in submitted.split(",")]
+
+            filt = []
+            params = []
+
+            for s in sub:
+                filt.append("LOWER(ingredients) LIKE ?")
+                params.append(f"%{s}%")
+
+            filt2 = " OR ".join(filt)
+
+            results = fetch("recipes",filt2,"id, name, author, description",tuple(params))
+
+    return render_template("searching.html",username=session['username'], stuff=results)
+
 @app.route('/create', methods=["GET", "POST"])
 def create():
     if not 'username' in session:
@@ -161,14 +187,10 @@ def create():
             (filename, recipeId)
         )
 
-        
-
         db.commit()
         db.close()
         return redirect("/")
  
-    
-
     return render_template("create.html", ings = [], username = session['username'])
 
 
@@ -365,7 +387,7 @@ out body 20;
 def game():
     if "username" not in session:
         return redirect("/login")
-    return render_template("game.html", user = session["username"])
+    return render_template("game.html", username = session["username"])
 
 
 
