@@ -306,6 +306,8 @@ function main_game_screen() {
                 )
             }
         }
+    } catch (error) {
+        console.error("Some images may have not loaded");
     }
 }
 
