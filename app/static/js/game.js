@@ -4,6 +4,8 @@ var context = canvas.getContext('2d');
 context.canvas.width = window.innerWidth * .50;
 context.canvas.height = window.innerWidth * .350;
 
+let SCALE = (canvas.width/768);
+
 //GAME MODE
 //0 = start screen
 //1 = tutorial
@@ -19,6 +21,47 @@ start_button.src = "/static/img/start_button.png";
 const tutorial_button = new Image();
 tutorial_button.src = "/static/img/tutorial_button.png";
 
+//TUTORIAL
+let TUTORIAL_CARD = 0;
+let GAME_CARD = 0;
+
+const tutorial_card_0 = new Image();
+tutorial_card_0.src = "/static/img/tutorial_card_0.png";
+const tutorial_card_1 = new Image();
+tutorial_card_0.src = "/static/img/tutorial_card_1.png";
+const tutorial_card_2 = new Image();
+tutorial_card_0.src = "/static/img/tutorial_card_2.png";
+const tutorial_card_3 = new Image();
+tutorial_card_0.src = "/static/img/tutorial_card_3.png";
+
+const tutorial_card_list = [tutorial_card_0, tutorial_card_1, tutorial_card_2, tutorial_card_3];
+
+const left_arrow = new Image();
+left_arrow.src = "/static/img/left_arrow.png";
+const right_arrow = new Image();
+right_arrow.src = "/static/img/right_arrow.png";
+
+const exit_cross = new Image();
+exit_cross.src = "/static/img/exit_cross.png";
+
+//MAIN GAME BACKGROUNDS
+const inventory_background = new Image();
+inventory_background.src = "/static/img/inventory_background.png"
+
+const background_card_0 = new Image();
+background_card_0.src = "/static/img/background_card_0.png";
+const background_card_1 = new Image();
+background_card_1.src = "/static/img/background_card_1.png";
+const background_card_2 = new Image();
+background_card_2.src = "/static/img/background_card_2.png";
+const background_card_3 = new Image();
+background_card_3.src = "/static/img/background_card_3.png";
+
+const main_game_card_list = [background_card_0, background_card_1, background_card_2, background_card_3];
+
+//INVENTORY
+const INVENTORY = [];
+
 //TO CREATE SCALEABLE GAME
 
 function loadImage(img) {
@@ -28,10 +71,10 @@ function loadImage(img) {
     });
 }
 
-async function start_screen() {
+function start_screen() {
     console.log("start_screen launched");
     try {
-        const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(src => loadImage(src)));
+        //const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(src => loadImage(src)));
     
         //const SCALE_FACTOR = start_button.width / canvas.width;
 
@@ -39,14 +82,13 @@ async function start_screen() {
             start_screen_bg, 0, 0, canvas.width, canvas.height
         );
 
-        //768 is the full screen length of canvas
         context.drawImage(
-            start_button, canvas.width/2 - start_button.width*(canvas.width/768)/2, canvas.height/2, start_button.width * (canvas.width/768), start_button.height * (canvas.height/768)
+            start_button, canvas.width/2 - start_button.width*(SCALE)/2, canvas.height/2, start_button.width * (SCALE), start_button.height * (SCALE)
         );
     
         context.drawImage(
-            tutorial_button, canvas.width/2 - tutorial_button.width*(canvas.width/768)/2, canvas.height/2 + tutorial_button.height*(canvas.width/768), tutorial_button.width * (canvas.width/768), tutorial_button.height * (canvas.height/768)
-        );
+            tutorial_button, canvas.width/2 - tutorial_button.width*(SCALE)/2, canvas.height/2 + 1.2*tutorial_button.height*(SCALE), tutorial_button.width * (SCALE), tutorial_button.height * (SCALE)
+        );  
     } catch (error) {
         console.error("Some images may have not loaded"); 
     }
@@ -76,9 +118,11 @@ function trigger_buttons(event){
 
     else if (GAME_MODE==1) {
         console.log("click detected on tutorial page");
+        trigger_buttons_tutorial(coords);
     }
     else if (GAME_MODE == 2) {
         console.log("click detected on game page");
+        trigger_buttons_main_game(coords);
     }
     else if (GAME_MODE == 3){
         console.log("click detected on night page");
@@ -86,36 +130,205 @@ function trigger_buttons(event){
 }
 
 function trigger_buttons_start(c) {
-    console.log(c);
-    if (c.x > canvas.width/2 - start_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + start_button.width*(canvas.width/768)/2) {
-        if (c.y > canvas.height/2 && c.y < canvas.height/2 + start_button.height*canvas.width/768) {
+    let start_button_x = canvas.width/2 - start_button.width*(SCALE)/2;
+    let start_button_y = canvas.height/2;
+    let start_button_width = start_button.width * (SCALE);
+    let start_button_height = start_button.height * (SCALE);
+
+    let tutorial_button_x = canvas.width/2 - tutorial_button.width*(SCALE)/2;
+    let tutorial_button_y = canvas.height/2 + tutorial_button.height*(SCALE);
+    let tutorial_button_width = tutorial_button.width * (SCALE);
+    let tutorial_button_height = tutorial_button.height * (SCALE);
+    
+    if (c.x > start_button_x && c.x < (start_button_x+start_button_width)) {
+        if (c.y > start_button_y && c.y < (start_button_y+start_button_height)) {
             console.log("run game");
+            GAME_MODE = 2;
         }
     }
 
-    if (c.x > canvas.width/2 - tutorial_button.width*(canvas.width/768)/2 && c.x < canvas.width/2 + tutorial_button.width*(canvas.width/768)/2) {
-        if (c.y > canvas.height/2 + tutorial_button.height*(canvas.width/768) && c.y < canvas.height/2 + tutorial_button.height*(canvas.width/768) + tutorial_button.width) {
+    if (c.x > tutorial_button_x && c.x < (tutorial_button_x+tutorial_button_width)) {
+        if (c.y > tutorial_button_y && c.y < (tutorial_button_y+tutorial_button_height)) {
             console.log("run tutorial");
+            GAME_MODE = 1;
         }
     }  
-
 }
 
+function trigger_buttons_tutorial(c) {
+
+    let left_arrow_x = 2*left_arrow.width*(SCALE)/3;
+    let left_arrow_y = canvas.height/2;
+
+    let right_arrow_x = canvas.width - 3 * right_arrow.width*(SCALE)/3;
+    let right_arrow_y = canvas.height/2;
+
+    let arrow_width = right_arrow.width*(SCALE)/3;
+    let arrow_height = right_arrow.height*(SCALE)/3;
+
+    let exit_cross_x = canvas.width - 3*(exit_cross.width)*(SCALE)/3;
+    let exit_cross_y = 2*(exit_cross.width)*(SCALE)/3;
+    let exit_cross_width = exit_cross.width*(SCALE)/3;
+    let exit_cross_height = exit_cross.height*(SCALE)/3;
+
+    if (c.x > left_arrow_x && c.x < left_arrow_x + arrow_width) {
+        if (c.y > left_arrow_y && c.y < left_arrow_y + arrow_height) {
+            trigger_arrows(true);
+        }
+    } else if (c.x > right_arrow_x && c.x < right_arrow_x + arrow_width) {
+        if (c.y > right_arrow_y && c.y < right_arrow_y + arrow_height) {
+            trigger_arrows(false);
+        }
+    }
+    
+    if (c.x > exit_cross_x && c.x < exit_cross_x + exit_cross_width) {
+        if (c.y > exit_cross_y && c.y < exit_cross_y + exit_cross_height) {
+            console.log("AAAAAAAAAAAAAAAAAAAA");
+            trigger_exit_cross();            
+        }
+    }
+}
+
+function trigger_buttons_main_game(c) {
+
+    let left_arrow_x = 0.1*left_arrow.width*(SCALE)/3;
+    let left_arrow_y = canvas.height/2 - left_arrow.height*(SCALE)/6;
+
+    let right_arrow_x = canvas.width - 1.1*(right_arrow.width*(SCALE)/3);
+    let right_arrow_y = canvas.height/2 - right_arrow.height*(SCALE)/6;
+
+    let arrow_width = right_arrow.width*(SCALE)/3;
+    let arrow_height = right_arrow.height*(SCALE)/3;
+
+    if (c.x > left_arrow_x && c.x < left_arrow_x + arrow_width) {
+        if (c.y > left_arrow_y && c.y < left_arrow_y + arrow_height) {
+            trigger_arrows(true);
+        }
+    } else if (c.x > right_arrow_x && c.x < right_arrow_x + arrow_width) {
+        if (c.y > right_arrow_y && c.y < right_arrow_y + arrow_height) {
+            trigger_arrows(false);
+        }
+    }
+}
+
+function trigger_arrows(IsLeft) {
+    if (GAME_MODE == 1) {
+        if (IsLeft == true) {
+            TUTORIAL_CARD = TUTORIAL_CARD - 1;
+            console.log("LEFT ARROW");
+            if (TUTORIAL_CARD == -1) {
+                TUTORIAL_CARD = 3;
+            }
+        }
+        else if (IsLeft == false) {
+            TUTORIAL_CARD = TUTORIAL_CARD + 1;
+            console.log("RIGHT ARROW");
+            if (TUTORIAL_CARD == 4) {
+                TUTORIAL_CARD = 0;
+            }
+        }
+    } else if (GAME_MODE == 2) {
+        if (IsLeft == true) {
+            GAME_CARD = GAME_CARD - 1;
+            console.log("LEFT ARROW");
+            if (GAME_CARD == -1) {
+                GAME_CARD = 3;
+            }
+        }
+        else if (IsLeft == false) {
+            GAME_CARD = GAME_CARD + 1;
+            console.log("RIGHT ARROW");
+            if (GAME_CARD == 4) {
+                GAME_CARD = 0;
+            }
+        }
+    }
+}
+
+function trigger_exit_cross() {
+    if (GAME_MODE == 1) {
+        GAME_MODE = 0;
+    } else if (GAME_MODE == 3) {
+        GAME_MODE = 2;
+    }
+}
+
+function tutorial_screen() {
+    console.log("tutorial_screen launched");
+    try {
+        context.drawImage(
+            tutorial_card_list[TUTORIAL_CARD], 0, 0, canvas.width, canvas.height
+        );
+        context.drawImage(
+            exit_cross, canvas.width - 3*(exit_cross.width)*(SCALE)/3, 2*(exit_cross.width)*(SCALE)/3, exit_cross.width*(SCALE)/3, exit_cross.height*(SCALE)/3 
+        );
+
+        context.drawImage(
+            left_arrow, 2*left_arrow.width*(SCALE)/3, canvas.height/2, left_arrow.width*(SCALE)/3, left_arrow.height*(SCALE)/3 
+        );
+        context.drawImage(
+            right_arrow, canvas.width - 3 * right_arrow.width*(SCALE)/3, canvas.height/2, right_arrow.width*(SCALE)/3, right_arrow.height*(SCALE)/3
+        );
+    } catch (error) {
+        console.error("Some images may have not loaded"); 
+    }    
+}
+
+function main_game_screen() {
+    //console.log("MAIN GAME SCREEN LAUNCHED");
+
+    try {
+        context.drawImage(
+            main_game_card_list[GAME_CARD], 0, 0, canvas.width, canvas.height
+        );
+
+        context.drawImage(
+            inventory_background, 0,0, canvas.width, canvas.height
+        );
+        
+        context.drawImage(
+            left_arrow, 0.1*left_arrow.width*(SCALE)/3, canvas.height/2 - left_arrow.height*(SCALE)/6, left_arrow.width*(SCALE)/3, left_arrow.height*(SCALE)/3 
+        );
+        context.drawImage(
+            right_arrow, canvas.width - 1.1*(right_arrow.width*(SCALE)/3), canvas.height/2 - right_arrow.height*(SCALE)/6, right_arrow.width*(SCALE)/3, right_arrow.height*(SCALE)/3
+        );
+    } catch (error) {
+        console.error("Some images may have not loaded");
+    }
+
+    try {
+        for (let i = 0; i < 4; i++) {
+            if (INVENTORY[i] == null) {
+                context.drawImage(
+                    empty_inventory_slot_background, 2*empty_inventory_slot_background.width + i*empty_inventory_slot_background.width + i*((canvas.width - 8*filled_inventory_slot_background)/3), canvas.height - empty_inventory_slot_background.height*1.5
+                )
+            }
+        }
+    }
+}
+
+function main_game() {
+    main_game_screen();
+}
+
+
 function game() {
+    console.log(GAME_MODE);
     if (GAME_MODE == 0) {
         start_screen();
+        console.log("game() start screen");
     }
     else if (GAME_MODE == 1) {
         tutorial_screen();
+        console.log("game() tutorial screen");
     }
     else if (GAME_MODE == 2) {
-        //run game
+        main_game();
     }
     else if (GAME_MODE == 3) {
         //run night endgame
     }
 }
 
-//setInterval(game, 200);
-game();
-
+setInterval(game, 240);
+//game();
