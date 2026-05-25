@@ -326,52 +326,56 @@ def nearby():
         return redirect("/")
 
     query = request.args.get("query", "").strip().lower()
-    lati = request.args.get("lat", "")
-    long = request.args.get("lng", "")
+    lat = request.args.get("lat", "")
+    lg = request.args.get("lng", "")
 
-    if not query or not lati or not long:
+    if not query or not lat or not lg:
         return jsonify([])
-
     radius = 5000
     cuisine = foodss.get(query)
-
     if cuisine:
-        rF = f'["amenity"="restaurant"]["cuisine"="{cuisine}"]'
+        rf = f'["amenity"="restaurant"]["cuisine"="{cuisine}"]'
         fff = f'["amenity"="fast_food"]["cuisine"="{cuisine}"]'
     else:
-        rF = '["amenity"="restaurant"]'
+        rf = '["amenity"="restaurant"]'
         fff = '["amenity"="fast_food"]'
 
-    overpass_query = f"""
+    oq = f"""
     [out:json][timeout:10];
     (
-    node{rF}(around:{radius},{lati},{long});
-    node{fff}(around:{radius},{lati},{long});
-    node["shop"="supermarket"](around:{radius},{lati},{long});
-    node["shop"="grocery"](around:{radius},{lati},{long});
+    node{rf}(around:{radius},{lat},{lg});
+    node{fff}(around:{radius},{lat},{lg});
+    node["shop"="supermarket"](around:{radius},{lat},{lg});
+    node["shop"="grocery"](around:{radius},{lat},{lg});
     );
     out body 20;
     """
 
     url = "https://overpass-api.de/api/interpreter"
-    data = urllib.parse.urlencode({"data": overpass_query}).encode()
+    data = urllib.parse.urlencode({"data": oq}).encode()
     req = urllib.request.Request(url, data=data, headers={"User-Agent": "tacos-app/1.0"})
+
+    try:
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            result = json.loads(resp.read().decode())
+    except Exception:
+        return jsonify([])
 
     seen = set()
     places = []
-    for el in result.get("elements", []):
-        tags = el.get("tags", {})
+    for e in result.get("elements", []):
+        tags = e.get("tags", {})
         name = tags.get("name")
         if not name or name.lower() in seen:
             continue
         seen.add(name.lower())
         kind = tags.get("amenity") or tags.get("shop", "")
-        pType = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
+        pTyp = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
         places.append({
             "name": name,
             "type": pType,
-            "lat": el.get("lat"),
-            "lng": el.get("lon"),
+            "lat": e.get("lat"),
+            "lng": e.get("lon"),
         })
 
     return jsonify(places[:15])
