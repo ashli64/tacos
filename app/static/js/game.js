@@ -61,6 +61,8 @@ const main_game_card_list = [background_card_0, background_card_1, background_ca
 
 //INVENTORY
 const INVENTORY = [];
+const INGREDIENTS = [[],[]];
+
 
 const empty_inventory_slot_background = new Image();
 empty_inventory_slot_background.src = "/static/img/empty_inventory_slot_background.src";

@@ -1,0 +1,49 @@
+{
+    "bun_burger": {
+        "stock_image":"url",
+        "inventory_image": "/static/img/food/bun_burger_inventory_image.png",
+        "plated_image_top": "/static/img/food/bun_burger_plated_image_top.png",
+        "plated_image_bottom": "/static/img/food/bun_burger_plated_image_bottom.png"
+    },
+
+    "tomato": {
+        "stock_image": "url",
+        "inventory_image": "/static/img/food/tomato_plated_image.png",
+        "plated_image": "/static/img/food/tomato_plated_image.png"
+   }, 
+
+   "lettuce": {
+        "stock_image": "url",
+        "inventory_image": "/static/img/food/lettuce_plated_image.png",
+        "plated_image": "/static/img/food/letuce_plated_image.png"    
+   },
+
+   "patty": {
+        "stock_image": "url",
+        "inventory_image": "/static/img/food/patty_plated_image.png",
+        "plated_image": "/static/img/food/patty_plated_image.png",
+        "inventory_image_cooked": "/static/img/food/patty_plated_image_cooked.png",
+        "plated_image_cooked": "/static/img/food/patty_plated_image_cooked.png"
+   },
+
+   "bun_hotdog": {
+        "stock_image": "url",
+        "inventory_image": "/static/img/food/bun_hotdog_inventory_image.png",
+        "plated_image_top": "/static/img/food/bun_hotdog_plated_image_top.png",
+        "plated_image_bottom": "/static/img/food/bun_hotdog_plated_image_bottom.png"
+   },
+
+   "sausage": {
+        "stock_image": "url",
+        "inventory_image": "/static/img/food/sausage_plated_image.png",
+        "plated_image": "/static/img/food/sausage_plated_image.png",
+        "inventory_image_cooked": "/static/img/food/sausage_plated_image_cooked.png",
+        "plated_image_cooked": "/static/img/food/sausage_plated_image_cooked.png"
+   },
+
+   "sauce": {
+        "stock_image": "/static/img/food/sauce_stock_image.png",
+        "inventory_image": "/static/img/food/sauce_stock_image.png", 
+        "plated_image": "/static/img/food/sauce_plated_image.png"
+   }
+}
