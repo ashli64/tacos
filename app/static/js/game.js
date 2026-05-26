@@ -60,7 +60,7 @@ background_card_3.src = "/static/img/background_card_3.png";
 const main_game_card_list = [background_card_0, background_card_1, background_card_2, background_card_3];
 
 // INVENTORY
-const INVENTORY = [];
+const INVENTORY = [null, null, null, null];
 
 // shelves, fridge
 const INGREDIENTS = [[], []];
@@ -161,7 +161,7 @@ fetch('/static/js/foods.json')
     });
 
 const empty_inventory_slot_background = new Image();
-empty_inventory_slot_background.src = "/static/img/empty_inventory_slot_background.src";
+empty_inventory_slot_background.src = "/static/img/empty_inventory_slot_background.png";
 
 function createFood(type) {
     return {
@@ -214,6 +214,7 @@ function get_coordinates(event) {
 
 //detects what screen the buttons are pressed on
 canvas.addEventListener('click', trigger_buttons);
+canvas.addEventListener('click', gather_stock_food);
 
 function trigger_buttons(event){
     //console.log("get_coordinates click detected");  
@@ -320,6 +321,186 @@ function trigger_buttons_main_game(c) {
     }
 }
 
+let selectedFood = null;
+
+function gather_stock_food(event) {
+
+    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+    // ---------- GAME CARD 0 ----------
+
+    if (GAME_CARD == 0) {
+
+        const tomatoImage = new Image();
+        tomatoImage.src = FOOD[INGREDIENTS[0][0]].stock_image;
+
+        const tomatoX = 0.2 * tomatoImage.width * SCALE;
+        const tomatoY = 0.2 * tomatoImage.height * SCALE;
+        const tomatoWidth = tomatoImage.width * SCALE * 0.25;
+        const tomatoHeight = tomatoImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= tomatoX &&
+            mouseX <= tomatoX + tomatoWidth &&
+            mouseY >= tomatoY &&
+            mouseY <= tomatoY + tomatoHeight
+        ) {
+
+            selectedFood = INGREDIENTS[0][0];
+
+        }
+
+        const burgerBunImage = new Image();
+        burgerBunImage.src = FOOD[INGREDIENTS[0][1]].stock_image;
+
+        const burgerBunX = 0.2 * burgerBunImage.width * SCALE * 7;
+        const burgerBunY = 0.2 * burgerBunImage.height * SCALE * 2.2;
+        const burgerBunWidth = burgerBunImage.width * SCALE * 0.25;
+        const burgerBunHeight = burgerBunImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= burgerBunX &&
+            mouseX <= burgerBunX + burgerBunWidth &&
+            mouseY >= burgerBunY &&
+            mouseY <= burgerBunY + burgerBunHeight
+        ) {
+
+            selectedFood = INGREDIENTS[0][1];
+
+        }
+
+        const hotdogBunImage = new Image();
+        hotdogBunImage.src = FOOD[INGREDIENTS[0][2]].stock_image;
+
+        const hotdogBunX = 0.2 * hotdogBunImage.width * SCALE * 6;
+        const hotdogBunY = 0.2 * hotdogBunImage.height * SCALE * 2.2;
+        const hotdogBunWidth = hotdogBunImage.width * SCALE * 0.25;
+        const hotdogBunHeight = hotdogBunImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= hotdogBunX &&
+            mouseX <= hotdogBunX + hotdogBunWidth &&
+            mouseY >= hotdogBunY &&
+            mouseY <= hotdogBunY + hotdogBunHeight
+        ) {
+
+            selectedFood = INGREDIENTS[0][2];
+
+        }
+
+        const sauceImage = new Image();
+        sauceImage.src = FOOD[INGREDIENTS[0][3]].stock_image;
+
+        const sauceX = 0.2 * sauceImage.width * SCALE * 2.2;
+        const sauceY = 0.2 * sauceImage.height * SCALE * 2.3;
+        const sauceWidth = sauceImage.width * SCALE * 0.25;
+        const sauceHeight = sauceImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= sauceX &&
+            mouseX <= sauceX + sauceWidth &&
+            mouseY >= sauceY &&
+            mouseY <= sauceY + sauceHeight
+        ) {
+
+            selectedFood = INGREDIENTS[0][3];
+
+        }
+
+    }
+
+    // ---------- GAME CARD 1 ----------
+
+    else if (GAME_CARD == 1) {
+
+        const lettuceImage = new Image();
+        lettuceImage.src = FOOD[INGREDIENTS[1][0]].stock_image;
+
+        const lettuceX = 0.2 * lettuceImage.width * SCALE * 3.2;
+        const lettuceY = 0.2 * lettuceImage.height * SCALE * 2.3;
+        const lettuceWidth = lettuceImage.width * SCALE * 0.25;
+        const lettuceHeight = lettuceImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= lettuceX &&
+            mouseX <= lettuceX + lettuceWidth &&
+            mouseY >= lettuceY &&
+            mouseY <= lettuceY + lettuceHeight
+        ) {
+
+            selectedFood = INGREDIENTS[1][0];
+
+        }
+
+        const pattyImage = new Image();
+        pattyImage.src = FOOD[INGREDIENTS[1][1]].stock_image;
+
+        const pattyX = 0.2 * pattyImage.width * SCALE * 2;
+        const pattyY = 0.2 * pattyImage.height * SCALE * 1.1;
+        const pattyWidth = pattyImage.width * SCALE * 0.25;
+        const pattyHeight = pattyImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= pattyX &&
+            mouseX <= pattyX + pattyWidth &&
+            mouseY >= pattyY &&
+            mouseY <= pattyY + pattyHeight
+        ) {
+
+            selectedFood = INGREDIENTS[1][1];
+
+        }
+
+        const sausageImage = new Image();
+        sausageImage.src = FOOD[INGREDIENTS[1][2]].stock_image;
+
+        const sausageX = 0.2 * sausageImage.width * SCALE * 3;
+        const sausageY = 0.2 * sausageImage.height * SCALE * 4;
+        const sausageWidth = sausageImage.width * SCALE * 0.25;
+        const sausageHeight = sausageImage.height * SCALE * 0.25;
+
+        if (
+            mouseX >= sausageX &&
+            mouseX <= sausageX + sausageWidth &&
+            mouseY >= sausageY &&
+            mouseY <= sausageY + sausageHeight
+        ) {
+
+            selectedFood = INGREDIENTS[1][2];
+
+        }
+
+    }
+
+    // ---------- INVENTORY ----------
+    console.log(selectedFood)
+
+    const slotWidth = empty_inventory_slot_background.width * 0.25;
+    const slotHeight = empty_inventory_slot_background.height * 0.25;
+
+    for (let i = 0; i < 4; i++) {
+
+        const slotX = 0.2 * empty_inventory_slot_background.width * SCALE + 0.95 * i * empty_inventory_slot_background.width * SCALE;
+
+        const slotY = canvas.height - 0.4 * empty_inventory_slot_background.height * 1.5 * SCALE;
+
+        if (
+            mouseX >= slotX &&
+            mouseX <= slotX + slotWidth &&
+            mouseY >= slotY &&
+            mouseY <= slotY + slotHeight
+        ) {
+
+            console.log("pressed " + i + " inventory slot");
+            INVENTORY[i] = selectedFood;
+            selectedFood = null;
+
+        }
+
+    }
+}
+
 function trigger_arrows(IsLeft) {
     if (GAME_MODE == 1) {
         if (IsLeft == true) {
@@ -409,13 +590,19 @@ function main_game_screen() {
     try {
         for (let i = 0; i < 4; i++) {
             if (INVENTORY[i] == null) {
+                //console.log("EMPTYYYY");
+                //console.log(i);
                 context.drawImage(
-                    empty_inventory_slot_background, 2*empty_inventory_slot_background.width + i*empty_inventory_slot_background.width + i*((canvas.width - 8*filled_inventory_slot_background.width)/3), canvas.height - empty_inventory_slot_background.height*1.5
+                    empty_inventory_slot_background, 0.2*empty_inventory_slot_background.width*SCALE + 0.95*i*empty_inventory_slot_background.width*SCALE, canvas.height - 0.4*empty_inventory_slot_background.height*1.5*SCALE, empty_inventory_slot_background.width*0.25, empty_inventory_slot_background.height*0.25
                 )
             } else if (INVENTORY[i] != null) {
-                context.drawImage(
-                    INVENTORY[i].inventory_image, 2*INVENTORY[i].inventory_image.width + i*INVENTORY[i].inventory_image.width + i*((canvas.width - 8*INVENTORY[i].inventory_image.width)/3), canvas.height - INVENTORY[i].inventory_image.height*1.5
-                )
+                const inventoryImage = new Image();
+                inventoryImage.src = FOOD[INVENTORY[i]].inventory_image;
+                inventoryImage.onload = function () {
+                    context.drawImage(
+                        inventoryImage, 0.2*inventoryImage.width*SCALE + 0.95*i*inventoryImage.width*SCALE, canvas.height - 0.6*inventoryImage.height*1.5*SCALE, inventoryImage.width*0.35, inventoryImage.height*0.35
+                    )
+                }
             }
         }
     } catch (error) {
