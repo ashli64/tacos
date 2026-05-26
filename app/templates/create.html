@@ -81,7 +81,7 @@
       background: #aabecf;
     }
 
-   
+
 
     button:hover {
       background: #444;
@@ -207,7 +207,7 @@
           </div>
 
           <div id="namee">
-            <p id="tt">Ingredients Added:</p>
+            <p id="tt">Ingredients:</p>
 
             <ul id="ingLi">
               {% for ing in ings %}
@@ -219,9 +219,9 @@
           <input type="hidden" name="ingredients" id="iHid">
 
           <div>
-            <input type="text" id="inp" name="addIng" pattern="[^,]*" value="">
+            <input type="text" placeholder="type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
             <button id="adI" type="button" onclick="newF()">
-              Add Ingredient (don't include commas)
+              Add Ingredient
             </button>
           </div>
 

@@ -21,25 +21,31 @@
       <div class="flex flex-row items-center gap-2">
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/create">Create</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
       </div>
     </div>
   </nav>
 
-  <body>
+  <body class="min-h-screen bg-gray-100">
     <br>
     <div class='main'>
       <form method="POST" action="/searchIngs" enctype="multipart/form-data">
 
-          <p>Ingredients (don't include commas):</p>
-          <ul id="ingredientList" class="list-disc list-inside bg-gray-50 p-3 rounded w-1/2 min-h-12 border">
+          <p class="text-3xl font-bold text-gray-800 mb-6">Ingredients:</p>
+          <ul id="ingredientList" class="list-disc list-inside bg-white p-3 rounded w-1/2 min-h-12 border">
             {% for ing in ings %}
               <li>{{ ing }}</li>
             {% endfor %}
           </ul>
+          <br>
           <input type="hidden" name="ingredients" id="ingredientsHidden">
-          <input type = "text" id = "inp" pattern="[^,]*" value="">
-          <button type="button" onclick="newF()">
+          <input placeholder="type and add one at a time" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" type = "text" id = "inp" pattern="[^,]*" value="">
+
+
+          <button type="button" onclick="newF()" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">
             Add Ingredient
           </button>
           <br>
@@ -48,16 +54,16 @@
 
       </form>
 
+<br>
 
-
-      <h1>Results</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">Results:</h1>
 
         <div class="grid">
             {% for recipe in stuff %}
-                <div class="card">
-                    <h3>{{ recipe[1] }}</h3>   
-                    <p>{{ recipe[3] }}</p>     
-                    <p><a href="/recipe/{{ recipe[0] }}">Open</a></p>
+                <div class="card w-1/2 bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
+                    <h3 class="font-bold text-gray-800 text-lg mb-1">{{ recipe[1] }}</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ recipe[3] }}</p>
+                    <p><a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">Open</a></p>
                 </div>
                 <br>
             {% endfor %}
@@ -69,28 +75,28 @@
 
       <script>
         let ingredients = [];
-    
+
         function newF() {
             const input = document.getElementById("inp");
             const value = input.value.trim();
-    
+
             if (value === "") return;
-    
+
             ingredients.push(value);
-    
+
             const li = document.createElement("li");
             li.textContent = value;
             document.getElementById("ingredientList").appendChild(li);
-    
+
             document.getElementById("ingredientsHidden").value =
                 ingredients.join(",");
-    
+
             input.value = "";
         }
       </script>
 
 
-    
+
 
 
     </div>

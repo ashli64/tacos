@@ -15,9 +15,9 @@
       <div class="flex flex-row items-center gap-2">
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/create">Create</a>
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
-        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/create' class="util">Create</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/game' class="util">Play</a>
+        <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition"href='/map' class="util">Map</a>
         <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
       </div>
     </div>
@@ -25,7 +25,11 @@
 
   <body>
     <br>
-      <h1>Name: {{ name }} </h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ name }} </h1>
+      <div class="author">
+        <a href="/profile/{{author}}" class="text-xl font-bold text-gray-800 mt-3">By: {{author}}</a>
+
+      </div>
 
         <div class="w-40 h-40 overflow-hidden rounded-xl">
           <img
@@ -36,39 +40,33 @@
         </div>
         <br>
 
-        <div class="content">
-          Description: {{ description }}
+        <di>
+          <h2 class="content text-3xl font-bold text-gray-800 mb-6"> Description: </h2>
+          {{ description }}
         </div>
-        <br>
+        <br><br>
 
         <div class="ingredients">
-          <h2>Ingredients:</h2>
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">Ingredients:</h2>
           {{ ingredients }}
         </div>
         <br>
 
 	      <div class="content">
-          <h2>Instructions:</h2>
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">Instructions:</h2>
           {{ instructions }}
         </div>
 
         <br>
 
         <div class="content">
-          Skill level necessary: {{ difficulty }}
+          <h2 class="text-3xl font-bold text-gray-800 mb-6"> Skill level necessary: </h2>
+          {{ difficulty }}
         </div>
 
 
     </div>
   </body>
 
-  <footer>
-    <br>
-
-    <div class="author">
-      <a href="/profile/{{author}}">Author: {{author}}</a>
-
-    </div>
-  </footer>
 
 </html>

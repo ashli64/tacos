@@ -84,7 +84,7 @@ def allowed_file(filename):
 def homepage():
     if "username" not in session:
         return redirect("/login")
- 
+
     recipes = fetch('recipes', True, 'id, name, author, description')
 
     recipeSearch = []
@@ -190,7 +190,7 @@ def create():
         db.commit()
         db.close()
         return redirect("/")
- 
+
     return render_template("create.html", ings = [], username = session['username'])
 
 
@@ -281,17 +281,17 @@ def register():
 def profile(pid):
     if "username" not in session:
         return redirect("/login")
-    db = get_db() 
-    c = db.cursor() 
+    db = get_db()
+    c = db.cursor()
     c.execute ("""
-        SELECT id, name, description, pic, difficulty, author 
+        SELECT id, name, description, pic, difficulty, author
         FROM recipes
-        WHERE author = ? 
-    """, (pid,)) 
+        WHERE author = ?
+    """, (pid,))
     recipes = c.fetchall()
     db.close()
     return render_template ("profile.html", user=pid, recipes=recipes)
-   
+
 
 
 
@@ -390,5 +390,5 @@ def game():
 
 
 if __name__=='__main__':
-    app.debug = False
+    app.debug = True
     app.run()

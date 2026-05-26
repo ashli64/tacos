@@ -20,7 +20,7 @@
 
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-100">
 <!--NAV BAR-->
     <nav>
       <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
@@ -39,11 +39,11 @@
     </nav>
 
 <div class="container text-center mt-5">
-  <h1 class="fw-bold text-9x1">Welcome to Tacos: A Recipe Search & Share Tool</h1>
+  <h1 class="fw-bold text-xl">Welcome to Tacos: A Recipe Search & Share Tool</h1>
 </div>
 
 <div class="container text-center mt-5">
-  <h1 class="fw-bold display-4">Explore our library of recipes or search for a specific recipe based off of it's name below:</h1>
+  <h1 class="text-xl fw-bold display-4">Explore our library of recipes or search for a specific recipe based off of it's name below:</h1>
 </div>
 
 <br>
@@ -51,25 +51,32 @@
 <!-- the search  bar that shows everything if blank and limits search -->
 
 
-<h1>Recipe Catalog</h1>
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Search Recipes</h2>
 
 <form action="/results" method="GET" class="search-box">
-    <input type="text" name="search" placeholder="Search recipe name" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+    <input type="text" name="search" placeholder="Search recipe name" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+<br>
     <button type="submit" class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest">Search</button>
 </form>
 
+<br>
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Have Ingredients Waiting to be Used?</h2>
+
 <a href="/searchIngs"
    class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 px-4 inline-block text-center">
-    Search Ingredients
+    Search By Ingredients
 </a>
 
+<br>
+<br>
+<h2 class="text-3xl font-bold text-gray-800 mb-6">Recipe Catalog</h2>
+
 <div class="grid">
-    <br>
     {% for recipe in recipes %}
-    <div class="card">
-        <h3>{{ recipe[1] }}</h3>
-        <p>{{ recipe[3] }}</p>
-        <a href="/recipe/{{ recipe[0] }}">Open</a>
+    <div class="card w-1/2 bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
+        <h3 class="font-bold text-gray-800 text-lg mb-1">{{ recipe[1] }}</h3>
+        <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ recipe[3] }}</p>
+        <a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">Open</a>
     </div>
     <br>
     {% endfor %}
