@@ -59,15 +59,119 @@ background_card_3.src = "/static/img/background_card_3.png";
 
 const main_game_card_list = [background_card_0, background_card_1, background_card_2, background_card_3];
 
-//INVENTORY
+// INVENTORY
 const INVENTORY = [];
-const INGREDIENTS = [[],[]];
 
+// shelves, fridge
+const INGREDIENTS = [[], []];
+
+let FOOD;
+
+// RECIPES
+const BURGER0_RECIPE = [];
+const BURGER1_RECIPE = [];
+const BURGER2_RECIPE = [];
+const BURGER3_RECIPE = [];
+
+const BURGER_RECIPES = [];
+
+const HOTDOG0_RECIPE = [];
+const HOTDOG1_RECIPE = [];
+
+fetch('/static/js/foods.json')
+    .then(response => response.json())
+    .then(data => {
+
+        FOOD = data;
+
+        // INGREDIENT GROUPS
+
+        // shelves
+        INGREDIENTS[0].push(
+            'tomato',
+            'bun_burger',
+            'bun_hotdog',
+            'sauce'
+        );
+
+        // fridge
+        INGREDIENTS[1].push(
+            'lettuce',
+            'patty',
+            'sausage'
+        );
+
+        // BURGER RECIPES
+
+        BURGER0_RECIPE.push(
+            'bun_burger',
+            'patty'
+        );
+
+        BURGER1_RECIPE.push(
+            'bun_burger',
+            'patty',
+            'lettuce'
+        );
+
+        BURGER2_RECIPE.push(
+            'bun_burger',
+            'patty',
+            'tomato'
+        );
+
+        BURGER3_RECIPE.push(
+            'bun_burger',
+            'patty',
+            'lettuce',
+            'tomato'
+        );
+
+        BURGER_RECIPES.push(
+            BURGER0_RECIPE,
+            BURGER1_RECIPE,
+            BURGER2_RECIPE,
+            BURGER3_RECIPE
+        );
+
+        // HOTDOG RECIPES
+
+        HOTDOG0_RECIPE.push(
+            'bun_hotdog',
+            'sausage'
+        );
+
+        HOTDOG1_RECIPE.push(
+            'bun_hotdog',
+            'sausage',
+            'sauce'
+        );
+
+        //console.log(FOOD);
+        //console.log(INGREDIENTS);
+        //console.log(BURGER_RECIPES);
+        //console.log(HOTDOG0_RECIPE);
+        //console.log(HOTDOG1_RECIPE);
+
+    })
+    .catch(error => {
+
+        console.error('Error loading food JSON:', error);
+
+    });
 
 const empty_inventory_slot_background = new Image();
 empty_inventory_slot_background.src = "/static/img/empty_inventory_slot_background.src";
-//TO CREATE SCALEABLE GAME
 
+function createFood(type) {
+    return {
+        type: type,
+        isCooked: false, //if its a sausage or meat, show cooked variant
+        isStock: true //if its in stock, show stock, if in inventory, show its basic image
+    };
+}
+
+//TO CREATE SCALEABLE GAME
 function loadImage(img) {
     return new Promise((resolve, reject) => {
         img.onload = () => resolve(img);
@@ -76,7 +180,7 @@ function loadImage(img) {
 }
 
 function start_screen() {
-    console.log("start_screen launched");
+    //console.log("start_screen launched");
     try {
         //const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(src => loadImage(src)));
     
@@ -112,24 +216,25 @@ function get_coordinates(event) {
 canvas.addEventListener('click', trigger_buttons);
 
 function trigger_buttons(event){
-    console.log("get_coordinates click detected");  
+    //console.log("get_coordinates click detected");  
     const coords = get_coordinates(event);
+    console.log(coords);
 
     if (GAME_MODE==0) {
-        console.log("click detected on start page");
+        //.log("click detected on start page");
         trigger_buttons_start(coords);
     }
 
     else if (GAME_MODE==1) {
-        console.log("click detected on tutorial page");
+        //console.log("click detected on tutorial page");
         trigger_buttons_tutorial(coords);
     }
     else if (GAME_MODE == 2) {
-        console.log("click detected on game page");
+        //console.log("click detected on game page");
         trigger_buttons_main_game(coords);
     }
     else if (GAME_MODE == 3){
-        console.log("click detected on night page");
+        //console.log("click detected on night page");
     }     
 }
 
@@ -146,14 +251,14 @@ function trigger_buttons_start(c) {
     
     if (c.x > start_button_x && c.x < (start_button_x+start_button_width)) {
         if (c.y > start_button_y && c.y < (start_button_y+start_button_height)) {
-            console.log("run game");
+            //console.log("run game");
             GAME_MODE = 2;
         }
     }
 
     if (c.x > tutorial_button_x && c.x < (tutorial_button_x+tutorial_button_width)) {
         if (c.y > tutorial_button_y && c.y < (tutorial_button_y+tutorial_button_height)) {
-            console.log("run tutorial");
+            //console.log("run tutorial");
             GAME_MODE = 1;
         }
     }  
@@ -187,7 +292,7 @@ function trigger_buttons_tutorial(c) {
     
     if (c.x > exit_cross_x && c.x < exit_cross_x + exit_cross_width) {
         if (c.y > exit_cross_y && c.y < exit_cross_y + exit_cross_height) {
-            console.log("AAAAAAAAAAAAAAAAAAAA");
+            //console.log("AAAAAAAAAAAAAAAAAAAA");
             trigger_exit_cross();            
         }
     }
@@ -300,13 +405,83 @@ function main_game_screen() {
         console.error("Some images may have not loaded");
     }
 
+    //drawing the inventory bar
     try {
         for (let i = 0; i < 4; i++) {
             if (INVENTORY[i] == null) {
                 context.drawImage(
-                    empty_inventory_slot_background, 2*empty_inventory_slot_background.width + i*empty_inventory_slot_background.width + i*((canvas.width - 8*filled_inventory_slot_background)/3), canvas.height - empty_inventory_slot_background.height*1.5
+                    empty_inventory_slot_background, 2*empty_inventory_slot_background.width + i*empty_inventory_slot_background.width + i*((canvas.width - 8*filled_inventory_slot_background.width)/3), canvas.height - empty_inventory_slot_background.height*1.5
+                )
+            } else if (INVENTORY[i] != null) {
+                context.drawImage(
+                    INVENTORY[i].inventory_image, 2*INVENTORY[i].inventory_image.width + i*INVENTORY[i].inventory_image.width + i*((canvas.width - 8*INVENTORY[i].inventory_image.width)/3), canvas.height - INVENTORY[i].inventory_image.height*1.5
                 )
             }
+        }
+    } catch (error) {
+        console.error("Some images may have not loaded");
+    }
+
+    //drawing the items in stock
+    try {
+        if (GAME_CARD == 0) {
+        // TOMATO
+            const tomatoImage = new Image();
+            tomatoImage.src = FOOD[INGREDIENTS[0][0]].stock_image;
+
+            tomatoImage.onload = function () {
+                context.drawImage(tomatoImage, 0.2 * tomatoImage.width * SCALE, 0.2 * tomatoImage.height * SCALE, tomatoImage.width * SCALE * 0.25, tomatoImage.height * SCALE * 0.25);
+            };
+
+            // BURGER BUN
+            const burgerBunImage = new Image();
+            burgerBunImage.src = FOOD[INGREDIENTS[0][1]].stock_image;
+
+            burgerBunImage.onload = function () {
+                context.drawImage(burgerBunImage, 0.2 * burgerBunImage.width * SCALE*7, 0.2 * burgerBunImage.height * SCALE*2.2, burgerBunImage.width * SCALE * 0.25, burgerBunImage.height * SCALE * 0.25);
+            };
+
+            // HOTDOG BUN
+            const hotdogBunImage = new Image();
+            hotdogBunImage.src = FOOD[INGREDIENTS[0][2]].stock_image;
+
+            hotdogBunImage.onload = function () {
+                context.drawImage(hotdogBunImage, 0.2 * hotdogBunImage.width * SCALE * 6, 0.2 * hotdogBunImage.height * SCALE*2.2, hotdogBunImage.width * SCALE * 0.25, hotdogBunImage.height * SCALE * 0.25);
+            };
+
+            // SAUCE
+            const sauceImage = new Image();
+            sauceImage.src = FOOD[INGREDIENTS[0][3]].stock_image;
+
+            sauceImage.onload = function () {
+                context.drawImage(sauceImage, 0.2 * sauceImage.width * SCALE* 2.2, 0.2 * sauceImage.height * SCALE*2.3, sauceImage.width * SCALE * 0.25, sauceImage.height * SCALE * 0.25);
+            };
+        } else if (GAME_CARD == 1) {
+
+            // LETTUCE
+            const lettuceImage = new Image();
+            lettuceImage.src = FOOD[INGREDIENTS[1][0]].stock_image;
+
+            lettuceImage.onload = function () {
+                context.drawImage(lettuceImage, 0.2 * lettuceImage.width * SCALE * 3.2, 0.2 * lettuceImage.height * SCALE * 2.3, lettuceImage.width * SCALE * 0.25, lettuceImage.height * SCALE * 0.25);
+            };
+
+            // PATTY
+            const pattyImage = new Image();
+            pattyImage.src = FOOD[INGREDIENTS[1][1]].stock_image;
+
+            pattyImage.onload = function () {
+                context.drawImage(pattyImage, 0.2 * pattyImage.width * SCALE * 2, 0.2 * pattyImage.height * SCALE * 1.1, pattyImage.width * SCALE * 0.25, pattyImage.height * SCALE * 0.25);
+            };
+
+            // SAUSAGE
+            const sausageImage = new Image();
+            sausageImage.src = FOOD[INGREDIENTS[1][2]].stock_image;
+
+            sausageImage.onload = function () {
+                context.drawImage(sausageImage, 0.2 * sausageImage.width * SCALE * 3, 0.2 * sausageImage.height * SCALE * 4, sausageImage.width * SCALE * 0.25, sausageImage.height * SCALE * 0.25);
+            };
+
         }
     } catch (error) {
         console.error("Some images may have not loaded");
@@ -319,14 +494,14 @@ function main_game() {
 
 
 function game() {
-    console.log(GAME_MODE);
+    //console.log(GAME_MODE);
     if (GAME_MODE == 0) {
         start_screen();
-        console.log("game() start screen");
+        //console.log("game() start screen");
     }
     else if (GAME_MODE == 1) {
         tutorial_screen();
-        console.log("game() tutorial screen");
+        //console.log("game() tutorial screen");
     }
     else if (GAME_MODE == 2) {
         main_game();
