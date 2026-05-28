@@ -408,7 +408,7 @@ def nearby():
         pTyp = "restaurant" if kind in ("restaurant", "fast_food") else "grocery store"
         places.append({
             "name": name,
-            "type": pType,
+            "type": pTyp,
             "lat": e.get("lat"),
             "lng": e.get("lon"),
         })
