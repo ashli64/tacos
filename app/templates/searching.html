@@ -3,14 +3,24 @@
 <html>
 
   <head>
-    <title>HOME</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Searching</title>
+  
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <style>body { font-family: 'Poppins', sans-serif; }</style>
+
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+
+    <style>
+      body {
+        font-family: 'Manrope', sans-serif;
+      }
+    </style>
   </head>
 
   <nav>
@@ -29,77 +39,179 @@
     </div>
   </nav>
 
-  <body class="min-h-screen bg-gray-100">
-    <br>
-    <div class='main'>
-      <form method="POST" action="/searchIngs" enctype="multipart/form-data">
+  <body class="min-h-screen bg-[#f5f5f5] text-[#222] font-[Poppins]">
 
-          <p class="text-3xl font-bold text-gray-800 mb-6">Ingredients:</p>
-          <ul id="ingredientList" class="list-disc list-inside bg-white p-3 rounded w-1/2 min-h-12 border">
-            {% for ing in ings %}
-              <li>{{ ing }}</li>
-            {% endfor %}
-          </ul>
-          <br>
-          <input type="hidden" name="ingredients" id="ingredientsHidden">
-          <input placeholder="type and add one at a time" class="w-1/2 px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition" type = "text" id = "inp" pattern="[^,]*" value="">
-
-
-          <button type="button" onclick="newF()" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">
-            Add Ingredient
-          </button>
-          <br>
-
-        <input class="w-1/3 font-bold bg-gray-800 rounded-xl text-white hover:bg-gray-700 py-3 mt-2 transition cursor-pointer text-sm uppercase tracking-widest" type="submit" id='submit' value="Search">
-
-      </form>
-
-<br>
-
-      <h1 class="text-3xl font-bold text-gray-800 mb-6">Results:</h1>
-
-        <div class="grid">
-            {% for recipe in stuff %}
-                <div class="card w-1/2 bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
-                    <h3 class="font-bold text-gray-800 text-lg mb-1">{{ recipe[1] }}</h3>
-                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ recipe[3] }}</p>
-                    <p><a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">Open</a></p>
-                </div>
-                <br>
-            {% endfor %}
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+  
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+  
+          <div>
+            <h1 class="text-4xl font-extrabold text-gray-800">
+              Find Recipes
+            </h1>
+  
+            <p class="text-gray-500 mt-2">
+              Search recipes by ingredients you already have
+            </p>
+          </div>
+  
         </div>
-
+  
+        <form
+          method="POST"
+          action="/searchIngs"
+          enctype="multipart/form-data"
+          class="space-y-6">
+          <div>
+  
+            <p class="text-xl font-bold text-gray-800 mb-3">
+              Ingredients
+            </p>
+  
+            <ul
+              id="ingredientList"
+              class="bg-[#AAD3E0] rounded-2xl p-5 min-h-[90px] border border-gray-200 space-y-2 text-gray-800 font-medium">
+  
+              {% for ing in ings %}
+                <li>• {{ ing }}</li>
+              {% endfor %}
+  
+            </ul>
+  
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+  
+            <input
+              placeholder="Type and add one ingredient at a time"
+              class="flex-1 px-5 py-4 rounded-2xl border border-gray-200 bg-[#fafafa] text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition"
+              type="text"
+              id="inp"
+              pattern="[^,]*"
+              value="">
+  
+            <button
+              type="button"
+              onclick="newF()"
+              class="inline-flex items-center justify-center rounded-2xl bg-[#AAD3E0] px-6 py-4 text-sm font-semibold text-gray-800 transition hover:brightness-95">
+  
+              Add Ingredient
+  
+            </button>
+  
+          </div>
+  
+          <input
+            type="hidden"
+            name="ingredients"
+            id="ingredientsHidden">
+  
+          <input
+            class="w-full md:w-auto cursor-pointer rounded-2xl bg-gray-800 px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-gray-700"
+            type="submit"
+            id="submit"
+            value="Search Recipes">
+        </form>
+  
+      </div>
+  
+      <div class="mt-10">
+  
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-3xl font-bold text-gray-800">
+            Results
+          </h2>
+  
+          <span class="text-gray-500 font-medium">
+            {{ stuff|length }} recipes
+          </span>
+  
+        </div>
+  
         {% if stuff|length == 0 %}
-            <p>No Results</p>
+  
+          <div class="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm">
+            <p class="text-gray-500 text-lg">
+              No recipes found
+            </p>
+          </div>
+  
         {% endif %}
-
-      <script>
-        let ingredients = [];
-
-        function newF() {
-            const input = document.getElementById("inp");
-            const value = input.value.trim();
-
-            if (value === "") return;
-
-            ingredients.push(value);
-
-            const li = document.createElement("li");
-            li.textContent = value;
-            document.getElementById("ingredientList").appendChild(li);
-
-            document.getElementById("ingredientsHidden").value =
-                ingredients.join(",");
-
-            input.value = "";
-        }
-      </script>
-
-
-
-
-
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+  
+          {% for recipe in stuff %}
+  
+            <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 hover:shadow-md transition">
+  
+              <div class="flex flex-col h-full justify-between">
+  
+                <div>
+  
+                  <h3 class="text-2xl font-bold text-gray-800 mb-3">
+                    {{ recipe[1] }}
+                  </h3>
+  
+                  <p class="text-gray-500 leading-relaxed mb-6">
+                    {{ recipe[3] }}
+                  </p>
+  
+                </div>
+  
+                <div>
+  
+                  <a
+                    href="/recipe/{{ recipe[0] }}"
+                    class="inline-flex items-center justify-center rounded-xl bg-gray-800 px-5 py-3 text-sm font-semibold text-white transition hover:bg-gray-700">
+  
+                    Open Recipe
+  
+                  </a>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+  
+          {% endfor %}
+  
+        </div>
+  
+      </div>
+  
     </div>
+  
+    <script>
+  
+      let ingredients = [];
+  
+      function newF() {
+  
+        const input = document.getElementById("inp");
+        const value = input.value.trim();
+  
+        if (value === "") return;
+  
+        ingredients.push(value);
+  
+        const li = document.createElement("li");
+        li.textContent = "• " + value;
+  
+        document
+          .getElementById("ingredientList")
+          .appendChild(li);
+  
+        document
+          .getElementById("ingredientsHidden")
+          .value = ingredients.join(",");
+  
+        input.value = "";
+  
+      }
+  
+    </script>
+  
   </body>
 
   <footer>

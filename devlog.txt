@@ -3,6 +3,13 @@ Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
 
+naomiK -- 2026-05-28 17:38
+   - Added styling 
+   - Added reviews table
+   - Added review feature
+   - Added review file
+   - Added star image
+
 naomiK -- 2026-05-25 02:20
    - Added styling to create
    - Added ingredients search

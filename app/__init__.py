@@ -66,6 +66,16 @@ CREATE TABLE IF NOT EXISTS recipes (
 )
 """)
 
+c.execute("""
+CREATE TABLE IF NOT EXISTS reviews (
+   author TEXT,
+   stars INT,
+   summary TEXT,
+   recipe INT,
+   title TEXT
+)
+""")
+
 
 
 db.commit()
@@ -193,6 +203,29 @@ def create():
 
     return render_template("create.html", ings = [], username = session['username'])
 
+@app.route('/review/<rid>', methods=["GET", "POST"])
+def review(rid):
+    author = session['username']
+    recipeId = rid
+
+    if request.method == "POST":
+        db = get_db()
+        c = db.cursor()
+
+        query = "INSERT INTO reviews (author, stars, summary, recipe, title) VALUES (?, ?, ?, ?, ?)"
+
+        stars = request.form.get('stars', default=0, type=int)
+        params = (author, stars, request.form["summary"], recipeId, request.form['ttl'])
+        c.execute(query, params)
+
+        db.commit()
+        db.close()
+
+        return redirect("/")
+
+
+    return render_template("review.html", username = author)
+
 
 @app.route('/recipe/<rid>', methods=["GET", "POST"])
 def recipe(rid):
@@ -213,7 +246,9 @@ def recipe(rid):
     else:
         pic = ''
 
-    return render_template("recipe.html", name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic)
+    s = fetch('reviews', 'recipe = ?', "author, stars, summary, title", (rid,))
+
+    return render_template("recipe.html", name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic, rid = rid, stuff = s)
 
 
 @app.route("/logout", methods=["GET", "POST"])

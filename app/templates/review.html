@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>CREATE</title>
+  <title>Review</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
       border-radius: 14px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
+
     .formWrap{
       display: grid;
       grid-template-columns: 1.7fr 1fr;
@@ -50,12 +51,14 @@
       font-size: 14px;
       background: #fafafa;
     }
+
     textarea:focus,
     input:focus {
       outline: none;
       border-color: #888;
       background: white;
     }
+
     p,label{
       font-weight: 600;
       margin-top: 6px;
@@ -160,8 +163,7 @@
     }
   </style>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ 
 </head>
 
 <nav>
@@ -174,9 +176,6 @@
       <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
 
       <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
-      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
-
-      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
 
       <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
     </div>
@@ -187,150 +186,96 @@
 
   <div class='main'>
 
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="">
 
       <div class="formWrap">
         <div class="lcol">
           <div>
+            <p>Review by {{username}}</p>
+          </div>
+
+          <div>
             <p>Title:</p>
-            <textarea name="name" placeholder="Recipe Name:" required></textarea>
+            <textarea name="ttl" placeholder="Title:" required></textarea>
           </div>
 
+       
           <div>
-            <p>Description:</p>
-            <textarea name="description" rows="5" placeholder="Enter food description..." required></textarea>
-          </div>
-
-          <div id="namee">
-            <p id="tt">Ingredients:</p>
-
-            <ul id="ingLi">
-              {% for ing in ings %}
-              <li>{{ ing }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          <input type="hidden" name="ingredients" id="iHid">
-
-          <div>
-            <input type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
-            <button id="adI" type="button" onclick="newF()">
-              Add Ingredient
-            </button>
-          </div>
-
-          <div>
-            <p>Instructions:</p>
+            <p>Review:</p>
 
             <textarea
               class="w-full"
-              name="instructions"
+              name="summary"
               rows="12"
-              placeholder="Enter instructions..."
+              placeholder="Enter review..."
               required></textarea>
           </div>
 
         </div>
 
         <div class="rcol">
-          <div class="sideCard">
-
-            <label for="pic">Pick a photo:</label>
-
-            <input
-              name="pic"
-              id="pic"
-              type="file"
-              accept="image/*"
-              capture="environment">
-
-          </div>
 
           <div class="sideCard">
 
-            <p>Skill Level Required:</p>
+            <p>Stars:</p>
 
-            <fieldset>
-              <input type="radio" name="diff" value="Hopeless in kitchen" required> Hopeless in kitchen<br>
-              <input type="radio" name="diff" value="Beginner"> Beginner<br>
-              <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
-              <input type="radio" name="diff" value="Good"> Good<br>
-              <input type="radio" name="diff" value="Advanced"> Advanced<br>
-            </fieldset>
+            <fieldset class="space-y-2">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
+                  <input type="radio" name="stars" value="1" required class="accent-gray-800">
+                  <div class="flex gap-1">
+                    <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
+                  </div>
+                </label>
+              
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
+                  <input type="radio" name="stars" value="2" class="accent-gray-800">
+                  <div class="flex gap-1">
+                    {% for i in range(2) %}
+                      <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
+                    {% endfor %}
+                  </div>
+                </label>
+              
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
+                  <input type="radio" name="stars" value="3" class="accent-gray-800">
+                  <div class="flex gap-1">
+                    {% for i in range(3) %}
+                      <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
+                    {% endfor %}
+                  </div>
+                </label>
+              
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
+                  <input type="radio" name="stars" value="4" class="accent-gray-800">
+                  <div class="flex gap-1">
+                    {% for i in range(4) %}
+                      <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
+                    {% endfor %}
+                  </div>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
+                  <input type="radio" name="stars" value="5" class="accent-gray-800">
+                  <div class="flex gap-1">
+                    {% for i in range(5) %}
+                      <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
+                    {% endfor %}
+                  </div>
+                </label>
+              
+              </fieldset>
 
           </div>
 
-          <div class="sideCard">
-            <p>Choose Origin of Dish:</p>
-            <div id="map"></div>
-            <input type="hidden" name="lt" id="lt">
-            <input type="hidden" name="lg" id="lg">
-          </div>
+        
         </div>
 
       </div>
 
-      <input type="submit" id='submit' value="Publish Recipe">
+      <input type="submit" id='submit' value="Publish Review">
 
     </form>
 
-    <script>
-
-      let ingredients = [];
-
-      const bounds = [
-        [-85, -180],
-        [85, 180]
-      ];
-
-      const mp = L.map('map', {
-        minZoom: 2,
-        maxZoom: 18,
-        maxBounds: bounds,
-        maxBoundsViscosity: 1.0
-      }).setView([10, 0], 2);
-
-      let mark = null;
-
-      function newF() {
-
-        const input = document.getElementById("inp");
-        const value = input.value.trim();
-
-        if (value === "") return;
-
-        ingredients.push(value);
-
-        const li = document.createElement("li");
-        li.textContent = value;
-
-        document.getElementById("ingLi").appendChild(li);
-
-        document.getElementById("iHid").value =
-          ingredients.join(",");
-
-        input.value = "";
-      }
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-        noWrap: true
-      }).addTo(mp);
-
-      mp.on('click', function (evt) {
-
-        const lat = evt.latlng.lat;
-        const lng = evt.latlng.lng;
-
-        document.getElementById("lt").value = lat;
-        document.getElementById("lg").value = lng;
-        if (mark) {
-          mp.removeLayer(mark);
-        }
-        mark = L.marker([lat, lng]).addTo(mp);
-      });
-
-    </script>
+   
 
   </div>
 
