@@ -101,6 +101,8 @@ def homepage():
     for recipe in recipes:
         recipeSearch.append(recipe[1])
 
+        
+
     return render_template("home.html",recipes=recipes,recipeSearch=recipeSearch, username = session['username'])
 
 @app.route('/results', methods=["GET"])
