@@ -133,9 +133,6 @@
       transition: 0.2s;
     }
 
-    #submit:hover{
-      background: #444;
-    }
 
     .sideCard{
       background: #fafafa;
@@ -215,7 +212,7 @@
 
           <div>
             <input type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
-            <button id="adI" type="button" onclick="newF()">
+            <button class = "hover:brightness-95" id="adI" type="button" onclick="newF()">
               Add Ingredient
             </button>
           </div>
@@ -271,7 +268,7 @@
 
       </div>
 
-      <input  type="submit" id='submit' value="Publish Recipe">
+      <input  class="hover:brightness-95" type="submit" id='submit' value="Publish Recipe">
 
     </form>
 
