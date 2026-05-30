@@ -95,7 +95,7 @@ def homepage():
     if "username" not in session:
         return redirect("/login")
 
-    recipes = fetch('recipes', True, 'id, name, author, description')
+    recipes = fetch('recipes', True, 'id, name, author, description, pic')
 
     recipeSearch = []
     for recipe in recipes:

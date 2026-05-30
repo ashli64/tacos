@@ -1,8 +1,8 @@
 <!--
-  Veronika Duvanova, Naomi Kurian, Alvin Sze, Andrew Tsai   Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
+  Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kur>
   Tacos
   SoftDev
-  P05 -- El Fin
+  P05 -- Le Fin
   2026-05-13
  -->
  <html>
@@ -26,10 +26,13 @@
 
    </head>
    <body>
-
+      <div
+        class="fixed inset-0 bg-cover bg-center opacity-30 -z-20"
+        style="background-image: url('{{ url_for('static', filename='uploads/tacos2.jpg') }}');">
+      </div>
 
       <nav>
-        <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+        <div class="bg-[#7CA1A3] backdrop-blur-sm flex items-center justify-between h-20 px-6">
           <a class="flex items-center gap-2" href="/">
             <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
           </a>
@@ -43,7 +46,7 @@
         </div>
       </nav>
 
-     <div id="game-holder" style="width:100%">
+     <div id="game-holder" style="width:100%" class="pt-20">
        <canvas id="main-canvas" style="margin:auto; position:relative;border:1px solid #000000;"></canvas>
      </div>
 

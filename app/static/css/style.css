@@ -1,25 +1,24 @@
-
-
 .taco-container {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    overflow: hidden;
-  }
-  
-.taco-walk {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100px;
-    animation: walkAcross 6s linear infinite alternate;
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  background-color: aqua;
 }
-  
-@keyframes walkAcross {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(100vw - 120px));
-    }
+
+.taco-walk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  animation: walky 6s linear infinite alternate;
+}
+
+@keyframes walky {
+  from {
+    transform: translateX(0vw);
+  }
+  to {
+    transform: translateX(70vw);
+  }
 }

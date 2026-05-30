@@ -22,7 +22,7 @@
   </head>
 
   <nav>
-    <div class="bg-gray-800/95 backdrop-blur-sm flex items-center justify-between h-20 px-6">
+    <div class="bg-[#7CA1A3] backdrop-blur-sm flex items-center justify-between h-20 px-6">
       <a class="flex items-center gap-2" href="/">
         <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
       </a>
@@ -38,25 +38,31 @@
 
   <body class="">
 
+    <div
+        class="fixed inset-0 bg-cover bg-center opacity-70 -z-20"
+        style="background-image: url('{{ url_for('static', filename='uploads/tacos3.jpg') }}');">
+    </div>
+
     <div class="max-w-7xl mx-auto px-6 py-8">
   
-      <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-  
-        <div>
+      <div class="relative z-20 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-3xl shadow-sm p-8 mb-6 overflow-visible">
+        <div class="flex flex-col items-center text-center">
           <h1 class="text-4xl font-extrabold text-gray-800">
             Recipe Map
           </h1>
-  
-          <p class="text-gray-500 mt-2">
+      
+          <p class="text-gray-500 mt-2 mb-4">
             See recipes' origins...
           </p>
         </div>
-  
+      
+        <img
+          src="/static/uploads/taco.gif"
+          class="taco-walk absolute -bottom-10 right-10 z-30 w-80 h-auto pointer-events-none">
+      
       </div>
   
-      <div class="taco-container"> <img src="/static/uploads/taco.gif" class="taco-walk"> </div>
-  
-      <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-4">
+      <div class="relative z-10 bg-white border border-gray-200 rounded-3xl shadow-sm p-4">
   
         <div
           id="map"
