@@ -63,7 +63,7 @@
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
                 <h3 class="font-bold text-gray-800 text-lg mb-1">{{ recipe[1] }}</h3>
                 <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ recipe[3] }}</p>
-                <a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition">Open</a>
+                <a href="/recipe/{{ recipe[0] }}" class="inline-block font-semibold bg-[#7CA1A3] text-white text-sm rounded-xl px-4 py-2 hover:brightness-95 transition">Open</a>
             </div>
             {% endfor %}
         </div>
@@ -77,7 +77,7 @@
             <button
                 id="nearry"
                 onclick="findNearby()"
-                class="font-bold bg-gray-800 text-white rounded-xl px-6 py-3 hover:bg-gray-700 transition text-sm uppercase tracking-widest">
+                class="font-bold bg-[#7CA1A3] text-white rounded-xl px-6 py-3 hover:brightness-95 transition text-sm uppercase tracking-widest">
                 Find Nearby Places
             </button>
 
@@ -110,7 +110,7 @@
                         const container = document.getElementById("nres");
 
                         if (places.length === 0) {
-                            container.innerHTML = "<p class='text-center text-gray-400'>No nearby places found. Try a different search term.</p>";
+                            container.innerHTML = "<p class='text-center text-gray-400'>No nearby places found</p>";
                             return;
                         }
 
@@ -132,7 +132,7 @@
                                             <p class="font-bold text-gray-800">${p.name}</p>
                                             <p class="text-xs text-gray-400 mt-1">Restaurant</p>
                                         </div>
-                                        <a href="${mapu}" target="_blank" class="font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition ml-4 whitespace-nowrap">
+                                        <a href="${mapu}" target="_blank" class="font-semibold bg-[#7CA1A3] text-white text-sm rounded-xl px-4 py-2 hover:brightness-95 transition ml-4 whitespace-nowrap">
                                             View Map
                                         </a>
                                     </div>
@@ -154,7 +154,7 @@
                                             <p class="font-bold text-gray-800">${p.name}</p>
                                             <p class="text-xs text-gray-400 mt-1">Grocery Store</p>
                                         </div>
-                                        <a href="${mapu}" target="_blank" class="font-semibold bg-gray-800 text-white text-sm rounded-xl px-4 py-2 hover:bg-gray-700 transition ml-4 whitespace-nowrap">
+                                        <a href="${mapu}" target="_blank" class="font-semibold bg-[#7CA1A3] text-white text-sm rounded-xl px-4 py-2 hover:brightness-95 transition ml-4 whitespace-nowrap">
                                             View Map
                                         </a>
                                     </div>
@@ -171,7 +171,7 @@
                     });
             }, function() {
                 status.classList.remove("hidden");
-                status.textContent = "Location Access Denied...Change Your Settings";
+                status.textContent = "Location Access Denied--Change Your Settings";
             });
         }
         </script>
