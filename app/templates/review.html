@@ -13,7 +13,6 @@
   <style>
     body{
       font-family: 'Manrope', sans-serif;
-      background: #f5f5f5;
       color: #222;
     }
 
@@ -141,7 +140,7 @@
     }
 
     .sideCard{
-      background: #fafafa;
+      background: white;
       border: 1px solid #ddd;
       border-radius: 14px;
       padding: 18px;
@@ -182,16 +181,16 @@
   </div>
 </nav>
 
-<body>
+<body class = "bg-cover bg-center bg-no-repeat min-h-screen" style="background-image: url('{{ url_for('static', filename='uploads/t.jpg') }}');">
 
-  <div class='main'>
+  <div class='main bg-[#D8E7EB]/70'>
 
     <form method="POST" action="">
 
       <div class="formWrap">
         <div class="lcol">
           <div>
-            <p>Review by {{username}}</p>
+            <h1>Review by {{username}}</h1>
           </div>
 
           <div>
@@ -219,16 +218,16 @@
 
             <p>Stars:</p>
 
-            <fieldset class="space-y-2">
-                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
-                  <input type="radio" name="stars" value="1" required class="accent-gray-800">
+            <fieldset class="space-y-2 bg-white">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg">
+                  <input type="radio" name="stars" value="1" required class="">
                   <div class="flex gap-1">
                     <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
                   </div>
                 </label>
               
-                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
-                  <input type="radio" name="stars" value="2" class="accent-gray-800">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg">
+                  <input type="radio" name="stars" value="2" class="">
                   <div class="flex gap-1">
                     {% for i in range(2) %}
                       <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
@@ -236,8 +235,8 @@
                   </div>
                 </label>
               
-                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
-                  <input type="radio" name="stars" value="3" class="accent-gray-800">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg">
+                  <input type="radio" name="stars" value="3" class="">
                   <div class="flex gap-1">
                     {% for i in range(3) %}
                       <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
@@ -245,16 +244,16 @@
                   </div>
                 </label>
               
-                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
-                  <input type="radio" name="stars" value="4" class="accent-gray-800">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg">
+                  <input type="radio" name="stars" value="4" class="">
                   <div class="flex gap-1">
                     {% for i in range(4) %}
                       <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
                     {% endfor %}
                   </div>
                 </label>
-                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100">
-                  <input type="radio" name="stars" value="5" class="accent-gray-800">
+                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg">
+                  <input type="radio" name="stars" value="5" class="">
                   <div class="flex gap-1">
                     {% for i in range(5) %}
                       <img src="{{ url_for('static', filename='uploads/star.png') }}" class="w-5 h-5">
