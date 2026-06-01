@@ -18,6 +18,7 @@
       body {
         font-family: 'Manrope', sans-serif;
       }
+
     </style>
   </head>
 
@@ -119,24 +120,29 @@
           ).addTo(map);
   
           marker.bindPopup(`
-            <div class="w-[220px] p-1">
-  
-              <img
-                src="/static/uploads/${r[2]}"
-                class="w-full h-32 object-cover rounded-xl mb-3">
-  
-              <h3 class="text-lg font-bold text-gray-800 mb-2">
-                ${r[1]}
-              </h3>
-  
-              <a
-                href="/recipe/${r[0]}"
-                class="inline-flex items-center justify-center rounded-lg bg-[#7CA1A3] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95">
-                View Recipe
-              </a>
-  
-            </div>
-          `);
+          <div class="w-[220px] p-1">
+
+            <img
+              src="/static/uploads/${r[2]}"
+              class="w-full h-32 object-cover rounded-xl mb-3">
+
+            <h3 class="text-lg font-bold text-gray-800 mb-2">
+              ${r[1]}
+            </h3>
+
+            <a
+              href="/recipe/${r[0]}"
+              class="inline-flex items-center justify-center rounded-lg bg-[#7CA1A3] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95">
+              View Recipe
+            </a>
+
+          </div>
+        `, {
+          minWidth: 240,
+          maxWidth: 240
+        });
+
+          
   
         }
   
