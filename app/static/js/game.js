@@ -201,11 +201,11 @@ function loadImage(img) {
 //TO GET COORDINATES OF CLICK
 function get_coordinates(event) {
   const rect = canvas.getBoundingClientRect();
-  return {  
-    x: (event.clientX - rect.left) * (canvas.width / rect.width),  
+  return {
+    x: (event.clientX - rect.left) * (canvas.width / rect.width),
     y: (event.clientY - rect.top) * (canvas.height / rect.height)
-  };  
-}  
+  };
+}
 
 //LISTENS FOR USER CLICK
 canvas.addEventListener('click', trigger_buttons);
@@ -214,7 +214,7 @@ canvas.addEventListener('click', trigger_buttons);
 //canvas.addEventListener('click', gather_stock_food);
 
 function trigger_buttons(event){
-    //console.log("get_coordinates click detected");  
+    //console.log("get_coordinates click detected");
     const coords = get_coordinates(event);
     //console.log(coords);
     if (GAME_MODE==0) {
@@ -228,7 +228,7 @@ function trigger_buttons(event){
         trigger_buttons_main_game(coords);
     } else if (GAME_MODE == 3){
         //console.log("click detected on night page");
-    }     
+    }
 }
 
 //CHECKS TO SEE IF BUTTONS ON START WERE PRESSED
@@ -242,7 +242,7 @@ function trigger_buttons_start(c) {
     let tutorial_button_y = canvas.height*2/3;
     let tutorial_button_width = tutorial_button.width * (SCALE)/2;
     let tutorial_button_height = tutorial_button.height * (SCALE)/2;
-    
+
     if (c.x > start_button_x && c.x < (start_button_x+start_button_width)) {
         if (c.y > start_button_y && c.y < (start_button_y+start_button_height)) {
             //console.log("run game");
@@ -254,7 +254,7 @@ function trigger_buttons_start(c) {
             //console.log("run tutorial");
             GAME_MODE = 1;
         }
-    }  
+    }
 }
 
 function trigger_buttons_tutorial(c) {
@@ -287,7 +287,7 @@ function trigger_buttons_tutorial(c) {
     if (c.x > exit_cross_x && c.x < exit_cross_x + exit_cross_width) {
         if (c.y > exit_cross_y && c.y < exit_cross_y + exit_cross_height) {
             //console.log("AAAAAAAAAAAAAAAAAAAA");
-            trigger_exit_cross();            
+            trigger_exit_cross();
         }
     }
 }
@@ -548,12 +548,12 @@ function check_inventory_interaction(c) {
                 plate_food(INVENTORY[prevInv], PLATE00);
             } else if (PLATE00.length > 0) {
                 SELECTED_ITEM = {
-                    type: "plate", 
+                    type: "plate",
                     items: [...PLATE00]
                 };
                 PLATE00 = [];
             }
-        }      
+        }
 
         if (
             c.x >= p2x &&
@@ -565,12 +565,12 @@ function check_inventory_interaction(c) {
                 plate_food(INVENTORY[prevInv], PLATE01);
             } else if (PLATE01.length > 0) {
                 SELECTED_ITEM = {
-                    type: "plate", 
+                    type: "plate",
                     items: [...PLATE01]
                 };
                 PLATE01 = [];
             }
-        }      
+        }
 
         if (
             c.x >= p3x &&
@@ -582,12 +582,12 @@ function check_inventory_interaction(c) {
                 plate_food(INVENTORY[prevInv], PLATE10)
             }  else if (PLATE10.length > 0) {
                 SELECTED_ITEM = {
-                    type: "plate", 
+                    type: "plate",
                     items: [...PLATE10]
                 };
                 PLATE10 = [];
             }
-        }      
+        }
 
         if (
             c.x >= p4x &&
@@ -599,13 +599,13 @@ function check_inventory_interaction(c) {
                 plate_food(INVENTORY[prevInv], PLATE11)
             } else if (PLATE11.length > 0) {
                 SELECTED_ITEM = {
-                    type: "plate", 
+                    type: "plate",
                     items: [...PLATE11]
                 };
                 PLATE11 = [];
             }
-        }  
-        
+        }
+
         if (
             c.x >= pan1x &&
             c.x <= pan1x + p_width &&
@@ -617,7 +617,7 @@ function check_inventory_interaction(c) {
                 PAN0 = INVENTORY[prevInv];
                 INVENTORY[prevInv] = null;
             }
-        }      
+        }
 
         if (
             c.x >= pan2x &&
@@ -629,7 +629,7 @@ function check_inventory_interaction(c) {
                 PAN1 = INVENTORY[prevInv];
                 INVENTORY[prevInv] = null;
             }
-        }          
+        }
     }
 
     // ---------- INVENTORY ----------
@@ -651,7 +651,7 @@ function check_inventory_interaction(c) {
             if (SELECTED_ITEM != null && INVENTORY[i] == null) {
                 //console.log("pressed " + i + " inventory slot, placed item");
                 INVENTORY[i] = SELECTED_ITEM;
-                SELECTED_ITEM = null; 
+                SELECTED_ITEM = null;
                 isPrevInv = false;
             } else if (INVENTORY[i] != null) {
                 //console.log("pressed inventory slot with item");
@@ -711,7 +711,7 @@ function start_screen() {
     //console.log("start_screen launched");
     try {
         //const images = await Promise.all([start_screen_bg, start_button, tutorial_button].map(src => loadImage(src)));
-    
+
         //const SCALE_FACTOR = start_button.width / canvas.width;
 
         context.drawImage(
@@ -721,12 +721,12 @@ function start_screen() {
         context.drawImage(
             start_button, canvas.width/8, canvas.height*2/3, start_button.width * (SCALE)/2, start_button.height * (SCALE)/2
         );
-    
+
         context.drawImage(
             tutorial_button, canvas.width*5/8, canvas.height*2/3, tutorial_button.width * (SCALE)/2, tutorial_button.height * (SCALE)/2
-        );  
+        );
     } catch (error) {
-        console.error("Some images may have not loaded"); 
+        console.error("Some images may have not loaded");
     }
 }
 
@@ -738,18 +738,18 @@ function tutorial_screen() {
             tutorial_card_list[TUTORIAL_CARD], 0, 0, canvas.width, canvas.height
         );
         context.drawImage(
-            exit_cross, canvas.width - (exit_cross.width)*(SCALE)/1.5, (exit_cross.height)*(SCALE)/6.5, exit_cross.width*(SCALE)/2, exit_cross.height*(SCALE)/2 
+            exit_cross, canvas.width - (exit_cross.width)*(SCALE)/1.5, (exit_cross.height)*(SCALE)/6.5, exit_cross.width*(SCALE)/2, exit_cross.height*(SCALE)/2
         );
 
         context.drawImage(
-            left_arrow, left_arrow.width*(SCALE)/6, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2 
+            left_arrow, left_arrow.width*(SCALE)/6, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
         );
         context.drawImage(
             right_arrow, canvas.width - right_arrow.width*(SCALE)/1.6, canvas.height/2, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
         );
     } catch (error) {
-        console.error("Some images may have not loaded"); 
-    }    
+        console.error("Some images may have not loaded");
+    }
 }
 
 function draw_plated_food() {
@@ -778,7 +778,7 @@ function draw_plated_food() {
     //PLATE STUFFFFF
     for (let i = 0; i < PLATE00.length; i++) {
 
-        if (PLATE00[i] != null && FOOD[PLATE00[i]] != null) { 
+        if (PLATE00[i] != null && FOOD[PLATE00[i]] != null) {
             if (PLATE00[i] == "bun_burger" || PLATE00[i] == "bun_hotdog") {
                 const img1 = FOOD[PLATE00[i]].loadedPlatedTopImage;
                 const img2 = FOOD[PLATE00[i]].loadedPlatedBottomImage;
@@ -797,7 +797,7 @@ function draw_plated_food() {
                         p1y,
                         foodWidth,
                         foodHeight
-                    );               
+                    );
                 }
             } else {
                 const img = FOOD[PLATE00[i]].loadedPlatedImage;
@@ -819,7 +819,7 @@ function draw_plated_food() {
 
     for (let i = 0; i < PLATE01.length; i++) {
 
-        if (PLATE01[i] != null && FOOD[PLATE01[i]] != null) { 
+        if (PLATE01[i] != null && FOOD[PLATE01[i]] != null) {
             if (PLATE01[i] == "bun_burger" || PLATE01[i] == "bun_hotdog") {
                 const img1 = FOOD[PLATE01[i]].loadedPlatedTopImage;
                 const img2 = FOOD[PLATE01[i]].loadedPlatedBottomImage;
@@ -838,7 +838,7 @@ function draw_plated_food() {
                         p2y,
                         foodWidth,
                         foodHeight
-                    );               
+                    );
                 }
             } else {
                 const img = FOOD[PLATE01[i]].loadedPlatedImage;
@@ -860,7 +860,7 @@ function draw_plated_food() {
 
     for (let i = 0; i < PLATE10.length; i++) {
 
-        if (PLATE10[i] != null && FOOD[PLATE10[i]] != null) { 
+        if (PLATE10[i] != null && FOOD[PLATE10[i]] != null) {
             if (PLATE10[i] == "bun_burger" || PLATE10[i] == "bun_hotdog") {
                 const img1 = FOOD[PLATE10[i]].loadedPlatedTopImage;
                 const img2 = FOOD[PLATE10[i]].loadedPlatedBottomImage;
@@ -879,7 +879,7 @@ function draw_plated_food() {
                         p3y,
                         foodWidth,
                         foodHeight
-                    );               
+                    );
                 }
             } else {
                 const img = FOOD[PLATE10[i]].loadedPlatedImage;
@@ -901,7 +901,7 @@ function draw_plated_food() {
 
     for (let i = 0; i < PLATE11.length; i++) {
 
-        if (PLATE11[i] != null && FOOD[PLATE11[i]] != null) { 
+        if (PLATE11[i] != null && FOOD[PLATE11[i]] != null) {
             if (PLATE11[i] == "bun_burger" || PLATE11[i] == "bun_hotdog") {
                 const img1 = FOOD[PLATE11[i]].loadedPlatedTopImage;
                 const img2 = FOOD[PLATE11[i]].loadedPlatedBottomImage;
@@ -920,7 +920,7 @@ function draw_plated_food() {
                         p4y,
                         foodWidth,
                         foodHeight
-                    );               
+                    );
                 }
             } else {
                 const img = FOOD[PLATE11[i]].loadedPlatedImage;
@@ -984,7 +984,7 @@ function draw_plated_food() {
 
 function main_game_screen() {
     //console.log("MAIN GAME SCREEN LAUNCHED");
-    
+
     try {
         context.drawImage(
             main_game_card_list[GAME_CARD], 0, 0, canvas.width, canvas.height
@@ -993,9 +993,9 @@ function main_game_screen() {
         context.drawImage(
             inventory_background, 0,0, canvas.width, canvas.height
         );
-        
+
         context.drawImage(
-            left_arrow, left_arrow.width*(SCALE)/24, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2 
+            left_arrow, left_arrow.width*(SCALE)/24, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
         );
         context.drawImage(
             right_arrow, canvas.width - right_arrow.width*(SCALE)/1.8, canvas.height/2, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
@@ -1124,7 +1124,7 @@ function main_game_screen() {
     }
 
     if (GAME_CARD == 2) {
-        draw_plated_food();  
+        draw_plated_food();
     }
 }
 
