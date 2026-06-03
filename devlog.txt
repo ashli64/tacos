@@ -3,6 +3,9 @@ Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
 
+naomik -- 2026-06-03 11:35
+   - Added character limit
+
 ashleyL -- 2026-06-02
    - Done well: Styling, idea of website
    - Needs work: restaurant filter should be less restrictive
