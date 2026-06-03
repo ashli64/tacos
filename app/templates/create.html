@@ -190,12 +190,12 @@
         <div class="lcol">
           <div>
             <p>Title:</p>
-            <textarea name="name" placeholder="Recipe Name:" required></textarea>
+            <textarea maxlength = "100" name="name" placeholder="Recipe Name:" required></textarea>
           </div>
 
           <div>
             <p>Description:</p>
-            <textarea name="description" rows="5" placeholder="Enter food description..." required></textarea>
+            <textarea maxlength = "150" name="description" rows="5" placeholder="Enter food description..." required></textarea>
           </div>
 
           <div id="namee">
@@ -211,7 +211,7 @@
           <input type="hidden" name="ingredients" id="iHid">
 
           <div>
-            <input type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
+            <input maxlength = "200" type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
             <button class = "hover:brightness-95" id="adI" type="button" onclick="newF()">
               Add Ingredient
             </button>
@@ -221,6 +221,7 @@
             <p>Instructions:</p>
 
             <textarea
+              maxlength = "1500"
               class="w-full"
               name="instructions"
               rows="12"
