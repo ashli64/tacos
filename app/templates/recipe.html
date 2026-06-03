@@ -114,9 +114,12 @@
           <h2 class="text-3xl font-bold text-gray-800">
             Reviews
           </h2>
-  
-          <a href="/review/{{rid}}" class="inline-flex items-center justify-center rounded-xl bg-[#7CA1A3] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"> Leave Review</a>
-        </div>
+
+          {% if rev %}  
+          	<a href="/review/{{rid}}" class="inline-flex items-center justify-center rounded-xl bg-[#7CA1A3] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"> Leave Review</a>
+          {%endif%}
+
+	</div>
   
         <div class="space-y-5">
   
