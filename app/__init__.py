@@ -242,7 +242,10 @@ def recipe(rid):
     author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
     difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
     instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
-
+    if author == session['username']:
+        rev = False
+    else:
+        rev = True
     if fetch("recipes", "id = ?", "pic", (rid,)):
         pic = fetch("recipes", "id = ?", "pic", (rid,))[0][0]
     else:
@@ -250,7 +253,7 @@ def recipe(rid):
 
     s = fetch('reviews', 'recipe = ?', "author, stars, summary, title", (rid,))
 
-    return render_template("recipe.html", name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic, rid = rid, stuff = s)
+    return render_template("recipe.html", rev = rev, name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic, rid = rid, stuff = s)
 
 
 @app.route("/logout", methods=["GET", "POST"])
