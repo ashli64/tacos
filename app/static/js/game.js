@@ -55,6 +55,10 @@ right_arrow.src = "/static/img/right_arrow.png";
 const exit_cross = new Image();
 exit_cross.src = "/static/img/exit_cross.png";
 
+//TEST PLATE
+const plate = new Image();
+plate.src = "/static/img/plate.png";
+
 //INVENTORY BAR
 const inventory_background = new Image();
 inventory_background.src = "/static/img/inventory_background.png"
@@ -515,28 +519,27 @@ function check_inventory_interaction(c) {
 }
 
         //PLATES AND PANS ASSEMBLY
-        const p1x = canvas.width/2.10 * SCALE; //0.
-        const p1y = canvas.height/1.5*SCALE; //..
+        const p_width = 200*SCALE;
+        const p_height = 200*SCALE;
 
-        const p2x = canvas.width/2.10 * SCALE; //..
-        const p2y = canvas.height/0.8*SCALE;  //0.
+        const p1x = p_width/2.3*SCALE; //0.
+        const p1y = p_height/2*SCALE; //..
 
-        const p3x = canvas.width/0.8*SCALE;  //.0
-        const p3y = canvas.height/1.5*SCALE;//..
+        //updated
+        const p2x = p_width/2.3*SCALE; //..
+        const p2y = p_height*SCALE;  //0.
 
-        const p4x = canvas.width/0.725*SCALE; //..
-        const p4y = canvas.width/1.175*SCALE; //.0
+        const p3x = p_width*1.5*SCALE;  //.0
+        const p3y = p_height/2*SCALE;//..
 
-        const pan1x = canvas.width/0.47*SCALE;
-        const pan1y = canvas.height/1.3*SCALE;
+        const p4x = p_width*1.6*SCALE; //..
+        const p4y = p_height*SCALE; //.0
 
-        const pan2x = canvas.width/0.45*SCALE;
-        const pan2y = canvas.width/1.175*SCALE;
+        const pan1x = p_width*3*SCALE;
+        const pan1y = p_height/1.1*SCALE;
 
-        const p_width = canvas.width/2.5*SCALE;
-        const p_height = canvas.height/2.5*SCALE;
-
-        //console.log(p1x, p1y, p1x+p_width, p1y+p_height);
+        const pan2x = p_width*2.8*SCALE;
+        const pan2y = p_height/2*SCALE;
         if (
             c.x >= p1x &&
             c.x <= p1x + p_width &&
@@ -754,26 +757,28 @@ function tutorial_screen() {
 
 function draw_plated_food() {
 
-    const p1x = canvas.width/2.10 * SCALE;
-    const p1y = canvas.height/1.5 * SCALE;
+  //PLATES AND PANS ASSEMBLY
+  const p_width = 200*SCALE;
+  const p_height = 200*SCALE;
 
-    const p2x = canvas.width/2.10 * SCALE;
-    const p2y = canvas.height/0.8 * SCALE;
+  const p1x = p_width/2.3*SCALE; //0.
+  const p1y = p_height/2*SCALE; //..
 
-    const p3x = canvas.width/0.8 * SCALE;
-    const p3y = canvas.height/1.5 * SCALE;
+  //updated
+  const p2x = p_width/2.3*SCALE; //..
+  const p2y = p_height*SCALE;  //0.
 
-    const p4x = canvas.width/0.725 * SCALE;
-    const p4y = canvas.width/1.175 * SCALE;
+  const p3x = p_width*1.5*SCALE;  //.0
+  const p3y = p_height/2*SCALE;//..
 
-    const pan1x = canvas.width/0.47 * SCALE;
-    const pan1y = canvas.height/1.3 * SCALE;
+  const p4x = p_width*1.6*SCALE; //..
+  const p4y = p_height*SCALE; //.0
 
-    const pan2x = canvas.width/0.45 * SCALE;
-    const pan2y = canvas.width/1.175 * SCALE;
+  const pan1x = p_width*3*SCALE;
+  const pan1y = p_height/1.1*SCALE;
 
-    const foodWidth = 60 * SCALE;
-    const foodHeight = 60 * SCALE;
+  const pan2x = p_width*2.8*SCALE;
+  const pan2y = p_height/2*SCALE;
 
     //PLATE STUFFFFF
     for (let i = 0; i < PLATE00.length; i++) {
@@ -786,17 +791,17 @@ function draw_plated_food() {
                 if (img2 && img2.complete) {
                     context.drawImage(
                         img2,
-                        p1x + i * 15 * SCALE,
+                        p1x,
                         p1y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                     context.drawImage(
                         img1,
-                        p1x + i * 15 * SCALE,
+                        p1x,
                         p1y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                 }
             } else {
@@ -806,10 +811,10 @@ function draw_plated_food() {
 
                     context.drawImage(
                         img,
-                        p1x + i * 15 * SCALE,
+                        p1x,
                         p1y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                         );
 
                     }
@@ -827,17 +832,17 @@ function draw_plated_food() {
                 if (img2 && img2.complete) {
                     context.drawImage(
                         img2,
-                        p2x + i * 15 * SCALE,
+                        p2x,
                         p2y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                     context.drawImage(
                         img1,
-                        p2x + i * 15 * SCALE,
+                        p2x,
                         p2y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                 }
             } else {
@@ -847,10 +852,10 @@ function draw_plated_food() {
 
                     context.drawImage(
                         img,
-                        p2x + i * 15 * SCALE,
+                        p2x,
                         p2y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                         );
 
                     }
@@ -868,17 +873,17 @@ function draw_plated_food() {
                 if (img2 && img2.complete) {
                     context.drawImage(
                         img2,
-                        p3x + i * 15 * SCALE,
+                        p3x,
                         p3y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                     context.drawImage(
                         img1,
-                        p3x + i * 15 * SCALE,
+                        p3x,
                         p3y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                 }
             } else {
@@ -888,10 +893,10 @@ function draw_plated_food() {
 
                     context.drawImage(
                         img,
-                        p3x + i * 15 * SCALE,
+                        p3x,
                         p3y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                         );
 
                     }
@@ -909,17 +914,17 @@ function draw_plated_food() {
                 if (img2 && img2.complete) {
                     context.drawImage(
                         img2,
-                        p4x + i * 15 * SCALE,
+                        p4x,
                         p4y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                     context.drawImage(
                         img1,
-                        p4x + i * 15 * SCALE,
+                        p4x,
                         p4y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                     );
                 }
             } else {
@@ -929,10 +934,10 @@ function draw_plated_food() {
 
                     context.drawImage(
                         img,
-                        p4x + i * 15 * SCALE,
+                        p4x,
                         p4y,
-                        foodWidth,
-                        foodHeight
+                        p_width/1.5,
+                        p_height/1.5
                         );
 
                     }
@@ -954,8 +959,8 @@ function draw_plated_food() {
                 img,
                 pan1x,
                 pan1y,
-                foodWidth,
-                foodHeight
+                p_width/1.5,
+                p_height/1.5
             );
 
         }
@@ -974,8 +979,8 @@ function draw_plated_food() {
                 img,
                 pan2x,
                 pan2y,
-                foodWidth,
-                foodHeight
+                p_width/1.5,
+                p_height/1.5
             );
 
         }
