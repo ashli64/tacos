@@ -256,6 +256,22 @@ def recipe(rid):
     return render_template("recipe.html", rev = rev, name=name, description=description, ingredients=ingredients, author=author, difficulty=difficulty, instructions=instructions, username=session['username'], pic=pic, rid = rid, stuff = s)
 
 
+@app.route("/edit/<rid>", methods=["GET", "POST"])
+def edit(rid):
+    if not 'username' in session:
+        return redirect("/login")
+    description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
+    name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
+    ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
+    author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
+    difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
+    instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
+    if author != session['username']:
+        return redirect("/")
+
+    return render_template("edit.html", description = description, name = name, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions)
+
+
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.clear()
