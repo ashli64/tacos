@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CREATE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <style>
+    body{
+      font-family: 'Manrope', sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    .main{
+      max-width: 1300px;
+      margin: 30px auto;
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .formWrap{
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .lcol,
+    .rcol{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      border: 1px solid #d4d4d4;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 14px;
+      background: #fafafa;
+    }
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: #888;
+      background: white;
+    }
+    p,label{
+      font-weight: 600;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    button, #adI{
+      background: #222;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    #adI{
+      color: black;
+      background:#AAD3E0;
+    }
+
+
+
+    button:hover {
+      background: #444;
+    }
+
+    fieldset{
+      border: 1px solid #ddd;
+      padding: 14px;
+      border-radius: 10px;
+      background: #fafafa;
+      width: 100%;
+    }
+
+    #ingLi{
+      padding: 14px;
+      background: #AAD3E0;
+      min-height: 50px;
+    }
+
+    #namee{
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 14px;
+      background: #AAD3E0;
+      min-height: 50px;
+    }
+
+    #tt{
+      color: black;
+    }
+
+
+    #map{
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      margin-top: 12px;
+      height: 320px;
+    }
+
+    #submit{
+      width: 100%;
+      background: #7CA1A3;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      transition: 0.2s;
+    }
+
+
+    .sideCard{
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    @media(max-width: 900px){
+      .formWrap{
+        grid-template-columns: 1fr;
+      }
+      #map{
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        margin-top: 12px;
+        height: 520px;
+        width: 100%;
+      }
+
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<nav>
+  <div class="bg-[#7CA1A3] backdrop-blur-sm flex items-center justify-between h-20 px-6">
+    <a class="flex items-center gap-2" href="/">
+      <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+    </a>
+
+    <div class="flex flex-row items-center gap-2">
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
+
+      <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<body class ="bg-[#D8E7EB]">
+
+  <div class='main'>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+
+      <div class="formWrap">
+        <div class="lcol">
+          <div>
+            <p>Title:</p>
+            <textarea maxlength = "100" name="name" placeholder="Recipe Name:" required></textarea>
+          </div>
+
+          <div>
+            <p>Description:</p>
+            <textarea maxlength = "150" name="description" rows="5" placeholder="Enter food description..." required></textarea>
+          </div>
+
+          <div id="namee">
+            <p id="tt">Ingredients:</p>
+
+            <ul id="ingLi">
+              {% for ing in ings %}
+              <li>{{ ing }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <input type="hidden" name="ingredients" id="iHid">
+
+          <div>
+            <input maxlength = "200" type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
+            <button class = "hover:brightness-95" id="adI" type="button" onclick="newF()">
+              Add Ingredient
+            </button>
+          </div>
+
+          <div>
+            <p>Instructions:</p>
+
+            <textarea
+              maxlength = "1500"
+              class="w-full"
+              name="instructions"
+              rows="12"
+              placeholder="Enter instructions..."
+              required></textarea>
+          </div>
+
+        </div>
+
+        <div class="rcol">
+          <div class="sideCard">
+
+            <label for="pic">Pick a photo:</label>
+
+            <input
+              name="pic"
+              id="pic"
+              type="file"
+              accept="image/*"
+              capture="environment">
+
+          </div>
+
+          <div class="sideCard">
+
+            <p>Skill Level Required:</p>
+
+            <fieldset>
+              <input type="radio" name="diff" value="Hopeless in kitchen" required> Hopeless in kitchen<br>
+              <input type="radio" name="diff" value="Beginner"> Beginner<br>
+              <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
+              <input type="radio" name="diff" value="Good"> Good<br>
+              <input type="radio" name="diff" value="Advanced"> Advanced<br>
+            </fieldset>
+
+          </div>
+
+          <div class="sideCard">
+            <p>Choose Origin of Dish:</p>
+            <div id="map"></div>
+            <input type="hidden" name="lt" id="lt">
+            <input type="hidden" name="lg" id="lg">
+          </div>
+        </div>
+
+      </div>
+
+      <input  class="hover:brightness-95" type="submit" id='submit' value="Publish Recipe">
+
+    </form>
+
+    <script>
+
+      let ingredients = [];
+
+      const bounds = [
+        [-85, -180],
+        [85, 180]
+      ];
+
+      const mp = L.map('map', {
+        minZoom: 2,
+        maxZoom: 18,
+        maxBounds: bounds,
+        maxBoundsViscosity: 1.0
+      }).setView([10, 0], 2);
+
+      let mark = null;
+
+      function newF() {
+
+        const input = document.getElementById("inp");
+        const value = input.value.trim();
+
+        if (value === "") return;
+
+        ingredients.push(value);
+
+        const li = document.createElement("li");
+        li.textContent = value;
+
+        document.getElementById("ingLi").appendChild(li);
+
+        document.getElementById("iHid").value =
+          ingredients.join(",");
+
+        input.value = "";
+      }
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        noWrap: true
+      }).addTo(mp);
+
+      mp.on('click', function (evt) {
+
+        const lat = evt.latlng.lat;
+        const lng = evt.latlng.lng;
+
+        document.getElementById("lt").value = lat;
+        document.getElementById("lg").value = lng;
+        if (mark) {
+          mp.removeLayer(mark);
+        }
+        mark = L.marker([lat, lng]).addTo(mp);
+      });
+
+    </script>
+
+  </div>
+
+</body>
+
+<footer>
+
+</footer>
+
+</html>
