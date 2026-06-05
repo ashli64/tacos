@@ -298,11 +298,11 @@ function trigger_buttons_tutorial(c) {
 
 function trigger_buttons_main_game(c) {
 
-    let left_arrow_x = left_arrow.width*(SCALE)/24;
-    let left_arrow_y = canvas.height/2;
+    let left_arrow_x = left_arrow.width*(SCALE)/4;
+    let left_arrow_y = canvas.height - 0.4*left_arrow.height*1.5*SCALE;
 
-    let right_arrow_x = canvas.width - right_arrow.width*(SCALE)/1.8;
-    let right_arrow_y = canvas.height/2;
+    let right_arrow_x = canvas.width - right_arrow.width*(SCALE)/1.2;
+    let right_arrow_y = canvas.height - 0.4*right_arrow.height*1.5*SCALE;
 
     let arrow_width = left_arrow.width*(SCALE)/2;
     let arrow_height = left_arrow.height*(SCALE)/2;
@@ -316,8 +316,41 @@ function trigger_buttons_main_game(c) {
             trigger_arrows(false);
         }
     }
-
+    //SPLIT THIS FUNCTION INTO TWO - CHECK SCREEN CLICKED (PICK UP FOOD), CHECK INVNENTORY CLICKED (PLACE FOOD OR PICK UP FOOD), DETECT PLATES (PLACE FOOD OR PICK UP FOOD)
     check_inventory_interaction(c);
+    check_trash_interaction(c);
+}
+
+function check_trash_interaction(c){
+  //TRASH FEATURE
+  //hard coding coordinates cuz sad and tired
+  const trashXI = canvas.width/15;
+  const trashYI = canvas.height - canvas.height/3;
+  const trashXF = canvas.width/4;
+  const trashYF = canvas.height - canvas.height/5;
+  //console.log(trashXI, trashYI, trashXF, trashYF);
+
+  if (
+      c.x >= trashXI &&
+      c.x <= trashXF &&
+      c.y >= trashYI &&
+      c.y <= trashYF
+  ) {
+      //console.log("TRASH CLICKED");
+  if (SELECTED_ITEM != null) {
+
+    // if item came from inventory, clear inventory slot too
+    if (isPrevInv && prevInv != -1) {
+        INVENTORY[prevInv] = null;
+    }
+
+    SELECTED_ITEM = null;
+    isPrevInv = false;
+    prevInv = -1;
+
+    console.log("item trashed");
+    }
+  }
 }
 
 let SELECTED_ITEM = null;
@@ -488,35 +521,6 @@ function check_inventory_interaction(c) {
 
     }
     else if (GAME_CARD == 2) {
-        //TRASH FEATURE
-        //hard coding coordinates cuz sad and tired
-        const trashXI = canvas.width/15;
-        const trashYI = canvas.height - canvas.height/3;
-        const trashXF = canvas.width/4;
-        const trashYF = canvas.height - canvas.height/5;
-        //console.log(trashXI, trashYI, trashXF, trashYF);
-
-        if (
-            c.x >= trashXI &&
-            c.x <= trashXF &&
-            c.y >= trashYI &&
-            c.y <= trashYF
-        ) {
-            //console.log("TRASH CLICKED");
-    if (SELECTED_ITEM != null) {
-
-        // if item came from inventory, clear inventory slot too
-        if (isPrevInv && prevInv != -1) {
-            INVENTORY[prevInv] = null;
-        }
-
-        SELECTED_ITEM = null;
-        isPrevInv = false;
-        prevInv = -1;
-
-        console.log("item trashed");
-    }
-}
 
         //PLATES AND PANS ASSEMBLY
         const p_width = 200*SCALE;
@@ -642,7 +646,7 @@ function check_inventory_interaction(c) {
     const slotWidth = empty_inventory_slot_background.width*0.5*SCALE;
     const slotHeight = empty_inventory_slot_background.height*0.5*SCALE;
     for (let i = 0; i < 4; i++) {
-        const slotX = 0.2*empty_inventory_slot_background.width*SCALE + i*empty_inventory_slot_background.width*SCALE;
+        const slotX = 0.8*empty_inventory_slot_background.width*SCALE + 0.6*i*empty_inventory_slot_background.width*SCALE;
         const slotY = canvas.height - 0.4*empty_inventory_slot_background.height*1.5*SCALE;
 
         if (
@@ -744,12 +748,13 @@ function tutorial_screen() {
             exit_cross, canvas.width - (exit_cross.width)*(SCALE)/1.5, (exit_cross.height)*(SCALE)/6.5, exit_cross.width*(SCALE)/2, exit_cross.height*(SCALE)/2
         );
 
-        context.drawImage(
-            left_arrow, left_arrow.width*(SCALE)/6, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
-        );
-        context.drawImage(
-            right_arrow, canvas.width - right_arrow.width*(SCALE)/1.6, canvas.height/2, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
-        );
+          context.drawImage(
+              left_arrow, left_arrow.width*(SCALE)/6, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
+          );
+          context.drawImage(
+              right_arrow, canvas.width - right_arrow.width*(SCALE)/1.6, canvas.height/2, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
+          );
+
     } catch (error) {
         console.error("Some images may have not loaded");
     }
@@ -1000,10 +1005,10 @@ function main_game_screen() {
         );
 
         context.drawImage(
-            left_arrow, left_arrow.width*(SCALE)/24, canvas.height/2, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
+            left_arrow, left_arrow.width*(SCALE)/4, canvas.height - 0.4*left_arrow.height*1.5*SCALE, left_arrow.width*(SCALE)/2, left_arrow.height*(SCALE)/2
         );
         context.drawImage(
-            right_arrow, canvas.width - right_arrow.width*(SCALE)/1.8, canvas.height/2, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
+            right_arrow, canvas.width - right_arrow.width*(SCALE)/1.2, canvas.height - 0.4*right_arrow.height*1.5*SCALE, right_arrow.width*(SCALE)/2, right_arrow.height*(SCALE)/2
         );
     } catch (error) {
         console.error("Some images may have not loaded");
@@ -1016,7 +1021,7 @@ function main_game_screen() {
                 //console.log("EMPTYYYY");
                 //console.log(i);
                 context.drawImage(
-                    empty_inventory_slot_background, 0.2*empty_inventory_slot_background.width*SCALE + i*empty_inventory_slot_background.width*SCALE, canvas.height - 0.4*empty_inventory_slot_background.height*1.5*SCALE, empty_inventory_slot_background.width*0.5*SCALE, empty_inventory_slot_background.height*0.5*SCALE
+                    empty_inventory_slot_background, 0.8*empty_inventory_slot_background.width*SCALE + 0.6*i*empty_inventory_slot_background.width*SCALE, canvas.height - 0.4*empty_inventory_slot_background.height*1.5*SCALE, empty_inventory_slot_background.width*0.5*SCALE, empty_inventory_slot_background.height*0.5*SCALE
                 )
             } else if (INVENTORY[i] != null) {
 
@@ -1029,7 +1034,7 @@ function main_game_screen() {
         inventory_image.onload = function () {
             context.drawImage(
                 inventory_image,
-                0.2*inventory_image.width*SCALE + i*inventory_image.width*SCALE,
+                0.8*empty_inventory_slot_background.width*SCALE + 0.6*i*empty_inventory_slot_background.width*SCALE,
                 canvas.height - 0.4*inventory_image.height*1.5*SCALE,
                 inventory_image.width*0.5*SCALE,
                 inventory_image.height*0.5*SCALE
@@ -1050,11 +1055,11 @@ function main_game_screen() {
         inventory_image.onload = function () {
             context.drawImage(
                 inventory_image,
-                0.2*inventory_image.width*SCALE + i*inventory_image.width*SCALE,
+                0.8*inventory_slot_background.width*SCALE + 0.6*i*empty_inventory_slot_background.width*SCALE,
                 canvas.height - 0.4*inventory_image.height*1.5*SCALE,
                 inventory_image.width*0.5*SCALE,
                 inventory_image.height*0.5*SCALE
-            );
+              );
         };
     }
 }
