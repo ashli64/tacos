@@ -292,17 +292,16 @@
         const value = input.value.trim();
 
         if (!value) return;
-
         if (value.includes(",")) {
-          alert("No commas");
+          alert("No commas allowed");
           return;
         }
+
+        
         ingredients.push(value);
         const li = document.createElement("li");
-
         li.className =
           "flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200 mb-2";
-
         li.innerHTML = `
           <span class="text-gray-800">${value}</span>
           <button
