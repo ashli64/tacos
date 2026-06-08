@@ -3,6 +3,10 @@ Ashley Li, Naomi Kurian, Veronika Duvanova, Ashley Li
 P05: Le Fin
 ----------------------------
 
+naomik -- 2026-06-08 01:40
+   - Worked on edit and create
+   - Fixed bug with commas in user input
+
 naomik -- 2026-06-03 12:00
    - Fixed review issue
 

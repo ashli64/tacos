@@ -200,18 +200,14 @@
 
           <div id="namee">
             <p id="tt">Ingredients:</p>
-
-            <ul id="ingLi">
-              {% for ing in ings %}
-              <li>{{ ing }}</li>
-              {% endfor %}
+            <ul id="ingLi" class="space-y-2">
             </ul>
           </div>
 
           <input type="hidden" name="ingredients" id="iHid">
 
           <div>
-            <input maxlength = "200" type="text" placeholder="Type and add one at a time" id="inp" name="addIng" pattern="[^,]*" value="">
+            <input maxlength = "200" type="text" placeholder="Type and add one at a time" id="inp" name="addIng" value="">
             <button class = "hover:brightness-95" id="adI" type="button" onclick="newF()">
               Add Ingredient
             </button>
@@ -292,24 +288,48 @@
       let mark = null;
 
       function newF() {
-
         const input = document.getElementById("inp");
         const value = input.value.trim();
 
-        if (value === "") return;
+        if (!value) return;
 
+        if (value.includes(",")) {
+          alert("No commas");
+          return;
+        }
         ingredients.push(value);
-
         const li = document.createElement("li");
-        li.textContent = value;
 
+        li.className =
+          "flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200 mb-2";
+
+        li.innerHTML = `
+          <span class="text-gray-800">${value}</span>
+          <button
+            type="button"
+            data-value="${value}"
+            onclick="rmF(this)"
+            class="ml-3 bg-red-500 hover:bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold transition"
+          >
+            ×
+          </button>
+        `;
         document.getElementById("ingLi").appendChild(li);
-
-        document.getElementById("iHid").value =
-          ingredients.join(",");
+        document.getElementById("iHid").value = ingredients.join(", ");
 
         input.value = "";
       }
+
+      function rmF(btn) {
+        const value = btn.dataset.value;
+
+        ingredients = ingredients.filter(i => i !== value);
+
+        btn.parentElement.remove();
+
+        document.getElementById("iHid").value = ingredients.join(", ");
+      }
+
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap',
         noWrap: true

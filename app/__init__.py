@@ -203,7 +203,7 @@ def create():
         db.close()
         return redirect("/")
 
-    return render_template("create.html", ings = [], username = session['username'])
+    return render_template("create.html", username = session['username'])
 
 @app.route('/review/<rid>', methods=["GET", "POST"])
 def review(rid):
@@ -263,13 +263,18 @@ def edit(rid):
     description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
     name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
     ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
+    if "," in ingredients:
+        ingredients = ingredients.split(",")
     author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
     difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
     instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
     if author != session['username']:
         return redirect("/")
-
-    return render_template("edit.html", description = description, name = name, ingredients = ingredients, author = author, difficulty = difficulty, instructions = instructions)
+#if no pic, leave alone
+#take code from create
+#if map not clicked, leave alone
+#add map to recipes?
+    return render_template("edit.html", description = description, name = name, ings = ingredients, author = author, difficulty = difficulty, instructions = instructions)
 
 
 @app.route("/logout", methods=["GET", "POST"])
