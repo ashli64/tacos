@@ -23,7 +23,7 @@
       background: white;
       padding: 28px;
       border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
     }
     .formWrap{
       display: grid;
@@ -203,19 +203,19 @@
             <p id="tt">Ingredients:</p>
 
             <ul id="ingLi" class="space-y-2">
-              {% for i in ings %}
-              <li class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200">
-                <span class="text-gray-800">{{ i }}</span>
-            
-                <button
-                  type="button"
-                  data-value="{{ i }}"
-                  onclick="rmF(this)"
-                  class="ml-3 bg-red-500 hover:bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold transition">
-                  ×
-                </button>
-              </li>
-              {% endfor %}
+                {% for i in ings %}
+                <li class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200">
+                  <span class="text-gray-800">{{ i }}</span>
+              
+                  <button
+                    type="button"
+                    data-value="{{ i }}"
+                    onclick="rmF(this)"
+                    class="ml-3 bg-red-500 hover:bg-red-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold transition">
+                    ×
+                  </button>
+                </li>
+                {% endfor %}
             </ul>
           </div>
 
@@ -243,9 +243,19 @@
         </div>
 
         <div class="rcol">
+
+
+
+
           <div class="sideCard">
 
-            <label for="pic">Pick a photo:</label>
+            <div >
+              <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+                <img src="{{ url_for('static', filename='uploads/' + pic) }}" alt="food img" class="w-full h-80 object-cover">
+              </div>
+            </div>
+
+            <label for="pic">Pick a new photo (jpg, png, or gif):</label>
 
             <input
               name="pic"
@@ -256,31 +266,59 @@
 
           </div>
 
+          
+
           <div class="sideCard">
 
             <p>Skill Level Required:</p>
 
             <fieldset>
-              <input type="radio" name="diff" value="Hopeless in kitchen" required> Hopeless in kitchen<br>
-              <input type="radio" name="diff" value="Beginner"> Beginner<br>
-              <input type="radio" name="diff" value="Mediocre"> Mediocre<br>
-              <input type="radio" name="diff" value="Good"> Good<br>
-              <input type="radio" name="diff" value="Advanced"> Advanced<br>
+              <input type="radio" name="diff" value="Hopeless in kitchen"
+                {% if difficulty == "Hopeless in kitchen" %}checked{% endif %}>
+              Hopeless in kitchen<br>
+
+              <input type="radio" name="diff" value="Beginner"
+                {% if difficulty == "Beginner" %}checked{% endif %}>
+              Beginner<br>
+
+              <input type="radio" name="diff" value="Mediocre"
+                {% if difficulty == "Mediocre" %}checked{% endif %}>
+              Mediocre<br>
+
+              <input type="radio" name="diff" value="Good"
+                {% if difficulty == "Good" %}checked{% endif %}>
+              Good<br>
+
+              <input type="radio" name="diff" value="Advanced"
+                {% if difficulty == "Advanced" %}checked{% endif %}>
+              Advanced<br>
             </fieldset>
 
           </div>
 
+
+
+
+
           <div class="sideCard">
+
+
+
             <p>Choose Origin of Dish:</p>
             <div id="map"></div>
             <input type="hidden" name="lt" id="lt">
             <input type="hidden" name="lg" id="lg">
+
+
+
           </div>
+
+
         </div>
 
       </div>
 
-      <input  class="hover:brightness-95" type="submit" id='submit' value="Publish Recipe">
+      <input class="hover:brightness-95" type="submit" id='submit' value="Edit Recipe">
 
     </form>
 
@@ -288,20 +326,6 @@
 
       let ingredients = {{ ings | tojson }};
       document.getElementById("iHid").value = ingredients.join(", ");
-
-      const bounds = [
-        [-85, -180],
-        [85, 180]
-      ];
-
-      const mp = L.map('map', {
-        minZoom: 2,
-        maxZoom: 18,
-        maxBounds: bounds,
-        maxBoundsViscosity: 1.0
-      }).setView([10, 0], 2);
-
-      let mark = null;
 
       function rmF(btn) {
         const value = btn.dataset.value;
@@ -346,10 +370,44 @@
         input.value = "";
       }
 
+
+      const bounds = [
+        [-85, -180],
+        [85, 180]
+      ];
+
+      const mp = L.map('map', {
+        minZoom: 2,
+        maxZoom: 18,
+        maxBounds: bounds,
+        maxBoundsViscosity: 1.0
+      }).setView([10, 0], 2);
+      
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap',
         noWrap: true
       }).addTo(mp);
+
+
+      let mark = null;
+
+
+      const lat = {{ l2|tojson }};
+      const lng = {{ l1|tojson }};
+
+
+      if (lat !== "" && lng !== "") {
+        mp.setView([lat, lng], 5);
+
+        mark = L.marker([lat, lng]).addTo(mp);
+
+        document.getElementById("lt").value = lat;
+        document.getElementById("lg").value = lng;
+      } else {
+        mp.setView([10, 0], 2);
+      }
+
+
 
       mp.on('click', function (evt) {
 

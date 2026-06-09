@@ -4,6 +4,11 @@ P05: Le Fin
 ----------------------------
 
 naomik -- 2026-06-08 01:40
+   - Basically finished edit feature
+   - Fixed bugs with ingredients
+   - Added image specifications
+
+naomik -- 2026-06-08 01:40
    - Worked on edit and create
    - Fixed bug with commas in user input
 

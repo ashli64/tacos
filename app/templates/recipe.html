@@ -107,6 +107,14 @@
         </div>
   
       </div>
+
+      <br>
+
+      {% if not rev %}
+        <a href="/edit/{{rid}}" class="inline-flex rounded-xl bg-[#7CA1A3] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95">Edit Recipe</a>
+      {% endif%}
+      
+      <br>
   
       <div class="mt-12">
   
@@ -116,10 +124,11 @@
           </h2>
 
           {% if rev %}  
-          	<a href="/review/{{rid}}" class="inline-flex items-center justify-center rounded-xl bg-[#7CA1A3] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"> Leave Review</a>
+          	<a href="/review/{{rid}}" class="inline-flex items-center justify-center rounded-xl bg-[#7CA1A3] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95">Leave Review</a>
           {%endif%}
 
-	</div>
+
+	      </div>
   
         <div class="space-y-5">
   

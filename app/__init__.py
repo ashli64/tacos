@@ -249,7 +249,7 @@ def recipe(rid):
     if fetch("recipes", "id = ?", "pic", (rid,)):
         pic = fetch("recipes", "id = ?", "pic", (rid,))[0][0]
     else:
-        pic = ''
+        pic = 'taco.gif'
 
     s = fetch('reviews', 'recipe = ?', "author, stars, summary, title", (rid,))
 
@@ -260,21 +260,64 @@ def recipe(rid):
 def edit(rid):
     if not 'username' in session:
         return redirect("/login")
+    author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
+    if author != session['username']:
+        return redirect("/")
     description = fetch("recipes", "id = ?", "description", (rid,))[0][0]
     name = fetch("recipes", "id = ?", "name", (rid,))[0][0]
     ingredients = fetch("recipes", "id = ?", "ingredients", (rid,))[0][0]
     if "," in ingredients:
         ingredients = ingredients.split(",")
-    author = fetch("recipes", "id = ?", "author", (rid,))[0][0]
+    elif ingredients != '':
+        ingredients = [ingredients]
+    else:
+        ingredients = []
     difficulty = fetch("recipes", "id = ?", "difficulty", (rid,))[0][0]
     instructions = fetch("recipes", "id = ?", "instructions", (rid,))[0][0]
-    if author != session['username']:
+    longitude = fetch("recipes", "id = ?", "long", (rid,))[0][0]
+    latitude = fetch("recipes", "id = ?", "lat", (rid,))[0][0]
+    if fetch("recipes", "id = ?", "pic", (rid,)):
+        pic = fetch("recipes", "id = ?", "pic", (rid,))[0][0]
+    else:
+        pic = ''
+
+    if request.method == "POST":
+
+        db = get_db()
+        c = db.cursor()
+
+        query = "UPDATE recipes SET name = ?, description = ?, ingredients = ?, pic = ?, difficulty = ?, instructions = ?, lat = ?, long = ? WHERE id = ?"
+        params = (request.form["name"], request.form["description"], request.form.get("ingredients"), pic, request.form["diff"], request.form["instructions"], request.form.get("lt"), request.form.get("lg"), rid,)
+        c.execute(query, params)
+
+        recipeId = c.lastrowid
+
+        photo = request.files.get("pic")
+        filename = ''
+        if photo and photo.filename != "" and allowed_file(photo.filename):
+
+            curr = os.path.splitext(photo.filename)[1]
+            filename = f"{rid}{curr}"
+            upload_path = os.path.join(
+                app.static_folder,
+                "uploads",
+                filename
+            )
+
+            photo.save(upload_path)
+        else:
+            filename = pic
+
+        c.execute(
+            "UPDATE recipes SET pic = ? WHERE id = ?",
+            (filename, rid)
+        )
+
+        db.commit()
+        db.close()
         return redirect("/")
-#if no pic, leave alone
-#take code from create
-#if map not clicked, leave alone
-#add map to recipes?
-    return render_template("edit.html", description = description, name = name, ings = ingredients, author = author, difficulty = difficulty, instructions = instructions)
+  
+    return render_template("edit.html", description = description, name = name, ings = ingredients, author = author, difficulty = difficulty, instructions = instructions, l1 = longitude, l2 = latitude, pic =pic)
 
 
 @app.route("/logout", methods=["GET", "POST"])
