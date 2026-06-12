@@ -294,10 +294,22 @@ def edit(rid):
 
         photo = request.files.get("pic")
         filename = ''
+
         if photo and photo.filename != "" and allowed_file(photo.filename):
 
-            curr = os.path.splitext(photo.filename)[1]
+            for ext in [".jpg", ".jpeg", ".png", ".gif"]:
+                old_path = os.path.join(
+                    app.static_folder,
+                    "uploads",
+                    f"{rid}{ext}"
+                )
+
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            curr = os.path.splitext(photo.filename)[1].lower()
             filename = f"{rid}{curr}"
+
             upload_path = os.path.join(
                 app.static_folder,
                 "uploads",
@@ -305,6 +317,7 @@ def edit(rid):
             )
 
             photo.save(upload_path)
+
         else:
             filename = pic
 
