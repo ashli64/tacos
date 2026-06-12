@@ -184,13 +184,13 @@ def create():
 
             curr = os.path.splitext(photo.filename)[1]
             filename = f"{rid}{curr}"
-            upload_path = os.path.join(
+            uploadpath = os.path.join(
                 app.static_folder,
                 "uploads",
                 filename
             )
 
-            photo.save(upload_path)
+            photo.save(uploadpath)
         else:
             filename = "taco.jpeg"
 
@@ -298,25 +298,25 @@ def edit(rid):
         if photo and photo.filename != "" and allowed_file(photo.filename):
 
             for ext in [".jpg", ".jpeg", ".png", ".gif"]:
-                old_path = os.path.join(
+                oldpath = os.path.join(
                     app.static_folder,
                     "uploads",
                     f"{rid}{ext}"
                 )
 
-                if os.path.exists(old_path):
-                    os.remove(old_path)
+                if os.path.exists(oldpath):
+                    os.remove(oldpath)
 
             curr = os.path.splitext(photo.filename)[1].lower()
             filename = f"{rid}{curr}"
 
-            upload_path = os.path.join(
+            uploadpath = os.path.join(
                 app.static_folder,
                 "uploads",
                 filename
             )
 
-            photo.save(upload_path)
+            photo.save(uploadpath)
 
         else:
             filename = pic
