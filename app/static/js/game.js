@@ -420,7 +420,8 @@ function check_inventory_interaction(c) {
     //console.log(c);
     //console.log(prevInv);
 
-    const in_width = 200 * SCALE * 0.5 //inventory item width/height, knowing they're 200x200
+    const in_width = 200 * SCALE * 0.5
+    console.log(in_width); //inventory item width/height, knowing they're 200x200
     //c.x is x, c.y is y
     // CHECKS IF AN INGREDIENT WAS SELECTED ON THE TWO PAGES, ADDS TO SELECTED_ITEM
     //fix coordinates of items
@@ -766,230 +767,36 @@ function draw_plated_food() {
   const p_width = 200*SCALE;
   const p_height = 200*SCALE;
 
-  const p1x = p_width/2.3*SCALE; //0.
-  const p1y = p_height/2*SCALE; //..
+  const p1x = canvas.width/100; //0.
+  const p1y = canvas.height/100; //..
 
-  //updated
-  const p2x = p_width/2.3*SCALE; //..
-  const p2y = p_height*SCALE;  //0.
+  const p2x = canvas.width/50; //..
+  const p2y = canvas.height/50;  //0.
 
-  const p3x = p_width*1.5*SCALE;  //.0
-  const p3y = p_height/2*SCALE;//..
+  const p3x = p_width*2.5*SCALE;  //.0
+  const p3y = p_height/1.5*SCALE;//..
 
-  const p4x = p_width*1.6*SCALE; //..
-  const p4y = p_height*SCALE; //.0
+  const p4x = p_width*2.7*SCALE; //..
+  const p4y = p_height*1.6*SCALE; //.0
 
-  const pan1x = p_width*3*SCALE;
-  const pan1y = p_height/1.1*SCALE;
 
-  const pan2x = p_width*2.8*SCALE;
-  const pan2y = p_height/2*SCALE;
+  const pan1x = canvas.width*SCALE - p_width*SCALE*2;
+  const pan1y = p_height/1.2*SCALE;
 
-    //PLATE STUFFFFF
-    for (let i = 0; i < PLATE00.length; i++) {
+  const pan2x = canvas.width*SCALE - p_width*SCALE*1.8;
+  const pan2y = p_height*1.5*SCALE;
+try{
+  context.drawImage(
+    plate, p1x, p1y, p_width, p_height
+  );
 
-        if (PLATE00[i] != null && FOOD[PLATE00[i]] != null) {
-            if (PLATE00[i] == "bun_burger" || PLATE00[i] == "bun_hotdog") {
-                const img1 = FOOD[PLATE00[i]].loadedPlatedTopImage;
-                const img2 = FOOD[PLATE00[i]].loadedPlatedBottomImage;
+context.drawImage(
+  plate, p2x, p2y, p_width, p_height
+);
 
-                if (img2 && img2.complete) {
-                    context.drawImage(
-                        img2,
-                        p1x,
-                        p1y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                    context.drawImage(
-                        img1,
-                        p1x,
-                        p1y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                }
-            } else {
-                const img = FOOD[PLATE00[i]].loadedPlatedImage;
-
-                if (img && img.complete) {
-
-                    context.drawImage(
-                        img,
-                        p1x,
-                        p1y,
-                        p_width/1.5,
-                        p_height/1.5
-                        );
-
-                    }
-                }
-            }
-        }
-
-    for (let i = 0; i < PLATE01.length; i++) {
-
-        if (PLATE01[i] != null && FOOD[PLATE01[i]] != null) {
-            if (PLATE01[i] == "bun_burger" || PLATE01[i] == "bun_hotdog") {
-                const img1 = FOOD[PLATE01[i]].loadedPlatedTopImage;
-                const img2 = FOOD[PLATE01[i]].loadedPlatedBottomImage;
-
-                if (img2 && img2.complete) {
-                    context.drawImage(
-                        img2,
-                        p2x,
-                        p2y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                    context.drawImage(
-                        img1,
-                        p2x,
-                        p2y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                }
-            } else {
-                const img = FOOD[PLATE01[i]].loadedPlatedImage;
-
-                if (img && img.complete) {
-
-                    context.drawImage(
-                        img,
-                        p2x,
-                        p2y,
-                        p_width/1.5,
-                        p_height/1.5
-                        );
-
-                    }
-                }
-            }
-        }
-
-    for (let i = 0; i < PLATE10.length; i++) {
-
-        if (PLATE10[i] != null && FOOD[PLATE10[i]] != null) {
-            if (PLATE10[i] == "bun_burger" || PLATE10[i] == "bun_hotdog") {
-                const img1 = FOOD[PLATE10[i]].loadedPlatedTopImage;
-                const img2 = FOOD[PLATE10[i]].loadedPlatedBottomImage;
-
-                if (img2 && img2.complete) {
-                    context.drawImage(
-                        img2,
-                        p3x,
-                        p3y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                    context.drawImage(
-                        img1,
-                        p3x,
-                        p3y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                }
-            } else {
-                const img = FOOD[PLATE10[i]].loadedPlatedImage;
-
-                if (img && img.complete) {
-
-                    context.drawImage(
-                        img,
-                        p3x,
-                        p3y,
-                        p_width/1.5,
-                        p_height/1.5
-                        );
-
-                    }
-                }
-            }
-        }
-
-    for (let i = 0; i < PLATE11.length; i++) {
-
-        if (PLATE11[i] != null && FOOD[PLATE11[i]] != null) {
-            if (PLATE11[i] == "bun_burger" || PLATE11[i] == "bun_hotdog") {
-                const img1 = FOOD[PLATE11[i]].loadedPlatedTopImage;
-                const img2 = FOOD[PLATE11[i]].loadedPlatedBottomImage;
-
-                if (img2 && img2.complete) {
-                    context.drawImage(
-                        img2,
-                        p4x,
-                        p4y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                    context.drawImage(
-                        img1,
-                        p4x,
-                        p4y,
-                        p_width/1.5,
-                        p_height/1.5
-                    );
-                }
-            } else {
-                const img = FOOD[PLATE11[i]].loadedPlatedImage;
-
-                if (img && img.complete) {
-
-                    context.drawImage(
-                        img,
-                        p4x,
-                        p4y,
-                        p_width/1.5,
-                        p_height/1.5
-                        );
-
-                    }
-                }
-            }
-        }
-
-    // PANM STUFF
-    if (
-        PAN0 != null &&
-        FOOD[PAN0] != null
-    ) {
-
-        const img = FOOD[PAN0].loadedPlatedImage;
-
-        if (img && img.complete) {
-
-            context.drawImage(
-                img,
-                pan1x,
-                pan1y,
-                p_width/1.5,
-                p_height/1.5
-            );
-
-        }
-    }
-
-    if (
-        PAN1 != null &&
-        FOOD[PAN1] != null
-    ) {
-
-        const img = FOOD[PAN1].loadedPlatedImage;
-
-        if (img && img.complete) {
-
-            context.drawImage(
-                img,
-                pan2x,
-                pan2y,
-                p_width/1.5,
-                p_height/1.5
-            );
-
-        }
-    }
+}  catch(error) {
+  console.error("Plates not drawn");
+}
 }
 
 function main_game_screen() {
