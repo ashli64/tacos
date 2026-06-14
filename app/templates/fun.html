@@ -98,14 +98,15 @@
 
         
         document.addEventListener("keydown", (e) => {
-            if (e.code === "Space" && p.y >= 180) {
+            if (e.repeat) return;
+
+            if (e.code === "Space" && p.y >= 240) {
                 p.velocityY = -19;
             }
             else{
                 p.y = 240;
             }
         });
-
 
        
 
