@@ -394,6 +394,14 @@ def register():
     return render_template("register.html")
 
 
+@app.route('/fun', methods=["GET", "POST"])
+def fun():
+    if "username" not in session:
+        return redirect("/")
+
+    return render_template("fun.html")
+
+
 @app.route("/profile/<pid>")
 def profile(pid):
     if "username" not in session:

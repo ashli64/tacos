@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<!--
+  Isabel Zheng, Veronika Duvanova, Ashley Li, and Naomi Kurian
+  Tacos
+  SoftDev
+  P05 -- Le Fin
+  2026-05-13
+ -->
+
+<html>
+<head>
+    <title>Results for "{{ search }}"</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-[#D8E7EB] min-h-screen">
+
+    <nav>
+      <div class="bg-[#7CA1A3] backdrop-blur-sm flex items-center justify-between h-20 px-6">
+        <a class="flex items-center gap-2" href="/">
+          <span class="text-white font-extrabold text-xl tracking-wide hidden sm:block">Tacos</span>
+        </a>
+        <div class="flex flex-row items-center gap-2">
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/">Home</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/profile/{{username}}">Profile</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/create">Create</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/game">Play</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/map">Map</a>
+          <a class="font-semibold bg-white/10 rounded-xl text-white hover:bg-white hover:text-gray-800 py-2 px-4 text-sm transition" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+
+    
+    <div class="min-h-screen flex flex-col items-center justify-center gap-4">
+        <h1 class="text-center text-xl md:text-2xl font-semibold text-gray-800 mt-6 px-4">
+            Press the space bar to jump or bring the taco back down to the ground. The game will speed up as time progresses. Good luck!
+        </h1>
+
+        <a href="/game"
+            class="absolute left-4 top-1/2 -translate-y-1/2 bg-[#7CA1A3] text-white p-3 rounded-full shadow-lg hover:brightness-95 active:scale-95 transition">
+                ←
+            </a>
+    
+        <div id="game-holder" class="relative">
+    
+            <canvas id="main-canvas" class="border border-black mx-auto"></canvas>
+        
+        
+        </div>
+    
+        <div class="flex gap-3">
+            <button id="start" class="px-6 py-2 bg-emerald-500 text-white font-bold rounded-lg shadow hover:bg-emerald-600 active:scale-95 transition">
+                Start
+            </button>
+    
+            <button id="pause" class="px-6 py-2 bg-rose-500 text-white font-bold rounded-lg shadow hover:bg-rose-600 active:scale-95 transition">
+                Pause
+            </button>
+        </div>
+    
+    </div>
+
+
+    <script>
+        const cvs = document.getElementById("main-canvas");
+        const road = new Image()
+        road.src = "static/funs/road.jpg"
+        let speed = 6
+        let roadXCor = 0
+        const dr = cvs.getContext("2d")
+        cvs.height = 420;
+        cvs.width = 800;
+        let count = 0
+        let running = false;
+        let gameOver = false;
+
+        const pimg = new Image();
+        pimg.src = "static/funs/taco.jpg";
+
+        const oimg = new Image();
+        oimg.src = "static/funs/obstacle.jpg";
+
+        const gravity = 0.7;
+
+        
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space" && p.y >= 180) {
+                p.velocityY = -19;
+            }
+            else{
+                p.y = 240;
+            }
+        });
+
+
+       
+
+        const p = {
+            x: 80,
+            y: 240,
+            width: 90,
+            height: 60,
+            velocityY: 0
+        };
+
+        const ob = {
+            x: 800,
+            y: 200,
+            width: 130,
+            height: 110
+        };
+
+        const ss = new Image();
+        ss.src = "static/funs/ss.jpg";
+
+        ss.onload = () => {
+            dr.drawImage(
+                ss,
+                0,
+                0,
+                cvs.width,
+                cvs.height
+            );
+        };
+
+        function collision(a, b) {
+            return (
+                a.x < b.x + b.width &&
+                a.x + a.width > b.x &&
+                a.y < b.y + b.height &&
+                a.y + a.height > b.y
+            );
+        }
+
+        function run() {
+            if (gameOver) return;
+            if (!running) return;
+
+            roadXCor -= speed;
+            ob.x -= speed;
+
+            if (ob.x + ob.width < 0) {
+                ob.x = cvs.width + Math.random() * 300;
+            }
+            count += 1;
+
+            if  (speed != 22) {
+                speed = 6 + Math.floor(count / 100);
+            }
+
+            if (roadXCor <= -cvs.width) {
+                roadXCor = 0
+            }
+
+            dr.clearRect(0, 0, cvs.width, cvs.height);
+            dr.drawImage(road, roadXCor, 0, cvs.width, cvs.height);
+            dr.drawImage(road, roadXCor + cvs.width, 0, cvs.width, cvs.height);
+        
+
+            dr.drawImage(
+                pimg,
+                p.x,
+                p.y,
+                p.width,
+                p.height
+            );
+
+            dr.drawImage(
+                oimg,
+                ob.x,
+                ob.y,
+                ob.width,
+                ob.height
+            );
+
+            p.velocityY += gravity;
+            p.y += p.velocityY;
+
+            if (p.y > 240) {
+                p.y = 240;
+                p.velocityY = 0;
+            }
+            if (collision(p, ob)) {
+                gameOver = true;
+                running = false;
+
+                dr.fillStyle = "black";
+                dr.font = "40px Impact";
+                dr.fillText("Game Over!", 300, 150);
+                dr.fillText(`Score: ${Math.floor(count / 10)}`, 300, 250);
+
+
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }
+
+        
+
+            dr.fillStyle = "white";
+            dr.font = "30px Impact";
+            dr.fillText(`Score: ${Math.floor(count / 10)}`, 20, 40);
+           
+            requestAnimationFrame(run);
+        }
+
+        road.onload = () => {
+            run();
+        };
+    
+        document.getElementById("start").addEventListener("click", () => {
+            if (!running) {
+                running = true;
+                run();
+            }
+        });
+
+        document.getElementById("pause").addEventListener("click", () => {
+            running = false;
+        });
+
+        
+
+    </script>
+
+ 
+
+</body>
+</html>
